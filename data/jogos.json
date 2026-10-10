@@ -3894,5 +3894,218 @@
 ]
 }
 ]
+},
+"plantel": {
+"Esperanças": [
+{
+"name": "Afonso Ruas",
+"num": 10,
+"pos": "Extremo",
+"h": 200,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/160683_1759760211.jpg",
+"id": 232650
+},
+{
+"name": "Diogo Silva",
+"num": 46,
+"pos": "Poste",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/172630_1760713992.jpg",
+"id": 244626
+},
+{
+"name": "Francisco Costa",
+"num": 18,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/166163_1744290283.jpg",
+"id": 238151
+},
+{
+"name": "Francisco Silva",
+"num": 17,
+"pos": "Base",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/146535_1759831301.jpg",
+"id": 218452
+},
+{
+"name": "Guilherme Regalado",
+"num": 20,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/159326_1744469024.jpg",
+"id": 231290
+},
+{
+"name": "João Ribeiro",
+"num": 0,
+"pos": "Base",
+"h": 185,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/141094_1760714067.jpg",
+"id": 212389
+},
+{
+"name": "João Silva",
+"num": 14,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/184529_1744290412.jpg",
+"id": 256594
+},
+{
+"name": "Nuno Angélico",
+"num": 0,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/166184_1744469060.jpg",
+"id": 238172
+},
+{
+"name": "Tomás Silva",
+"num": 30,
+"pos": "Base",
+"h": 181,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/141095_1759832124.jpg",
+"id": 212390
 }
+]
+},
+"coaches": {
+"andre-dara": {
+"name": "André Dara",
+"id": 9817,
+"grau": "Grau 2",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_26011_1743181648.jpeg",
+"carreira": [
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Mini 10 M - Principal; Mini 12 M - Principal; Mini 8 M - Principal; Coordenador de Minibasquete - -; Tutor de Estágio - -"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"Mini 10 M - Principal; Mini 12 M - Principal; Mini 8 M - Principal; Sel Reg - Principal; Sel Reg Mini12 M - Principal; CN 1.ª Divisão - Adjunto; Coordenador de Minibasquete - -; Tutor de Estágio - -"
+],
+[
+"2023/2024",
+"Powertogether-Associação",
+"Coordenador de Minibasquete - -"
+],
+[
+"2022/2023",
+"Powertogether-Associação",
+"Mini 8 F - Principal; Mini 8 M - Principal"
+],
+[
+"2021/2022",
+"Powertogether-Associação",
+"Coordenador de Minibasquete - -"
+],
+[
+"2020/2021",
+"Powertogether-Associação",
+"Coordenador de Minibasquete - -"
+],
+[
+"2019/2020",
+"Powertogether-Associação",
+"Mini 10 F - Principal; Mini 10 M - Principal; Mini 12 F - Principal; Mini 12 M - Principal; Mini 8 F - Principal; Mini 8 M - Principal"
+],
+[
+"2018/2019",
+"Powertogether-Associação",
+"Mini 10 F - Principal; Mini 10 M - Principal; Mini 12 F - Principal; Mini 12 M - Principal; Mini 8 F - Principal; Mini 8 M - Principal; Sub 14 M - Adjunto"
+],
+[
+"2016/2017",
+"Maia Basket Clube",
+"Mini 12 Misto - Principal; Sub 16 M - Principal"
+],
+[
+"2015/2016",
+"Maia Basket Clube",
+"Mini 10 F - Principal; Mini 12 F - Principal; Mini 8 F - Principal"
+],
+[
+"2014/2015",
+"Maia Basket Clube",
+"Mini 12 Misto - Principal"
+],
+[
+"2013/2014",
+"Maia Basket Clube",
+"Mini 12 Misto - Principal; Sub 14 M - Principal"
+],
+[
+"2012/2013",
+"Associação Desportiva de Grijó",
+"Mini 12 Misto - Principal"
+],
+[
+"2009/2010",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2008/2009",
+"Futebol Clube de Gaia",
+"Mini A - Principal; Mini B - Principal"
+],
+[
+"2007/2008",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal"
+],
+[
+"2006/2007",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+]
+]
+}
+},
+"staff": {
+"Seniores Masc": [
+"César Domingues"
+],
+"Esperanças": [
+"Duarte Oliveira",
+"Alexandre Silva"
+],
+"Sub-18 Masc A": [
+"Duarte Oliveira",
+"Alexandre Silva"
+],
+"Sub-18 Masc B": [
+"Gustavo Valgode"
+],
+"Sub-16 Masc A": [
+"Rui Martins"
+],
+"Sub-16 Masc B": [
+"Davide Coelho"
+],
+"Sub-14 Masc A": [
+"Joaquim Oliveira",
+"Helder Almeida"
+],
+"Sub-14 Masc B": [
+"Ivo Coutinho",
+"José Nogueira"
+]
+},
+"coord": [
+{
+"role": "Coordenador de Formação",
+"name": "Joaquim Oliveira",
+"email": "basquetebol.coordenacao.fcgaia@gmail.com"
+},
+{
+"role": "Coordenador de Minibasquete",
+"name": "André Dara",
+"email": "minibasquete.fcgaia@gmail.com"
+}
+]
 }
