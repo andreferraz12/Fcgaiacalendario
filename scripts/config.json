@@ -1,5 +1,6 @@
 {
   "calendario_clube": "https://www.fpb.pt/calendario/clube_119/",
+  "resultados_clube": "https://www.fpb.pt/resultados/clube_119/",
   "competicoes": [
     {"id": 11442, "nome": "CN1 1ª Divisão", "equipa": "Seniores Masc", "fonte": "FPB"},
     {"id": 11448, "nome": "Taça de Portugal", "equipa": "Seniores Masc", "fonte": "FPB", "taca": true},

@@ -106,6 +106,8 @@ def competition_phases(comp_id):
 
 def schedule_games(comp_id, phase_id):
     soup = get(f"{BASE}/getSchedule?competitionId={comp_id}&phaseId={phase_id}")
+    if not soup.find("tr"):
+        log(f"AVISO: página sem tabela em {comp_id}/{phase_id}: {norm(soup.get_text(' '))[:200]}")
     out, jor = [], None
     for tr in soup.find_all("tr"):
         c = cells(tr)
@@ -206,6 +208,39 @@ def club_calendar():
     return out
 
 
+def club_results(games):
+    """Resultados do clube em fpb.pt/resultados/clube_119/ (fonte de reserva).
+    Usa os nomes de equipas já conhecidos para encontrar cada jogo e os dois números entre eles."""
+    soup = get(CONFIG["resultados_clube"])
+    lines = [norm(x) for x in soup.get_text("\n").split("\n")]
+    lines = [x for x in lines if x]
+    blocks, cur = {}, None
+    for x in lines:
+        m = re.fullmatch(r"(\d{1,2}) (JAN|FEV|MAR|ABR|MAI|JUN|JUL|AGO|SET|OUT|NOV|DEZ) (\d{4})", x.upper())
+        if m:
+            cur = f"{m.group(3)}-{MESES[m.group(2)]:02d}-{int(m.group(1)):02d}"
+            blocks.setdefault(cur, [])
+            continue
+        if cur:
+            blocks[cur].append(x)
+    found = []
+    for g in games:
+        if g["res"] or g["date"] not in blocks:
+            continue
+        bl = [x.lower() for x in blocks[g["date"]]]
+        h, a = norm(g["home"]).lower(), norm(g["away"]).lower()
+        if h not in bl or a not in bl:
+            continue
+        ih, ia = bl.index(h), bl.index(a)
+        lo, hi = sorted((ih, ia))
+        nums = [int(x) for x in blocks[g["date"]][lo + 1:hi] if re.fullmatch(r"\d{1,3}", x)]
+        if len(nums) != 2:
+            continue
+        sh, sa = (nums[0], nums[1]) if ih < ia else (nums[1], nums[0])
+        found.append((g, f"{sh}-{sa}"))
+    return found, len(blocks)
+
+
 # ---------- Atualização ----------
 
 def team_id(base, gaia_name, ab):
@@ -223,6 +258,7 @@ def main():
     groups = data.setdefault("groups", {})
     before = json.dumps(data, ensure_ascii=False, sort_keys=True)
     known_teams = set(t["id"] for t in CONFIG["equipas"])
+    total_mine = 0
 
     for comp in CONFIG["competicoes"]:
         cid = comp["id"]
@@ -231,6 +267,9 @@ def main():
         except Exception as e:  # noqa: BLE001
             log(f"AVISO: falhou a competição {cid} ({comp['nome']}): {e}")
             continue
+        log(f"{comp['nome']} ({cid}): {len(phases)} fases/grupos encontrados")
+        if not phases:
+            log(f"AVISO: nenhuma fase lida em {comp['nome']}; o site pode ter mudado de formato.")
         for pid, title in phases.items():
             try:
                 rows = schedule_games(cid, pid)
@@ -240,6 +279,8 @@ def main():
             mine = [g for g in rows if is_gaia(g["home"]) or is_gaia(g["away"])]
             if not mine:
                 continue
+            total_mine += len(mine)
+            log(f"  {title}: {len(rows)} jogos no grupo, {len(mine)} do FC Gaia, {sum(1 for g in mine if g['res'])} com resultado")
             phase, group = phase_and_group(title, comp.get("taca"))
             label = f"{comp['nome']} · {group}" if group else comp["nome"]
             ids = set()
@@ -308,6 +349,20 @@ def main():
     except Exception as e:  # noqa: BLE001
         log(f"AVISO: falhou o calendário do clube: {e}")
 
+    # resultados do clube no fpb.pt (reserva, caso o Centro de Resultados ainda não os tenha)
+    try:
+        found, nblocks = club_results(list(games.values()))
+        log(f"fpb.pt resultados: {nblocks} datas lidas")
+        for g, res in found:
+            log(f"Resultado (fpb.pt): {g['team']} {g['home']} {res} {g['away']} {g['date']}")
+            g.update(res=res, status="realizado")
+            for ph in groups.get(g["team"], []):
+                for r in ph["rows"]:
+                    if r[0] == g["num"] and not r[6]:
+                        r[6] = res
+    except Exception as e:  # noqa: BLE001
+        log(f"AVISO: falhou a página de resultados do clube: {e}")
+
     data["games"] = [[g[k] for k in F] for g in sorted(games.values(), key=lambda x: (x["team"], x["date"] or "9", x["num"]))]
     data["stand"], data["logos"], data["groups"] = stand, logos, groups
     after = json.dumps(data, ensure_ascii=False, sort_keys=True)
@@ -317,8 +372,9 @@ def main():
         log("Dados atualizados.")
     else:
         log("Sem alterações.")
-    if any(x.startswith("AVISO: falhou a competição") for x in LOG) and len([x for x in LOG if x.startswith("AVISO: falhou a competição")]) == len(CONFIG["competicoes"]):
-        sys.exit("Nenhuma competição foi lida: verificar se o site mudou.")
+    log(f"Total: {total_mine} jogos do FC Gaia lidos no Centro de Resultados.")
+    if total_mine == 0:
+        sys.exit("ERRO: não foi lido nenhum jogo do FC Gaia no Centro de Resultados. O site pode estar a bloquear o acesso ou mudou de formato.")
 
 
 if __name__ == "__main__":
