@@ -1,0 +1,325 @@
+#!/usr/bin/env python3
+"""Atualiza data/jogos.json com os jogos, resultados e classificações do FC Gaia.
+
+Fontes:
+  - Centro de Resultados FPB (resultados.tugabasket.com): calendários e classificações
+  - Calendário do clube em fpb.pt: horas e pavilhões já marcados (sobretudo Esperanças)
+
+Regras:
+  - Nunca apaga jogos nem fases já guardados (só acrescenta ou atualiza).
+  - Marcações confirmadas das Esperanças mantêm-se se a fonte deixar de as mostrar.
+  - Se uma fonte falhar, mantém os dados anteriores dessa parte.
+"""
+import json, re, sys, time, unicodedata, datetime, pathlib
+import requests
+from bs4 import BeautifulSoup
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+DATA = ROOT / "data" / "jogos.json"
+CONFIG = json.loads((ROOT / "scripts" / "config.json").read_text(encoding="utf-8"))
+BASE = "https://resultados.tugabasket.com"
+CLUB_URL = CONFIG["calendario_clube"]
+UA = {"User-Agent": "Mozilla/5.0 (FC Gaia calendario; atualizacao diaria)"}
+LOG = []
+
+
+def log(msg):
+    LOG.append(msg)
+    print(msg, flush=True)
+
+
+def get(url, tries=3):
+    """Pede uma página com sessão nova (o site guarda estado em sessão)."""
+    for i in range(tries):
+        try:
+            r = requests.Session().get(url, headers=UA, timeout=30)
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or "utf-8"
+            return BeautifulSoup(r.text, "html.parser")
+        except Exception as e:  # noqa: BLE001
+            if i == tries - 1:
+                raise
+            time.sleep(3 + 3 * i)
+
+
+def norm(s):
+    s = unicodedata.normalize("NFC", s or "").replace("\xa0", " ")
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def is_gaia(name):
+    return norm(name).lower().startswith("fc gaia")
+
+
+def phase_and_group(title, cup=False):
+    """'1ª Fase - Série B' -> ('1.ª Fase', 'Série B'); Taça -> ('Taça de Portugal', ...)."""
+    t = norm(title)
+    if cup:
+        g = re.sub(r"(?i)^\d+\.?ª\s*fase\s*-\s*", "", t)
+        g = re.sub(r"(?i)eliminat[oó]ria", "Elim.", g).replace(" - ", " ")
+        return "Taça de Portugal", g.replace("Zona ", "")
+    m = re.match(r"(?i)^(\d+)\.?\s*ª\s*fase\s*(?:-\s*(.*))?$", t)
+    if m:
+        grp = (m.group(2) or "").strip()
+        grp = grp.title() if grp.isupper() else grp
+        return f"{m.group(1)}.ª Fase", grp
+    return t.title() if t.isupper() else t, ""
+
+
+def cells(tr):
+    return [norm(td.get_text(" ")) for td in tr.find_all(["td", "th"])]
+
+
+# ---------- Centro de Resultados ----------
+
+def competition_phases(comp_id):
+    """Devolve {phaseId: titulo} e as tabelas de classificação do resumo."""
+    soup = get(f"{BASE}/getCompetitionDetails?competitionId={comp_id}")
+    phases, tables = {}, {}
+    for a in soup.find_all("a", href=re.compile(r"getSchedule\?competitionId=%s&phaseId=(\d+)" % comp_id)):
+        pid = re.search(r"phaseId=(\d+)", a["href"]).group(1)
+        head = a.find_previous(string=re.compile(r"(?i)fase|elimina"))
+        if head and pid not in phases:
+            phases[pid] = norm(head)
+    for table in soup.find_all("table"):
+        link = table.find_previous("a", href=re.compile(r"phaseId=(\d+)"))
+        if not link:
+            continue
+        pid = re.search(r"phaseId=(\d+)", link["href"]).group(1)
+        rows = []
+        for tr in table.find_all("tr"):
+            c = [x for x in cells(tr)]
+            if not c or not c[0].isdigit():
+                continue
+            name = next((x for x in c[1:] if x and not re.fullmatch(r"-?\d+", x)), None)
+            if not name:
+                continue
+            nums = [int(x) for x in c[c.index(name) + 1:] if re.fullmatch(r"-?\d+", x)]
+            if any("EXCLU" in x.upper() for x in c):
+                rows.append([name, "exc"])
+            elif len(nums) >= 4:
+                rows.append([name] + nums[:4])
+        if rows:
+            tables[pid] = rows
+    return phases, tables
+
+
+def schedule_games(comp_id, phase_id):
+    soup = get(f"{BASE}/getSchedule?competitionId={comp_id}&phaseId={phase_id}")
+    out, jor = [], None
+    for tr in soup.find_all("tr"):
+        c = cells(tr)
+        txt = " ".join(c)
+        m = re.search(r"(\d+)\s*ª\s*Jornada", txt)
+        if m and not (c and c[0].isdigit()):
+            jor = int(m.group(1))
+            continue
+        if len(c) < 7 or not c[0].isdigit():
+            continue
+        num, d, h, home, res, away, venue = c[:7]
+        if "ANULAD" in d.upper():
+            continue
+        date = d if re.fullmatch(r"\d{4}-\d{2}-\d{2}", d) else ""
+        hora = h if re.fullmatch(r"\d{1,2}:\d{2}", h) else ""
+        r = re.fullmatch(r"(\d+)\s*[:\-]\s*(\d+)", res or "")
+        out.append(dict(num=int(num), jor=jor, date=date, time=hora, home=home, away=away,
+                        venue=venue, res=f"{r.group(1)}-{r.group(2)}" if r else ""))
+    return out
+
+
+def standings_full(comp_id, phase_id, group):
+    """Classificação detalhada (J, V, D, PTS, PM, PS) e logos.
+    Só é aceite se a página for mesmo do grupo pedido (o site às vezes devolve outro grupo)."""
+    soup = get(f"{BASE}/standings?competitionId={comp_id}&phaseId={phase_id}")
+    text = soup.get_text(" ").lower()
+    if group and group.lower() not in text:
+        return None, {}
+    rows, logos = [], {}
+    for table in soup.find_all("table"):
+        head = None
+        for tr in table.find_all("tr"):
+            c = cells(tr)
+            up = [x.upper() for x in c]
+            if "J" in up and "PTS" in up:
+                head = up
+                continue
+            if not head or not c:
+                continue
+            img = tr.find("img", src=re.compile(r"sav2\.fpb\.pt"))
+            # nome: primeira célula com letras (pode vir "1 FC Gaia A" ou pos e nome separados)
+            name = next((x for x in c if re.search(r"[A-Za-zÀ-ÿ]", x)), None)
+            if not name:
+                continue
+            name = re.sub(r"^\d+\s+", "", name)
+            if img and not is_gaia(name):
+                logos[name] = img["src"]
+            if any("EXCLU" in x.upper() for x in c):
+                rows.append([name, "exc"])
+                continue
+            off = len(c) - len(head)   # células a mais/menos antes das colunas numéricas
+            def col(lbl):
+                i = head.index(lbl) + off
+                return int(c[i]) if 0 <= i < len(c) and re.fullmatch(r"-?\d+", c[i]) else None
+            vals = [col(k) for k in ("J", "V", "D", "PTS")]
+            if None in vals:
+                continue
+            pm, ps = (col("PM") if "PM" in head else None), (col("PS") if "PS" in head else None)
+            rows.append([name] + vals + ([pm, ps] if pm is not None and ps is not None else []))
+        if rows:
+            break
+    return (rows or None), logos
+
+
+# ---------- Calendário do clube (fpb.pt) ----------
+
+MESES = {"JAN": 1, "FEV": 2, "MAR": 3, "ABR": 4, "MAI": 5, "JUN": 6, "JUL": 7, "AGO": 8, "SET": 9, "OUT": 10, "NOV": 11, "DEZ": 12}
+
+
+def club_calendar():
+    """Lista de jogos marcados [{date,time,home,away,cat,venue}] (leitura por linhas de texto)."""
+    soup = get(CLUB_URL)
+    lines = [norm(x) for x in soup.get_text("\n").split("\n")]
+    lines = [x for x in lines if x]
+    out, date = [], None
+    i = 0
+    while i < len(lines):
+        m = re.fullmatch(r"(\d{1,2}) (JAN|FEV|MAR|ABR|MAI|JUN|JUL|AGO|SET|OUT|NOV|DEZ) (\d{4})", lines[i].upper())
+        if m:
+            date = f"{m.group(3)}-{MESES[m.group(2)]:02d}-{int(m.group(1)):02d}"
+            i += 1
+            continue
+        t = re.fullmatch(r"(\d{1,2})H(\d{2})", lines[i].upper())
+        if t and date and i >= 1:
+            block = lines[max(0, i - 2): i + 8]
+            cat = next((x for x in block if re.search(r"(?i)campeonato|ta[cç]a|divis", x)), "")
+            teams = [x for x in lines[max(0, i - 2): i + 4]
+                     if x not in (lines[i], cat) and not re.search(r"(?i)masculino|feminino|campeonato|ta[cç]a|divis|^\d", x)]
+            venue = ""
+            if cat:
+                k = lines.index(cat, max(0, i - 2))
+                rest = [x for x in lines[k + 1:k + 3] if not re.search(r"(?i)masculino|feminino", x)]
+                venue = re.sub(r"\s*,.*$", "", rest[0]) if rest else ""
+            if len(teams) >= 2:
+                out.append(dict(date=date, time=f"{int(t.group(1)):02d}:{t.group(2)}",
+                                home=teams[0], away=teams[1], cat=cat, venue=venue))
+        i += 1
+    return out
+
+
+# ---------- Atualização ----------
+
+def team_id(base, gaia_name, ab):
+    if not ab:
+        return base
+    m = re.search(r"\b([AB])$", norm(gaia_name))
+    return f"{base} {m.group(1)}" if m else None
+
+
+def main():
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    F = ["team", "comp", "src", "num", "jor", "date", "time", "home", "away", "venue", "status", "res", "phase"]
+    games = {(r[0], r[3]): dict(zip(F, r)) for r in data["games"]}
+    stand, logos = data["stand"], data.get("logos", {})
+    groups = data.setdefault("groups", {})
+    before = json.dumps(data, ensure_ascii=False, sort_keys=True)
+    known_teams = set(t["id"] for t in CONFIG["equipas"])
+
+    for comp in CONFIG["competicoes"]:
+        cid = comp["id"]
+        try:
+            phases, tables = competition_phases(cid)
+        except Exception as e:  # noqa: BLE001
+            log(f"AVISO: falhou a competição {cid} ({comp['nome']}): {e}")
+            continue
+        for pid, title in phases.items():
+            try:
+                rows = schedule_games(cid, pid)
+            except Exception as e:  # noqa: BLE001
+                log(f"AVISO: falhou o calendário {cid}/{pid}: {e}")
+                continue
+            mine = [g for g in rows if is_gaia(g["home"]) or is_gaia(g["away"])]
+            if not mine:
+                continue
+            phase, group = phase_and_group(title, comp.get("taca"))
+            label = f"{comp['nome']} · {group}" if group else comp["nome"]
+            ids = set()
+            for g in mine:
+                gaia = g["home"] if is_gaia(g["home"]) else g["away"]
+                tid = team_id(comp["equipa"], gaia, comp.get("ab"))
+                if tid not in known_teams:
+                    log(f"AVISO: equipa nova do FC Gaia não configurada: {gaia} ({comp['nome']})")
+                    continue
+                ids.add(tid)
+                old = games.get((tid, g["num"]))
+                new = dict(team=tid, comp=label, src=comp["fonte"], num=g["num"], jor=g["jor"], date=g["date"],
+                           time=g["time"], home=g["home"], away=g["away"], venue=g["venue"], res=g["res"], phase=phase)
+                if old and not g["time"] and old.get("time") and old.get("status") == "marcado" and not g["res"]:
+                    # marcação confirmada (fpb.pt) que o Centro de Resultados ainda não mostra
+                    new.update(date=old["date"], time=old["time"], venue=old["venue"])
+                new["status"] = "realizado" if new["res"] else ("marcado" if new["date"] and new["time"] else "por marcar")
+                if old != new:
+                    log(("Atualizado" if old else "Novo") + f": {tid} #{g['num']} {g['home']} - {g['away']} {new['date']} {new['time']} {new['res']}")
+                games[(tid, g["num"])] = new
+            # todos os jogos do grupo (para a vista "Jornadas do grupo")
+            if not comp.get("taca"):
+                grows = [[g["num"], g["jor"], g["date"], g["time"], g["home"], g["away"], g["res"], g["venue"]] for g in rows]
+                for tid in ids:
+                    lst = groups.setdefault(tid, [])
+                    for k, e in enumerate(lst):
+                        if e["phase"] == phase:
+                            lst[k] = {"phase": phase, "rows": grows}
+                            break
+                    else:
+                        lst.append({"phase": phase, "rows": grows})
+            # classificação: detalhada (com pontos marcados/sofridos); se falhar, o resumo
+            if not comp.get("taca"):
+                rows_st = None
+                try:
+                    rows_st, found = standings_full(cid, pid, group)
+                    for name, url in found.items():
+                        logos.setdefault(name, url)
+                except Exception as e:  # noqa: BLE001
+                    log(f"AVISO: classificação detalhada {cid}/{pid} falhou: {e}")
+                rows_st = rows_st or tables.get(pid)
+                if rows_st:
+                    for tid in ids:
+                        lst = stand.setdefault(tid, [])
+                        entry = {"phase": phase, "name": label.replace("1ª Divisão", "").replace("  ", " ").strip(), "rows": rows_st}
+                        for k, e in enumerate(lst):
+                            if e["phase"] == phase:
+                                entry["name"] = e["name"]
+                                lst[k] = entry
+                                break
+                        else:
+                            lst.append(entry)
+                            log(f"Nova fase na classificação: {tid} {phase}")
+
+    # marcações do calendário do clube (Esperanças sem hora no Centro de Resultados)
+    try:
+        for c in club_calendar():
+            if "esperan" not in c["cat"].lower():
+                continue
+            for g in games.values():
+                if g["team"] == "Esperanças" and not g["res"] and norm(g["home"]).lower() == c["home"].lower() and norm(g["away"]).lower() == c["away"].lower():
+                    upd = dict(date=c["date"], time=c["time"], venue=c["venue"] or g["venue"], status="marcado")
+                    if any(g[k] != v for k, v in upd.items()):
+                        log(f"Marcação: Esperanças {g['home']} - {g['away']} {c['date']} {c['time']}")
+                        g.update(upd)
+    except Exception as e:  # noqa: BLE001
+        log(f"AVISO: falhou o calendário do clube: {e}")
+
+    data["games"] = [[g[k] for k in F] for g in sorted(games.values(), key=lambda x: (x["team"], x["date"] or "9", x["num"]))]
+    data["stand"], data["logos"], data["groups"] = stand, logos, groups
+    after = json.dumps(data, ensure_ascii=False, sort_keys=True)
+    if after != before:
+        data["updated"] = datetime.date.today().isoformat()
+        DATA.write_text(json.dumps(data, ensure_ascii=False, indent=0), encoding="utf-8")
+        log("Dados atualizados.")
+    else:
+        log("Sem alterações.")
+    if any(x.startswith("AVISO: falhou a competição") for x in LOG) and len([x for x in LOG if x.startswith("AVISO: falhou a competição")]) == len(CONFIG["competicoes"]):
+        sys.exit("Nenhuma competição foi lida: verificar se o site mudou.")
+
+
+if __name__ == "__main__":
+    main()

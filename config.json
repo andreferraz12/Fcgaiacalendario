@@ -1,0 +1,17 @@
+{
+  "calendario_clube": "https://www.fpb.pt/calendario/clube_119/",
+  "competicoes": [
+    {"id": 11442, "nome": "CN1 1ª Divisão", "equipa": "Seniores Masc", "fonte": "FPB"},
+    {"id": 11448, "nome": "Taça de Portugal", "equipa": "Seniores Masc", "fonte": "FPB", "taca": true},
+    {"id": 11444, "nome": "Esperanças", "equipa": "Esperanças", "fonte": "FPB"},
+    {"id": 11554, "nome": "Distrital Sub-18", "equipa": "Sub-18 Masc", "fonte": "ABP", "ab": true},
+    {"id": 11552, "nome": "Distrital Sub-16", "equipa": "Sub-16 Masc", "fonte": "ABP", "ab": true},
+    {"id": 11550, "nome": "Distrital Sub-14", "equipa": "Sub-14 Masc", "fonte": "ABP", "ab": true}
+  ],
+  "equipas": [
+    {"id": "Seniores Masc"}, {"id": "Esperanças"},
+    {"id": "Sub-18 Masc A"}, {"id": "Sub-18 Masc B"},
+    {"id": "Sub-16 Masc A"}, {"id": "Sub-16 Masc B"},
+    {"id": "Sub-14 Masc A"}, {"id": "Sub-14 Masc B"}
+  ]
+}
