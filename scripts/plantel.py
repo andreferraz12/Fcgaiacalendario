@@ -67,30 +67,67 @@ def rendered_links(url, pattern, name):
         log("AVISO: Playwright não instalado; uso só os IDs de config.json.")
         return {}
     out = {}
+    DEBUG.mkdir(exist_ok=True)
+    xhr, bodies, links = [], [], []
+
+    def on_resp(r):
+        try:
+            if r.request.resource_type in ("xhr", "fetch", "document"):
+                xhr.append(f"{r.status} {r.request.method} {r.url} {r.request.post_data or ''}"[:600])
+                t = r.text()
+                if pattern.strip("/").split("/")[0] in t or "atleta" in t or "treinador" in t:
+                    bodies.append(t)
+        except Exception:  # noqa: BLE001
+            pass
+
     try:
         with sync_playwright() as p:
             b = p.chromium.launch()
-            pg = b.new_page(user_agent=UA["User-Agent"])
-            xhr = []
-            pg.on("response", lambda r: xhr.append(r.url) if r.request.resource_type in ("xhr", "fetch") else None)
-            pg.goto(url, wait_until="networkidle", timeout=90000)
+            pg = b.new_page(user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
+                            viewport={"width": 1280, "height": 2000})
+            pg.on("response", on_resp)
             try:
-                pg.wait_for_selector(f"a[href*='{pattern}']", timeout=30000)
+                pg.goto(url, wait_until="domcontentloaded", timeout=60000)
+            except Exception as e:  # noqa: BLE001
+                log(f"AVISO: {url} demorou a abrir: {e}")
+            try:
+                pg.wait_for_selector(f"a[href*='{pattern}']", timeout=45000)
             except Exception:  # noqa: BLE001
-                log(f"AVISO: a lista em {url} não apareceu em 30 s.")
-            pg.wait_for_timeout(1500)
-            links = pg.eval_on_selector_all(
-                "a[href]", "els=>els.map(e=>[e.href,(e.innerText||'').trim(),(e.closest('li,tr,article,div')||e).innerText||''])")
-            DEBUG.mkdir(exist_ok=True)
-            (DEBUG / f"{name}.html").write_text(pg.content(), encoding="utf-8")
-            (DEBUG / f"{name}-xhr.txt").write_text("\n".join(xhr), encoding="utf-8")
+                log(f"AVISO: a lista em {url} não apareceu em 45 s; tento carregar em 'Aplicar filtros'.")
+                try:
+                    pg.get_by_text(re.compile("aplicar filtros", re.I)).first.click(timeout=5000)
+                    pg.wait_for_selector(f"a[href*='{pattern}']", timeout=30000)
+                except Exception:  # noqa: BLE001
+                    pass
+            for _ in range(4):
+                pg.mouse.wheel(0, 3000)
+                pg.wait_for_timeout(800)
+            try:
+                links = pg.eval_on_selector_all(
+                    "a[href]", "els=>els.map(e=>[e.href,(e.innerText||'').trim(),((e.closest('li,tr,article')||e.parentElement||e).innerText||'')])")
+            except Exception as e:  # noqa: BLE001
+                log(f"AVISO: {e}")
+            try:
+                (DEBUG / f"{name}.html").write_text(pg.content(), encoding="utf-8")
+                pg.screenshot(path=str(DEBUG / f"{name}.png"), full_page=True)
+            except Exception:  # noqa: BLE001
+                pass
             b.close()
-        for href, txt, ctx in links:
-            m = re.search(pattern + r"(\d+)", href)
-            if m:
-                out.setdefault(int(m.group(1)), norm(txt) or norm(ctx)[:200])
     except Exception as e:  # noqa: BLE001
         log(f"AVISO: falhou a leitura de {url} com o browser: {e}")
+    (DEBUG / f"{name}-pedidos.txt").write_text("\n".join(xhr), encoding="utf-8")
+    for i, t in enumerate(bodies[:20]):
+        (DEBUG / f"{name}-resposta{i}.txt").write_text(t[:300000], encoding="utf-8")
+        try:
+            for a in BeautifulSoup(t, "html.parser").find_all("a", href=True):
+                links.append([a["href"], a.get_text(" "), (a.parent.get_text(" ") if a.parent else "")])
+        except Exception:  # noqa: BLE001
+            pass
+    for href, txt, ctx in links:
+        m = re.search(re.escape(pattern) + r"(\d+)", href.replace("\\/", "/"))
+        if m:
+            t, c = norm(txt), norm(ctx)[:200]
+            out.setdefault(int(m.group(1)), t if not c or c == t else f"{t} | {c}")
     log(f"{url}: {len(out)} links encontrados")
     for k, v in out.items():
         log(f"   {k}: {v[:120]}")
