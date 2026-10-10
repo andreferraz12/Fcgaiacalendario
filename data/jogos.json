@@ -3969,6 +3969,900 @@
 "photo": "https://sav2.fpb.pt/uploads/utilizadores/141095_1759832124.jpg",
 "id": 212390
 }
+],
+"Seniores Masc": [
+{
+"name": "Afonso Ruas",
+"num": 10,
+"pos": "Extremo",
+"h": 200,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/160683_1759760211.jpg",
+"id": 232650
+},
+{
+"name": "André Valgode",
+"num": 5,
+"pos": "Base",
+"h": 178,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/110236_1759311052.jpg",
+"id": 182140
+},
+{
+"name": "Bernardo Azevedo",
+"num": 11,
+"pos": "Base",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/105860_1760713824.jpg",
+"id": 177311
+},
+{
+"name": "Diogo Silva",
+"num": 46,
+"pos": "Poste",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/172630_1760713992.jpg",
+"id": 244626
+},
+{
+"name": "Francisco Costa",
+"num": 18,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/166163_1744290283.jpg",
+"id": 238151
+},
+{
+"name": "Francisco Silva",
+"num": 17,
+"pos": "Base",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/146535_1759831301.jpg",
+"id": 218452
+},
+{
+"name": "Guilherme Regalado",
+"num": 20,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/159326_1744469024.jpg",
+"id": 231290
+},
+{
+"name": "Gustavo Rodrigues",
+"num": 0,
+"pos": "Poste",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/148427_1759831453.jpg",
+"id": 220344
+},
+{
+"name": "Ivo Coutinho",
+"num": 8,
+"pos": "Base / Extremo",
+"h": 185,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/105783_1759504085.jpg",
+"id": 177286
+},
+{
+"name": "João Guerreiro",
+"num": 13,
+"pos": "Extremo",
+"h": 194,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/113492_1759311527.jpg",
+"id": 185917
+},
+{
+"name": "João Morim",
+"num": 5,
+"pos": "Extremo",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/117558_1759831518.jpg",
+"id": 190026
+},
+{
+"name": "João Ribeiro",
+"num": 0,
+"pos": "Base",
+"h": 185,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/141094_1760714067.jpg",
+"id": 212389
+},
+{
+"name": "João Silva",
+"num": 14,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/184529_1744290412.jpg",
+"id": 256594
+},
+{
+"name": "Nuno Angélico",
+"num": 0,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/166184_1744469060.jpg",
+"id": 238172
+},
+{
+"name": "Pedro Lopes",
+"num": 10,
+"pos": "Extremo",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/114503_1760713906.jpg",
+"id": 185973
+},
+{
+"name": "Tomás Rodrigues",
+"num": 0,
+"pos": "Poste",
+"h": 192,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/125661_1767980454.png",
+"id": 197545
+},
+{
+"name": "Tomás Silva",
+"num": 30,
+"pos": "Base",
+"h": 181,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/141095_1759832124.jpg",
+"id": 212390
+}
+],
+"Sub-14 Masc A": [
+{
+"name": "Afonso Almeida",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/247749_1744303418.jpg",
+"id": 294503
+},
+{
+"name": "Bernardo Campelo",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220304_1744303425.jpg",
+"id": 270004
+},
+{
+"name": "Cauã Carneiro",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/229763_1739620723.png",
+"id": 278364
+},
+{
+"name": "Francisco Alves",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220305_1744293850.jpg",
+"id": 270005
+},
+{
+"name": "Francisco Monteiro",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/261539_1744303447.jpg",
+"id": 306580
+},
+{
+"name": "Guilherme Oliveira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/230711_1744303676.jpg",
+"id": 279258
+},
+{
+"name": "Gustavo Oliveira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/193967_1744293864.jpg",
+"id": 266045
+},
+{
+"name": "ISAAC MENDONÇA",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/226039_1744303488.jpg",
+"id": 275009
+},
+{
+"name": "Lourenço Queirós",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/193235_1744293879.jpg",
+"id": 265311
+},
+{
+"name": "Marco Cruz",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/256195_1744447436.jpg",
+"id": 301697
+},
+{
+"name": "Martim Martins",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/221818_1744293890.jpg",
+"id": 271420
+},
+{
+"name": "Martim Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 315561
+},
+{
+"name": "Miguel Alves",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220306_1744293923.jpg",
+"id": 270006
+},
+{
+"name": "Santiago Oliveira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220652_1744293946.jpg",
+"id": 270338
+},
+{
+"name": "Santiago Rocha",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/192347_1744293959.jpg",
+"id": 264423
+},
+{
+"name": "Tomás Almeida",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/227910_1744447571.jpg",
+"id": 276669
+},
+{
+"name": "Vicente Pedro",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/242704_1744303587.jpg",
+"id": 289934
+}
+],
+"Sub-16 Masc A": [
+{
+"name": "Afonso Silva",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228511_1744293093.jpg",
+"id": 277221
+},
+{
+"name": "DIOGO SOARES",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/188476_1744293491.jpg",
+"id": 260549
+},
+{
+"name": "Danyo Daniel",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 318296
+},
+{
+"name": "David Gonçalves",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/222294_1744293478.jpg",
+"id": 286819
+},
+{
+"name": "Diogo Lopes",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228421_1744293518.jpg",
+"id": 277134
+},
+{
+"name": "Diogo Sousa",
+"num": 8,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/254051_1744293501.jpg",
+"id": 299804
+},
+{
+"name": "Francisco Mota",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220642_1744293538.jpg",
+"id": 270328
+},
+{
+"name": "Gonçalo Borges",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/260166_1744293547.jpg",
+"id": 305458
+},
+{
+"name": "Guilherme Pinto",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/195068_1744293580.jpg",
+"id": 271416
+},
+{
+"name": "LUÍS RESENDE",
+"num": 1,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/259893_1767007406.jpg",
+"id": 305226
+},
+{
+"name": "Miguel Maia",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/239571_1744293719.jpg",
+"id": 287163
+},
+{
+"name": "Rodrigo Rocha",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/175831_1744293781.jpg",
+"id": 247838
+},
+{
+"name": "Tiago Vilar",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/184879_1744293792.jpg",
+"id": 256945
+}
+],
+"Sub-18 Masc A": [
+{
+"name": "Bruno Pinho",
+"num": 61,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/188572_1744290192.jpg",
+"id": 260645
+},
+{
+"name": "Duarte Cruz",
+"num": 20,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/172638_1744290264.jpg",
+"id": 244634
+},
+{
+"name": "Francisco Costa",
+"num": 18,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/166163_1744290283.jpg",
+"id": 238151
+},
+{
+"name": "Francisco Afonso",
+"num": 23,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173220_1708609042.jpg",
+"id": 245217
+},
+{
+"name": "Francisco Marques",
+"num": 0,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/191182_1770370305.jpg",
+"id": 263258
+},
+{
+"name": "Gabriel Moreira",
+"num": 0,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173598_1768576972.png",
+"id": 256775
+},
+{
+"name": "Gabriel Nogueira",
+"num": 64,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/160893_1744290355.jpg",
+"id": 232861
+},
+{
+"name": "Guilherme Gonçalves",
+"num": 83,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228578_1744290385.jpg",
+"id": 277285
+},
+{
+"name": "Henrique Vieira",
+"num": 66,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179458_1744290400.jpg",
+"id": 251498
+},
+{
+"name": "João Neves",
+"num": 0,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/171849_1770118734.jpg",
+"id": 243844
+},
+{
+"name": "João Silva",
+"num": 14,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/184529_1744290412.jpg",
+"id": 256594
+},
+{
+"name": "Pedro Baptista",
+"num": 65,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/230993_1744290451.jpg",
+"id": 279515
+},
+{
+"name": "Samuel Moreira",
+"num": 21,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173874_1760912090.png",
+"id": 245872
+},
+{
+"name": "Tomás Silva",
+"num": 14,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/165568_1760303952.jpg",
+"id": 237556
+},
+{
+"name": "Ufolo Santos",
+"num": 22,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/238661_1744290474.jpg",
+"id": 286387
+},
+{
+"name": "Vinicius Bucco",
+"num": 27,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179456_1744290511.jpg",
+"id": 251496
+}
+],
+"Sub-14 Masc B": [
+{
+"name": "Afonso Azevedo",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 319640
+},
+{
+"name": "António Barbosa",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 316472
+},
+{
+"name": "Daniel Alexandrov",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 321834
+},
+{
+"name": "Duarte Rodrigues",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 322571
+},
+{
+"name": "Gabriel Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/249033_1744447312.jpg",
+"id": 295662
+},
+{
+"name": "Guilherme Oliveira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/230711_1744303676.jpg",
+"id": 279258
+},
+{
+"name": "João Valente",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/263052_1744303497.jpg",
+"id": 307904
+},
+{
+"name": "Luis Pedrosa",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/233842_1744303512.jpg",
+"id": 282099
+},
+{
+"name": "Martim Pinto",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 321128
+},
+{
+"name": "Martim Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/251015_1744303522.jpg",
+"id": 297244
+},
+{
+"name": "Miguel Aguiar",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/248047_1744303549.jpg",
+"id": 294786
+},
+{
+"name": "Pedro Teixeira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 294623
+},
+{
+"name": "Rodrigo Pinto",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220295_1744303665.jpg",
+"id": 269995
+},
+{
+"name": "Salvador Dias",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228676_1744447504.jpg",
+"id": 277379
+},
+{
+"name": "Tomás Almeida",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/227910_1744447571.jpg",
+"id": 276669
+},
+{
+"name": "Tomás Ramos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/229559_1744303580.jpg",
+"id": 278178
+},
+{
+"name": "Yhamal Nobrega",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 318268
+}
+],
+"Sub-16 Masc B": [
+{
+"name": "Alexandre Nunes",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 316465
+},
+{
+"name": "André Ferraz",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/220643_1744293456.jpg",
+"id": 270329
+},
+{
+"name": "Bernardo Monterroso",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179674_1744293446.jpg",
+"id": 251714
+},
+{
+"name": "Bernardo Sousa",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/181938_1744293466.jpg",
+"id": 287102
+},
+{
+"name": "Guilherme Rosário",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/230137_1744293561.jpg",
+"id": 278713
+},
+{
+"name": "Isaac Alves",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/232161_1744293591.jpg",
+"id": 280603
+},
+{
+"name": "João Cabral",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/248247_1744293644.jpg",
+"id": 294965
+},
+{
+"name": "Kianu Macedo",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 316468
+},
+{
+"name": "Manuel Carabet",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/247160_1744293670.jpg",
+"id": 293941
+},
+{
+"name": "Martim Fonseca",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/241800_1744293682.jpg",
+"id": 289123
+},
+{
+"name": "Rafael Nascimento",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/239174_1744293752.jpg",
+"id": 286825
+},
+{
+"name": "Rafael Oliveira",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179450_1744293740.jpg",
+"id": 251490
+},
+{
+"name": "Rafael Sousa",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/188525_1759096877.jpg",
+"id": 260598
+},
+{
+"name": "Santiago Silva",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 314564
+},
+{
+"name": "TOMÁS COSTA",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/234318_1744293803.jpg",
+"id": 282550
+},
+{
+"name": "Vasco Varejão",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228419_1744293815.jpg",
+"id": 277132
+}
+],
+"Sub-18 Masc B": [
+{
+"name": "Afonso Martins",
+"num": 22,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179617_1737921036.jpeg",
+"id": 251657
+},
+{
+"name": "Carlos Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/229443_1769701681.jpg",
+"id": 278078
+},
+{
+"name": "David Cardoso",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 294363
+},
+{
+"name": "Dinis Amaral",
+"num": 8,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/228581_1744291938.jpg",
+"id": 277288
+},
+{
+"name": "Gonçalo Costa",
+"num": 19,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/194150_1744291976.jpg",
+"id": 266228
+},
+{
+"name": "Gonçalo Pinto",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/225589_1744292005.jpg",
+"id": 274613
+},
+{
+"name": "Guilherme Silva",
+"num": 55,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173873_1708610746.jpg",
+"id": 245871
+},
+{
+"name": "Gustavo Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/247265_1768465681.jpg",
+"id": 294040
+},
+{
+"name": "Hugo Ribeiro",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/235493_1769704117.jpg",
+"id": 283671
+},
+{
+"name": "Martim Novais",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/232157_1744292122.jpg",
+"id": 280598
+},
+{
+"name": "Rodrigo Fernandes",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/260093_1744468885.jpg",
+"id": 305393
+},
+{
+"name": "Romário Santos",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 313839
+},
+{
+"name": "Salvador Poças",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "",
+"id": 305387
+},
+{
+"name": "Tiago Silva",
+"num": null,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/262552_1744468933.jpg",
+"id": 307462
+}
 ]
 },
 "coaches": {
@@ -4062,6 +4956,796 @@
 "2006/2007",
 "Futebol Clube de Gaia",
 "Sub 16 M - Principal"
+]
+]
+},
+"cesar-domingues": {
+"name": "César Domingues",
+"id": 9292,
+"grau": "Grau 3",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/6812_1638023790.png",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal"
+],
+[
+"2025/2026",
+"Ginásio Clube Olhanense",
+"Sub 14 F - Principal"
+],
+[
+"2023/2024",
+"Ginásio Clube Olhanense",
+"Proliga - Principal"
+],
+[
+"2022/2023",
+"Ginásio Clube Olhanense",
+"Proliga - Principal"
+],
+[
+"2021/2022",
+"Ginásio Clube Olhanense",
+"Proliga - Principal"
+],
+[
+"2020/2021",
+"Ginásio Clube Olhanense",
+"Proliga - Principal; CN 2.ª Divisão - Principal; Coordenador Técnico Desportivo - -"
+],
+[
+"2019/2020",
+"Ginásio Clube Olhanense",
+"Proliga - Principal; Sub 18 M - Principal; Sen M - Adjunto"
+],
+[
+"2018/2019",
+"Atlético Clube Alfenense",
+"CN 1.ª Divisão - Principal; Sub 18 M - Principal"
+],
+[
+"2017/2018",
+"Atlético Clube Alfenense",
+"CN 2.ª Divisão - Principal; Sub 16 M - Principal; Sub 18 M - Principal"
+],
+[
+"2015/2016",
+"Terceira Basket Club",
+"Sub 18 M - Principal; Proliga - Adjunto; Sub 14 M - Adjunto"
+],
+[
+"2015/2016",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal; Sen M - Principal"
+],
+[
+"2014/2015",
+"Lousada Académico Clube",
+"LFB - Principal"
+],
+[
+"2013/2014",
+"Colégio Luso Internacional do Porto",
+"Sen F - Principal; Sub 18 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2012/2013",
+"Dragon Force Futebol Clube",
+"Sub 18 M - Principal; Sub 16 M - Adjunto; Sub 20 M - Adjunto"
+],
+[
+"2012/2013",
+"Grupo Desportivo Basquete de Leça",
+"Proliga - Principal"
+],
+[
+"2011/2012",
+"Grupo Desportivo Basquete de Leça",
+"CNB1 - Principal; Sub 20 M - Adjunto"
+],
+[
+"2010/2011",
+"Grupo Desportivo Basquete de Leça",
+"Sub 18 M - Principal"
+],
+[
+"2008/2009",
+"Guifões Sport Clube",
+"CNB1 - Principal"
+],
+[
+"2006/2007",
+"Académico Futebol Clube",
+"Sub 18 M - Principal"
+],
+[
+"2005/2006",
+"Académico Futebol Clube",
+"Sub 18 M - Principal"
+],
+[
+"2004/2005",
+"Grupo Desportivo Basquete de Leça",
+"Sub 20 M - Principal"
+],
+[
+"2003/2004",
+"Grupo Desportivo Basquete de Leça",
+"Sub 18 M - Adjunto"
+],
+[
+"1999/2000",
+"Maia Basket Clube",
+""
+],
+[
+"1999/2000",
+"Maia Basket Clube",
+""
+]
+]
+},
+"duarte-oliveira": {
+"name": "Duarte Oliveira",
+"id": 9325,
+"grau": "Grau 3",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_198026_1731004224.png",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Esperanças - Principal; Sub 18 M - Principal"
+],
+[
+"2025/2026",
+"Sporting Clube Vasco da Gama",
+"Sub 18 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal"
+],
+[
+"2023/2024",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal; Sub 16 M - Principal"
+],
+[
+"2022/2023",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal"
+],
+[
+"2021/2022",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Principal"
+],
+[
+"2020/2021",
+"Sporting Clube Vasco da Gama",
+"CN 1.ª Divisão - Principal"
+],
+[
+"2019/2020",
+"Sporting Clube Vasco da Gama",
+"CN 1.ª Divisão - Principal; CN 1.ª Divisão - Adjunto"
+],
+[
+"2018/2019",
+"Sporting Clube Vasco da Gama",
+"Proliga - Principal"
+],
+[
+"2017/2018",
+"Sporting Clube Vasco da Gama",
+"Sub 18 M - Principal; CN 1.ª Divisão - Adjunto"
+],
+[
+"2016/2017",
+"Sporting Clube Vasco da Gama",
+"Sub 18 M - Principal"
+],
+[
+"2015/2016",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal"
+],
+[
+"2014/2015",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal; Sub 18 M - Principal"
+],
+[
+"2013/2014",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal; Sub 16 M - Principal"
+],
+[
+"2012/2013",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2011/2012",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal; Sub 16 M - Principal"
+],
+[
+"2010/2011",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal"
+],
+[
+"2009/2010",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal"
+],
+[
+"2008/2009",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal"
+],
+[
+"2007/2008",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal"
+],
+[
+"2006/2007",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Principal; Mini A - Principal; Mini B - Principal"
+],
+[
+"2005/2006",
+"Maia Basket Clube",
+"Sub 14 M - Adjunto"
+],
+[
+"2004/2005",
+"Foca - Clube de Natação de Felgueiras",
+"Mini A - Principal; Mini B - Principal; Sub 14 M - Adjunto"
+],
+[
+"2003/2004",
+"Foca - Clube de Natação de Felgueiras",
+"Sub 14 M - Adjunto"
+]
+]
+},
+"alexandre-silva": {
+"name": "Alexandre Silva",
+"id": 21674,
+"grau": "Grau 2",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_171558_1744303757.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Mini 10 M - Principal; Esperanças - Adjunto; Sub 18 M - Adjunto"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Mini 8 M - Principal; Sub 16 M - Principal"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"Mini 12 M - Principal; Sub 14 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2023/2024",
+"Futebol Clube de Gaia",
+"Mini 12 M - Principal; Mini 10 M - Adjunto; Mini 8 M - Adjunto"
+],
+[
+"2022/2023",
+"Futebol Clube de Gaia",
+"Mini 10 M - Principal; Mini 12 M - Principal; Mini 8 M - Principal"
+]
+]
+},
+"gustavo-valgode": {
+"name": "Gustavo Valgode",
+"id": 10212,
+"grau": "Grau 2",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_1640_1707499599.png",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal; Esperanças - Adjunto"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"CN 1.ª Divisão - Adjunto"
+],
+[
+"2023/2024",
+"Futebol Clube de Gaia",
+"CN 2.ª Divisão - Principal; CN 1.ª Divisão - Adjunto"
+],
+[
+"2022/2023",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal; CN 1.ª Divisão - Adjunto"
+],
+[
+"2021/2022",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal; CN 1.ª Divisão - Adjunto"
+],
+[
+"2020/2021",
+"Fides - Orfeão de Valbom",
+"Sub 18 M - Principal"
+],
+[
+"2019/2020",
+"Fides - Orfeão de Valbom",
+"Sub 18 M - Principal"
+],
+[
+"2018/2019",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2017/2018",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2016/2017",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal"
+],
+[
+"2015/2016",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2014/2015",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal"
+],
+[
+"2013/2014",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal"
+],
+[
+"2012/2013",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal; Sub 18 M - Adjunto"
+],
+[
+"2011/2012",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal"
+],
+[
+"2010/2011",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal"
+],
+[
+"2009/2010",
+"Grupo Desportivo Bolacesto",
+"Sub 16 M - Principal"
+],
+[
+"2008/2009",
+"Grupo Desportivo Bolacesto",
+"Sub 14 M - Principal"
+]
+]
+},
+"rui-martins": {
+"name": "Rui Martins",
+"id": 6514,
+"grau": "Grau 3",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_196745_1665750226.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal; Tutor de Estágio - -"
+],
+[
+"2024/2025",
+"Associação de Basquetebol de Aveiro",
+"Sel Reg - Principal; Sel Reg Sub-16 F - Principal"
+],
+[
+"2023/2024",
+"Clube Propaganda de Natação",
+"Sub 16 F - Principal"
+],
+[
+"2022/2023",
+"Clube Propaganda de Natação",
+"Sub 14 F - Principal"
+],
+[
+"2021/2022",
+"Juvemaia - Associação Cultural Desportiva e Cívica",
+"Sub 14 F - Principal"
+],
+[
+"2019/2020",
+"Juvemaia - Associação Cultural Desportiva e Cívica",
+"Sub 16 F - Principal; Sub 19 F - Principal"
+],
+[
+"2018/2019",
+"Juvemaia - Associação Cultural Desportiva e Cívica",
+"Sub 16 M - Principal"
+],
+[
+"2017/2018",
+"Associação de Basquetebol de Aveiro",
+"Sub 14 M - Principal; Sel Reg - -"
+],
+[
+"2016/2017",
+"Illiabum Clube",
+"Sub 14 F - Principal; Sub 14 M - Principal"
+],
+[
+"2015/2016",
+"Illiabum Clube",
+"Sub 14 F - Principal; Sub 14 M - Principal"
+],
+[
+"2014/2015",
+"Basquete Clube de Barcelos",
+"LPB - Adjunto"
+],
+[
+"2013/2014",
+"Basquete Clube de Barcelos",
+"LPB - Adjunto"
+],
+[
+"2012/2013",
+"Basquete Clube de Barcelos",
+"Sub 14 F - Principal"
+],
+[
+"2011/2012",
+"Basquete Clube de Barcelos",
+"Sub 16 F - Principal"
+],
+[
+"2010/2011",
+"Basquete Clube de Barcelos",
+"Sub 16 F - Principal"
+],
+[
+"2009/2010",
+"Basquete Clube de Barcelos",
+"Sub 16 F - Principal"
+],
+[
+"2008/2009",
+"Basquete Clube de Barcelos",
+"Sub 16 F - Principal; Sub 14 F - Principal"
+],
+[
+"2007/2008",
+"Basquete Clube de Barcelos",
+"Sub 16 F - Principal; Sub 14 F - Principal"
+],
+[
+"2006/2007",
+"Basquete Clube de Barcelos",
+"Sub 14 F - Principal"
+],
+[
+"2005/2006",
+"Associação Desportiva de Vagos",
+"Sub 16 F - Principal; Sen F - Adjunto"
+],
+[
+"2004/2005",
+"Associação Desportiva de Vagos",
+"Sub 16 F - Principal; Sen F - Adjunto"
+],
+[
+"2003/2004",
+"Grupo Desportivo da Gafanha",
+"Sub 16 F - Principal"
+],
+[
+"2002/2003",
+"Grupo Desportivo da Gafanha",
+""
+],
+[
+"2001/2002",
+"Grupo Desportivo da Gafanha",
+""
+],
+[
+"2000/2001",
+"Colégio Nª Srª Apresentação",
+""
+],
+[
+"1999/2000",
+"Colégio Nª Srª Apresentação",
+""
+],
+[
+"1999/2000",
+"Colégio Nª Srª Apresentação",
+""
+],
+[
+"1998/1999",
+"Colégio Nª Srª Apresentação",
+""
+],
+[
+"1997/1998",
+"Colégio Nª Srª Apresentação",
+""
+],
+[
+"1996/1997",
+"Colégio Nª Srª Apresentação",
+""
+]
+]
+},
+"davide-coelho": {
+"name": "Davide Coelho",
+"id": 22139,
+"grau": "Grau 1",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_179774_1744292348.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Mini 10 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"Mini 8 M - Principal; Sub 16 M - Principal; Mini 10 M - Adjunto; Mini 12 M - Adjunto; Sub 14 M - Adjunto"
+]
+]
+},
+"joaquim-oliveira": {
+"name": "Joaquim Oliveira",
+"id": 9589,
+"grau": "Grau 2",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_83226_1744293994.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; Sub 16 M - Principal; Sub 18 M - Principal; Esperanças - Adjunto; Coordenador Técnico Desportivo - -"
+],
+[
+"2025/2026",
+"Associação de Basquetebol do Porto",
+"Sel Reg - Principal; Sel Reg Sub-14 M - Principal"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; Sub 16 M - Principal; Sub 18 M - Principal; Coordenador Técnico Desportivo - -; Tutor de Estágio - -"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; Sub 16 M - Principal; Sub 18 M - Principal"
+],
+[
+"2023/2024",
+"Futebol Clube de Gaia",
+"Sub 18 M - Principal"
+],
+[
+"2022/2023",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2021/2022",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2020/2021",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2019/2020",
+"Futebol Clube de Gaia",
+"Mini 10 F - Principal; Mini 10 M - Principal; Mini 12 F - Principal; Mini 12 M - Principal; Mini 8 F - Principal; Mini 8 M - Principal"
+],
+[
+"2018/2019",
+"Futebol Clube de Gaia",
+"Mini 10 F - Principal; Mini 10 M - Principal; Mini 12 F - Principal; Mini 12 M - Principal; Mini 8 F - Principal; Mini 8 M - Principal"
+],
+[
+"2009/2010",
+"Futebol Clube de Gaia",
+"Sub 16 M - Principal"
+],
+[
+"2008/2009",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2007/2008",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2006/2007",
+"Guifões Sport Clube",
+"Sub 14 F - Principal"
+],
+[
+"2004/2005",
+"Futebol Clube de Gaia",
+"Mini A - Principal; Mini B - Principal; Sub 14 M - Adjunto"
+],
+[
+"2004/2005",
+"Futebol Clube de Gaia",
+"Mini A - Principal; Mini B - Principal; Sub 14 M - Adjunto"
+]
+]
+},
+"helder-almeida": {
+"name": "Helder Almeida",
+"id": 22294,
+"grau": "Estagiário Grau 1",
+"photo": "",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 14 M - Adjunto"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Sub 14 M - Adjunto"
+]
+]
+},
+"ivo-coutinho": {
+"name": "Ivo Coutinho",
+"id": 11196,
+"grau": "Grau 2",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/105783_1653398583.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; Sub 16 M - Principal"
+],
+[
+"2025/2026",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal"
+],
+[
+"2024/2025",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal; Tutor de Estágio - -"
+],
+[
+"2023/2024",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal"
+],
+[
+"2022/2023",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal"
+],
+[
+"2021/2022",
+"Sporting Clube Vasco da Gama",
+"Sub 18 M - Principal"
+],
+[
+"2020/2021",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Principal; Sub 16 M - Adjunto; Sub 18 M - Adjunto"
+],
+[
+"2019/2020",
+"Sporting Clube Vasco da Gama",
+"Sub 16 M - Adjunto; Sub 18 M - Adjunto"
+],
+[
+"2018/2019",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Adjunto; Sub 18 M - Adjunto"
+],
+[
+"2017/2018",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Adjunto"
+],
+[
+"2016/2017",
+"Sporting Clube Vasco da Gama",
+"Sub 14 M - Adjunto"
+]
+]
+},
+"jose-nogueira": {
+"name": "José Nogueira",
+"id": 20893,
+"grau": "Grau 1",
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/fototreinador_201721_1744291866.jpg",
+"carreira": [
+[
+"2026/2027",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; Sub 16 M - Adjunto"
+],
+[
+"2025/2026",
+"Futebol Clube de Gaia",
+"Sub 14 M - Adjunto"
+],
+[
+"2024/2025",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2023/2024",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2022/2023",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal"
+],
+[
+"2021/2022",
+"Futebol Clube de Gaia",
+"Mini 12 M - Principal; Sub 14 M - Principal"
+],
+[
+"2020/2021",
+"Futebol Clube de Gaia",
+"Sub 14 M - Principal; BCR - Adjunto"
+],
+[
+"2019/2020",
+"Futebol Clube de Gaia",
+"Mini 10 F - Principal; Mini 10 M - Principal; Mini 12 F - Principal; Mini 12 M - Principal; Mini 8 F - Principal; Mini 8 M - Principal"
 ]
 ]
 }
