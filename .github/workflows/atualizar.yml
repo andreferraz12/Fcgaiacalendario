@@ -1,0 +1,56 @@
+name: Atualizar jogos e publicar site
+
+on:
+  schedule:
+    # todos os dias às 00:05 UTC (00:05 em Portugal no inverno, 01:05 no verão)
+    - cron: "5 0 * * *"
+  push:
+    branches: [main]      # publica também quando alteras ficheiros à mão
+  workflow_dispatch: {}   # botão "Run workflow" para atualizar à mão
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests==2.32.3 beautifulsoup4==4.12.3
+      - name: Recolher jogos e resultados
+        if: github.event_name != 'push'
+        run: python scripts/atualizar.py
+      - name: Guardar alterações
+        if: github.event_name != 'push'
+        run: |
+          if git diff --quiet; then echo "Sem alterações."; exit 0; fi
+          git config user.name "fcgaia-bot"
+          git config user.email "fcgaia-bot@users.noreply.github.com"
+          git add data/jogos.json
+          git commit -m "Atualizar jogos $(date -u +%Y-%m-%d)"
+          git push
+      - name: Preparar site
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r data _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
