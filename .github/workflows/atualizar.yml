@@ -2,11 +2,19 @@ name: Atualizar jogos e publicar site
 
 on:
   schedule:
-    # todos os dias às 00:05 UTC (00:05 em Portugal no inverno, 01:05 no verão)
+    # jogos e resultados: todos os dias às 00:05 UTC
     - cron: "5 0 * * *"
+    # plantel, fotos e carreiras dos treinadores: dia 1 de cada mês às 05:00 UTC
+    - cron: "0 5 1 * *"
   push:
     branches: [main]      # publica também quando alteras ficheiros à mão
-  workflow_dispatch: {}   # botão "Run workflow" para atualizar à mão
+  workflow_dispatch:      # botão "Run workflow" para atualizar à mão
+    inputs:
+      modo:
+        description: "O que atualizar"
+        type: choice
+        default: jogos
+        options: [jogos, plantel, tudo]
 
 permissions:
   contents: write
@@ -20,27 +28,53 @@ concurrency:
 jobs:
   atualizar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Escolher modo
+        id: modo
+        run: |
+          M="${{ github.event.inputs.modo }}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            if [ "${{ github.event.schedule }}" = "0 5 1 * *" ]; then M=plantel; else M=jogos; fi
+          fi
+          if [ "${{ github.event_name }}" = "push" ]; then M=nenhum; fi
+          echo "modo=${M:-jogos}" >> "$GITHUB_OUTPUT"
+          echo "Modo: ${M:-jogos}"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install requests==2.32.3 beautifulsoup4==4.12.3
-      - name: Recolher jogos e resultados
-        if: github.event_name != 'push'
-        run: python scripts/atualizar.py
-      - name: Guardar alterações
-        if: github.event_name != 'push'
+      - name: Instalar browser (para as listas do fpb.pt)
+        if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
         run: |
-          if git diff --quiet; then echo "Sem alterações."; exit 0; fi
+          pip install playwright==1.47.0
+          python -m playwright install --with-deps chromium
+      - name: Recolher jogos e resultados
+        if: steps.modo.outputs.modo == 'jogos' || steps.modo.outputs.modo == 'tudo'
+        run: python scripts/atualizar.py
+      - name: Recolher planteis e treinadores
+        if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
+        run: python scripts/plantel.py
+      - name: Guardar páginas lidas (para diagnóstico)
+        if: always() && (steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo')
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-fpb
+          path: debug/
+          if-no-files-found: ignore
+      - name: Guardar alterações
+        if: steps.modo.outputs.modo != 'nenhum'
+        run: |
+          if git diff --quiet -- data; then echo "Sem alterações."; exit 0; fi
           git config user.name "fcgaia-bot"
           git config user.email "fcgaia-bot@users.noreply.github.com"
           git add data/jogos.json
-          git commit -m "Atualizar jogos $(date -u +%Y-%m-%d)"
+          git commit -m "Atualizar ${{ steps.modo.outputs.modo }} $(date -u +%Y-%m-%d)"
+          git pull --rebase
           git push
       - name: Preparar site
         run: |
@@ -54,3 +88,4 @@ jobs:
           path: _site
       - id: deploy
         uses: actions/deploy-pages@v4
+
