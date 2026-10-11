@@ -1,5 +1,5 @@
 {
-"updated": "2026-10-10",
+"updated": "2026-10-11",
 "games": [
 [
 "Esperanças",
@@ -612,8 +612,8 @@
 "AC Alfenense",
 "FC Gaia A",
 "Pavilhão Gimnodesportivo Alfenense",
-"marcado",
-"",
+"realizado",
+"8-141",
 "1.ª Fase"
 ],
 [
@@ -657,8 +657,8 @@
 "5Basket B",
 "FC Gaia B",
 "Pavilhão Municipal São Pedro da Cova",
-"marcado",
-"",
+"realizado",
+"29-55",
 "1.ª Fase"
 ],
 [
@@ -717,8 +717,8 @@
 "FC Gaia A",
 "CD Póvoa A",
 "Pavilhão Futebol Clube Gaia",
-"marcado",
-"",
+"realizado",
+"65-45",
 "1.ª Fase"
 ],
 [
@@ -732,8 +732,8 @@
 "FC Gaia B",
 "Bolacesto B",
 "Pavilhão Futebol Clube Gaia",
-"marcado",
-"",
+"realizado",
+"49-45",
 "1.ª Fase"
 ],
 [
@@ -1109,21 +1109,21 @@
 ],
 [
 "CPN A ANTARTE",
+3,
+1,
 2,
-0,
-2,
-2,
-95,
-161
+4,
+171,
+208
 ],
 [
 "Bolacesto",
-2,
+3,
 0,
-2,
-2,
-96,
-215
+3,
+3,
+143,
+291
 ]
 ]
 }
@@ -1188,39 +1188,39 @@
 "rows": [
 [
 "FC Gaia A",
-2,
-2,
+3,
+3,
 0,
-4,
-195,
-43
+6,
+260,
+88
 ],
 [
 "CD Póvoa A",
+3,
 2,
-2,
-0,
-4,
-161,
-49
+1,
+5,
+206,
+114
 ],
 [
 "USC Paredes",
+3,
+1,
 2,
-0,
-2,
-2,
-53,
-153
+4,
+151,
+179
 ],
 [
 "CPN",
-2,
+3,
 0,
-2,
-2,
-39,
-203
+3,
+3,
+65,
+301
 ]
 ]
 }
@@ -1232,39 +1232,39 @@
 "rows": [
 [
 "Maia Basket B",
+2,
+2,
+0,
+4,
+130,
+67
+],
+[
+"FC Gaia B",
 1,
 1,
 0,
 2,
-52,
-34
+49,
+45
 ],
 [
 "Bolacesto B",
-1,
+2,
 0,
-1,
-1,
-34,
-52
-],
-[
-"FC Gaia B",
-0,
-0,
-0,
-0,
-0,
-0
+2,
+2,
+79,
+101
 ],
 [
 "CBP B",
+1,
 0,
-0,
-0,
-0,
-0,
-0
+1,
+1,
+33,
+78
 ],
 [
 "BC Marco",
@@ -1285,57 +1285,57 @@
 "rows": [
 [
 "FC Gaia A",
-3,
-3,
+4,
+4,
 0,
-6,
-328,
-88
+8,
+469,
+96
 ],
 [
 "Guifões SC A",
-3,
-3,
+4,
+4,
 0,
-6,
-312,
-94
-],
-[
-"GDB Leça",
-3,
-2,
-1,
-5,
-216,
-171
+8,
+404,
+137
 ],
 [
 "Bolacesto",
-3,
-1,
-2,
 4,
-210,
-196
+2,
+2,
+6,
+327,
+237
+],
+[
+"GDB Leça",
+4,
+2,
+2,
+6,
+259,
+263
 ],
 [
 "CD Aves",
-3,
+4,
 0,
-3,
-3,
-80,
-337
+4,
+4,
+121,
+454
 ],
 [
 "AC Alfenense",
-3,
+4,
 0,
-3,
-3,
-60,
-320
+4,
+4,
+68,
+461
 ]
 ]
 }
@@ -1346,6 +1346,15 @@
 "name": "Distrital Sub-14 · Grupo E2",
 "rows": [
 [
+"FC Gaia B",
+2,
+2,
+0,
+4,
+106,
+65
+],
+[
 "Académico/Ribadouro B",
 1,
 1,
@@ -1355,13 +1364,13 @@
 39
 ],
 [
-"FC Gaia B",
-1,
-1,
+"5Basket B",
+2,
 0,
 2,
-51,
-36
+2,
+68,
+128
 ],
 [
 "FC Porto B",
@@ -1371,15 +1380,6 @@
 1,
 36,
 51
-],
-[
-"5Basket B",
-1,
-0,
-1,
-1,
-39,
-73
 ],
 [
 "BC Marco",
@@ -1529,7 +1529,7 @@
 "11:00",
 "Bolacesto",
 "CD Aves",
-"",
+"117-41",
 "Pavilhão Municipal Salvador Guedes"
 ],
 [
@@ -1539,7 +1539,7 @@
 "09:00",
 "AC Alfenense",
 "FC Gaia A",
-"",
+"8-141",
 "Pavilhão Gimnodesportivo Alfenense"
 ],
 [
@@ -1549,7 +1549,7 @@
 "11:30",
 "Guifões SC A",
 "GDB Leça",
-"",
+"92-43",
 "Pavilhão Municipal de Guifões"
 ],
 [
@@ -1616,7 +1616,7 @@
 "14:30",
 "5Basket B",
 "FC Gaia B",
-"",
+"29-55",
 "Pavilhão Municipal São Pedro da Cova"
 ],
 [
@@ -1703,7 +1703,7 @@
 "11:00",
 "FC Gaia A",
 "CD Póvoa A",
-"",
+"65-45",
 "Pavilhão Futebol Clube Gaia"
 ],
 [
@@ -1713,7 +1713,7 @@
 "09:30",
 "CPN",
 "USC Paredes",
-"",
+"26-98",
 "Pavilhão Municipal Ermesinde"
 ]
 ]
@@ -1750,7 +1750,7 @@
 "09:00",
 "FC Gaia B",
 "Bolacesto B",
-"",
+"49-45",
 "Pavilhão Futebol Clube Gaia"
 ],
 [
@@ -1760,7 +1760,7 @@
 "18:15",
 "Maia Basket B",
 "CBP B",
-"",
+"78-33",
 "Pavilhão Mun. Nortecoope"
 ],
 [
@@ -1887,7 +1887,7 @@
 "11:30",
 "CPN A ANTARTE",
 "Bolacesto",
-"",
+"76-47",
 "Pavilhão Municipal Ermesinde"
 ]
 ]
@@ -3906,6 +3906,14 @@
 "id": 232650
 },
 {
+"name": "Bruno Pinho",
+"num": 61,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/188572_1744290192.jpg",
+"id": 260645
+},
+{
 "name": "Diogo Silva",
 "num": 46,
 "pos": "Poste",
@@ -3922,12 +3930,28 @@
 "id": 238151
 },
 {
+"name": "Francisco Afonso",
+"num": 23,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173220_1708609042.jpg",
+"id": 245217
+},
+{
 "name": "Francisco Silva",
 "num": 17,
 "pos": "Base",
 "h": null,
 "photo": "https://sav2.fpb.pt/uploads/utilizadores/146535_1759831301.jpg",
 "id": 218452
+},
+{
+"name": "Gabriel Nogueira",
+"num": 64,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/160893_1744290355.jpg",
+"id": 232861
 },
 {
 "name": "Guilherme Regalado",
@@ -3968,6 +3992,30 @@
 "h": 181,
 "photo": "https://sav2.fpb.pt/uploads/utilizadores/141095_1759832124.jpg",
 "id": 212390
+},
+{
+"name": "Tomás Silva",
+"num": 14,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/165568_1760303952.jpg",
+"id": 237556
+},
+{
+"name": "Ufolo Santos",
+"num": 22,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/238661_1744290474.jpg",
+"id": 286387
+},
+{
+"name": "Vinicius Bucco",
+"num": 27,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/179456_1744290511.jpg",
+"id": 251496
 }
 ],
 "Seniores Masc": [
