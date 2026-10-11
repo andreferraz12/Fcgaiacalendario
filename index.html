@@ -476,11 +476,12 @@ footer p{margin:0 0 6px;line-height:1.45}footer b{color:var(--muted)}
 .tl a:hover{color:var(--gold)}.tl a svg{width:15px;height:15px;flex:none;color:var(--gold)}
 .tbody>.treinos{margin:0 0 18px}
 @media (max-width:640px){.tl li{grid-template-columns:72px 1fr;row-gap:2px}.tl a{grid-column:1/-1}.hband.join .cta{width:100%;justify-content:center}}
+.brand#home{cursor:pointer}
 html,body{overflow-x:hidden}
 @media (max-width:640px){.gbanner::after{display:none}}
 </style>
 <header class="mast"><div class="mast-in">
-  <div class="brand"><img id="crest" alt="Emblema do FC Gaia"><h1><span class="a">FC Gaia</span><span class="b">Basquetebol</span></h1></div>
+  <div class="brand" id="home" role="link" tabindex="0" aria-label="Ir para o início"><img id="crest" alt="Emblema do FC Gaia"><h1><span class="a">FC Gaia</span><span class="b">Basquetebol</span></h1></div>
   <nav class="tabs" role="tablist" aria-label="Secções">
     <button class="tab" role="tab" id="tab-in" data-tab="in" aria-selected="true">Início</button>
     <button class="tab" role="tab" id="tab-cal" data-tab="cal" aria-selected="false">Calendário</button>
@@ -876,7 +877,9 @@ async function sendPeriodImage(btn){const p=periodInfo();btn.querySelector("span
   if(TOP){const a=document.createElement("a");a.href=c.toDataURL("image/png");a.download=p.file+".png";document.body.appendChild(a);a.click();a.remove();closePop();return}
   openSheet(`<div class="card"><div class="k">Pré-visualização</div><h2>${esc(p.label)}</h2><img class="shareimg" src="${c.toDataURL("image/png")}" alt="Imagem com os jogos"><p class="note">No site público, este botão abre a partilha do telemóvel (WhatsApp, Instagram…) ou descarrega a imagem no computador.</p><div class="cardfoot"><span></span><button class="x" id="close" data-focus>Fechar</button></div></div>`)}
 function closePop(){const p=document.getElementById("subpop");if(p){p.remove();["subbtn","calshare"].forEach(i=>{const b=document.getElementById(i);if(b)b.setAttribute("aria-expanded","false")})}}
+function goHome(){closeSheet();closePop();S.tab="in";S.team=null;try{history.replaceState(null,"",location.pathname+location.search)}catch(_){}render();window.scrollTo(0,0)}
 document.addEventListener("click",e=>{
+  if(e.target.closest("#home")){goHome();return}
   if(e.target.id==="sheet"||e.target.closest("#close")){closeSheet();return}
   if(!e.target.closest(".subw"))closePop();
   const gg=e.target.closest(".gg.mine");if(gg){detail(G[+gg.dataset.g]);return}
@@ -916,7 +919,7 @@ document.addEventListener("click",e=>{
     if(S.view==="month"){S.cur=new Date(S.cur.getFullYear(),S.cur.getMonth()+s,1,12);S.day=ks(S.cur)}else S.cur=add(S.cur,7*s);render()}
   else if(b.id==="today"){S.cur=pd(TODAY);S.day=TODAY;render()}});
 document.addEventListener("change",e=>{if(e.target.id==="fase"){S.phase[S.team]=e.target.value;render()}});
-document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("mine")){e.preventDefault();detail(G[+e.target.dataset.g]);return}if(e.key==="Escape"){closeSheet();closePop()}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="home"){goHome();return}if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("mine")){e.preventDefault();detail(G[+e.target.dataset.g]);return}if(e.key==="Escape"){closeSheet();closePop()}});
 document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.classList.add("ok");if(t.id==="capa")t.classList.add("ok")},true);
 document.addEventListener("error",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.remove();if(t.id==="capa")t.remove()},true);
 document.getElementById("crest").src=CREST;
