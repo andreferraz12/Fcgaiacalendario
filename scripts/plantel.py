@@ -137,6 +137,13 @@ def rendered_links(url, pattern, name):
 def team_from_text(t):
     """'FC Gaia B · Sub 18 Masculino' -> 'Sub-18 Masc B'. Devolve None se não for equipa configurada."""
     t = plain(t)
+    # minibasquete: junta masculino, feminino e misto no mesmo escalão
+    if re.search(r"\bbaby\b", t):
+        return "Baby" if "Baby" in TEAMS else None
+    for n in ("12", "10", "8"):
+        if re.search(rf"(mini|sub)[\s\-_]*(basquete\s*)?{n}\b", t):
+            tid = f"Sub-{n}"
+            return tid if tid in TEAMS else None
     if "femin" in t:
         return None
     if "esperanc" in t:
@@ -151,11 +158,18 @@ def team_from_text(t):
     return None
 
 
+MINI = {"Sub-12", "Sub-10", "Sub-8", "Baby"}
+
+
 def discover_teams():
-    ids = {k: int(v) for k, v in CONFIG.get("equipas_fpb", {}).items() if v}
+    """Devolve {equipa: [ids FPB]} (no minibasquete pode haver várias equipas por escalão)."""
+    ids = {}
+    for k, v in CONFIG.get("equipas_fpb", {}).items():
+        if v:
+            ids[k] = [int(x) for x in (v if isinstance(v, list) else [v])]
     found = rendered_links(f"{FPB}/equipas/clube_{CLUBE}/", "/equipa/equipa_", "equipas")
     for eid, txt in found.items():
-        if eid in ids.values():
+        if any(eid in v for v in ids.values()):
             continue
         tid = team_from_text(txt)
         if not tid:
@@ -170,8 +184,11 @@ def discover_teams():
         if tid and tid in ids and tid.endswith(" A") and tid[:-1] + "B" not in ids:
             log(f"   {tid} já atribuída; equipa_{eid} fica como {tid[:-1]}B (confirma no site)")
             tid = tid[:-1] + "B"
-        if tid and tid not in ids:
-            ids[tid] = eid
+        if tid in MINI:
+            ids.setdefault(tid, []).append(eid)
+            log(f"Equipa {tid} -> equipa_{eid}  ({txt[:80]})")
+        elif tid and tid not in ids:
+            ids[tid] = [eid]
             log(f"Equipa {tid} -> equipa_{eid}  ({txt[:80]})")
         elif not tid:
             log(f"   ignorada equipa_{eid}: {txt[:80]}")
@@ -292,9 +309,13 @@ def main():
     coaches = data.get("coaches", {})
     before = json.dumps([plantel, coaches, staff, coord], ensure_ascii=False, sort_keys=True)
 
-    for tid, eid in discover_teams().items():
+    for tid, eids in discover_teams().items():
+        eid = eids
         try:
-            ath = team_athletes(eid)
+            ath = {}
+            for e in eids:
+                for k, v in team_athletes(e).items():
+                    ath.setdefault(k, v)
             rows = []
             for aid, nm in ath.items():
                 try:

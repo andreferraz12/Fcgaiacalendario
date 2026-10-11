@@ -250,8 +250,35 @@ def team_id(base, gaia_name, ab):
     return f"{base} {m.group(1)}" if m else None
 
 
-def main():
+def pending_results(data, now=None):
+    """Jogos que começaram há 2h30–30h e ainda não têm resultado. Sem hora conta como 21h00."""
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo("Europe/Lisbon")
+    now = now or datetime.datetime.now(tz)
+    out = []
+    for r in data["games"]:
+        team, date, hora, res = r[0], r[5], r[6], r[11]
+        if res or not date:
+            continue
+        h, m = (hora or "21:00").split(":")[:2]
+        start = datetime.datetime.fromisoformat(f"{date}T{int(h):02d}:{int(m):02d}").replace(tzinfo=tz)
+        if datetime.timedelta(hours=2, minutes=30) <= now - start <= datetime.timedelta(hours=30):
+            out.append(r)
+    return out
+
+
+def main(mode="calendario"):
     data = json.loads(DATA.read_text(encoding="utf-8"))
+    comps = CONFIG["competicoes"]
+    if mode == "resultados":
+        pend = pending_results(data)
+        if not pend:
+            log("Nenhum jogo à espera de resultado (2h30 a 30h depois do início). Nada a fazer.")
+            return
+        for r in pend:
+            log(f"À espera de resultado: {r[0]} {r[7]} - {r[8]} {r[5]} {r[6]}")
+        teams = {r[0] for r in pend}
+        comps = [c for c in comps if any(t.startswith(c["equipa"]) for t in teams)]
     F = ["team", "comp", "src", "num", "jor", "date", "time", "home", "away", "venue", "status", "res", "phase"]
     games = {(r[0], r[3]): dict(zip(F, r)) for r in data["games"]}
     stand, logos = data["stand"], data.get("logos", {})
@@ -260,7 +287,7 @@ def main():
     known_teams = set(t["id"] for t in CONFIG["equipas"])
     total_mine = 0
 
-    for comp in CONFIG["competicoes"]:
+    for comp in comps:
         cid = comp["id"]
         try:
             phases, tables = competition_phases(cid)
@@ -378,4 +405,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--modo", default="calendario", choices=["calendario", "resultados"])
+    main(ap.parse_args().modo)
