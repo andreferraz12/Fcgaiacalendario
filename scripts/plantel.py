@@ -198,6 +198,79 @@ def discover_teams():
     return ids
 
 
+MINI_RX = [("Baby", r"baby"), ("Sub-8", r"(mini|sub)\D{0,12}8\b"), ("Sub-10", r"(mini|sub)\D{0,12}10\b"), ("Sub-12", r"(mini|sub)\D{0,12}12\b")]
+
+
+def club_athletes_mini():
+    """Lista de atletas do clube por escalão de minibasquete, usando os filtros da página
+    /atletas/clube_119/ (Época, Género, Escalão). Devolve {equipa: {id: nome}}."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return {}
+    out = {t: {} for t, _ in MINI_RX if t in TEAMS}
+    url = f"{FPB}/atletas/clube_{CLUBE}/"
+    try:
+        with sync_playwright() as p:
+            b = p.chromium.launch()
+            pg = b.new_page(viewport={"width": 1280, "height": 2000},
+                            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36")
+            try:
+                pg.goto(url, wait_until="domcontentloaded", timeout=60000)
+            except Exception as e:  # noqa: BLE001
+                log(f"AVISO: {url} demorou a abrir: {e}")
+            pg.wait_for_timeout(4000)
+            sels = pg.eval_on_selector_all("select", "els=>els.map((e,i)=>({i,opts:[...e.options].map(o=>[o.value,o.textContent.trim()])}))")
+            DEBUG.mkdir(exist_ok=True)
+            (DEBUG / "atletas-filtros.txt").write_text(json.dumps(sels, ensure_ascii=False, indent=1), encoding="utf-8")
+            esc_sel = next((x for x in sels if any(re.search(r"\bbaby|\bmini", plain(o[1])) for o in x["opts"])), None)
+            gen_sel = next((x for x in sels if any(plain(o[1]).startswith("femin") for o in x["opts"])), None)
+            if not esc_sel:
+                log("AVISO: não encontrei o filtro de escalão na página de atletas do clube.")
+                (DEBUG / "atletas.html").write_text(pg.content(), encoding="utf-8")
+                b.close()
+                return out
+            gens = [o for o in (gen_sel["opts"] if gen_sel else []) if o[0] and re.match(r"(mascul|femin|mist)", plain(o[1]))] or [None]
+            for tid, rx in MINI_RX:
+                if tid not in out:
+                    continue
+                opt = next((o for o in esc_sel["opts"] if re.search(rx, plain(o[1]))), None)
+                if not opt:
+                    log(f"   filtro de escalão sem opção para {tid}")
+                    continue
+                for g in gens:
+                    try:
+                        if g and gen_sel:
+                            pg.locator("select").nth(gen_sel["i"]).select_option(g[0])
+                            pg.wait_for_timeout(1500)
+                        pg.locator("select").nth(esc_sel["i"]).select_option(opt[0])
+                        pg.wait_for_timeout(1500)
+                        try:
+                            pg.get_by_text(re.compile("aplicar filtros", re.I)).first.click(timeout=3000)
+                        except Exception:  # noqa: BLE001
+                            pass
+                        pg.wait_for_timeout(1500)
+                        try:
+                            pg.wait_for_load_state("networkidle", timeout=10000)
+                        except Exception:  # noqa: BLE001
+                            pass
+                        pg.wait_for_timeout(1000)
+                        links = pg.eval_on_selector_all("a[href*='/atletas/']", "els=>els.map(e=>[e.href,(e.innerText||'').trim()])")
+                        n0 = len(out[tid])
+                        for href, txt in links:
+                            m = re.search(r"/atletas/(\d+)", href)
+                            if m and "clube_" not in href:
+                                out[tid].setdefault(int(m.group(1)), norm(txt))
+                        log(f"   {tid} ({opt[1]}{' · ' + g[1] if g else ''}): +{len(out[tid]) - n0} atletas")
+                        (DEBUG / f"atletas-{slug(tid)}-{slug(g[1]) if g else 'todos'}.html").write_text(pg.content(), encoding="utf-8")
+                    except Exception as e:  # noqa: BLE001
+                        log(f"AVISO: filtro {tid}/{g}: {e}")
+            b.close()
+    except Exception as e:  # noqa: BLE001
+        log(f"AVISO: falhou a página de atletas do clube: {e}")
+    return out
+
+
 def discover_coaches(names):
     ids = {k: int(v) for k, v in CONFIG.get("treinadores_fpb", {}).items() if v}
     found = rendered_links(f"{FPB}/treinadores/clube_{CLUBE}/", "/treinadores/", "treinadores")
@@ -359,6 +432,10 @@ def main():
     before = json.dumps([plantel, coaches, staff, coord], ensure_ascii=False, sort_keys=True)
 
     teams = discover_teams()
+    mini_extra = club_athletes_mini()
+    for t, d in mini_extra.items():
+        if d:
+            teams.setdefault(t, [])
     names = []
     for lst in staff.values():
         names += [n for n in lst if n not in names]
@@ -377,6 +454,8 @@ def main():
             for e in eids:
                 for k, v in team_athletes(e).items():
                     ath.setdefault(k, v)
+            for k, nm in mini_extra.get(tid, {}).items():
+                ath.setdefault(k, (nm, None))
             rows = []
             for aid, (nm, tnum) in ath.items():
                 try:
