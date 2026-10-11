@@ -477,6 +477,7 @@ footer p{margin:0 0 6px;line-height:1.45}footer b{color:var(--muted)}
 .tbody>.treinos{margin:0 0 18px}
 @media (max-width:640px){.tl li{grid-template-columns:72px 1fr;row-gap:2px}.tl a{grid-column:1/-1}.hband.join .cta{width:100%;justify-content:center}}
 .brand#home{cursor:pointer}
+.pcard.pl{cursor:pointer;transition:border-color .15s,transform .15s}.pcard.pl:hover,.pcard.pl:focus-visible{border-color:var(--gold);transform:translateY(-2px)}
 html,body{overflow-x:hidden}
 @media (max-width:640px){.gbanner::after{display:none}}
 </style>
@@ -728,7 +729,7 @@ function teamGames(t,cur,all){const gs=cur==="*"?all:all.filter(g=>g.phase===cur
   ${actions("team")}`}
 function teamSquad(t){const pl=sortedPl(t.id),sf=staffOf(t.id);
   const coaches=sf.map(([n,r])=>{const c=coach(n);return `<button class="pcard coachc" data-coach="${esc(ckey(n))}" data-role="${esc(r)}"><span class="ph">${avatar(c.name,c.photo,"big")}<span class="role">${r==="Treinador principal"?"Principal":"Adjunto"}</span></span><span class="pi2"><b>${esc(c.name)}</b><small>${esc(r)}${c.grau?" · "+esc(c.grau):""}</small><em>Ver carreira ›</em></span></button>`}).join("");
-  const players=pl.map(p=>`<div class="pcard"><span class="ph">${avatar(p.name,p.photo,"big")}${p.num!=null?`<span class="num">${p.num}</span>`:""}</span><span class="pi2"><b>${esc(p.name)}</b><small>${esc((p.pos||"").toUpperCase())}${p.h?(p.pos?" · ":"")+(p.h/100).toFixed(2).replace(".",",")+" m":""}</small></span></div>`).join("");
+  const players=pl.map(p=>`<div class="pcard pl" role="button" tabindex="0" data-ath="${esc(t.id)}|${p.id}"><span class="ph">${avatar(p.name,p.photo,"big")}${p.num!=null?`<span class="num">${p.num}</span>`:""}</span><span class="pi2"><b>${esc(p.name)}</b><small>${esc((p.pos||"").toUpperCase())}${p.h?(p.pos?" · ":"")+(p.h/100).toFixed(2).replace(".",",")+" m":""}</small></span></div>`).join("");
   return `${sf.length?`<h3 class="sech">Equipa técnica</h3><div class="pgrid">${coaches}</div>`:""}
   <h3 class="sech">Atletas</h3>${pl.length?`<div class="pgrid">${players}</div>`:`<div class="emptybox">${IC.user}<p>${t.id==="Baby"?"Plantel ainda não disponível.":"Plantel ainda não disponível."}</p></div>`}
   <p class="note">Fonte: fichas de atleta e de treinador no site da FPB.</p>`}
@@ -824,6 +825,14 @@ function shareText(g){const t=TM[g.team],d=g.date?pd(g.date):null,sc=score(g);
   if(sc)l.push(`Resultado: ${g.home} ${g.res.replace("-","–")} ${g.away}`);
   else{if(d)l.push(`📅 ${DWL[wd(d)]}, ${d.getDate()} ${MS[d.getMonth()]}${g.time?" · "+g.time.slice(0,5).replace(":","h"):" · hora a marcar"}`);if(hasPlace(g))l.push(`📍 ${ven(g)}`)}
   l.push("#TODOSPELOGAIA");return l.join("\n")}
+function athletePanel(tid,id){const p=(PLANTEL[tid]||[]).find(x=>String(x.id)===String(id));if(!p)return;
+  const teams=ALLT.filter(t=>(PLANTEL[t.id]||[]).some(x=>String(x.id)===String(id))).map(t=>t.nm);
+  const ins=p.insc||[];
+  const info=[p.pos?["Posição",p.pos]:null,p.h?["Altura",(p.h/100).toFixed(2).replace(".",",")+" m"]:null,p.nasc?["Data de nascimento",p.nasc]:p.ano?["Ano de nascimento",p.ano]:null].filter(Boolean);
+  openSheet(`<div class="card coachp" role="dialog" aria-modal="true" aria-labelledby="atitle"><div class="ch">${avatar(p.name,p.photo,"xl")}<div><div class="k">Atleta · ${esc(teams.join(", "))}</div><h2 id="atitle">${esc(p.name)}</h2>${p.num!=null?`<span class="grau">#${p.num}</span>`:""}</div></div>
+  ${info.length?`<dl>${info.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`:""}
+  <p class="sub2">Inscrições</p>${ins.length?`<ol class="car">${ins.map(r=>`<li><b>${esc(r[0])}</b><span class="cc">${esc(r[1])}</span>${r[2]?`<span class="cf">${esc(r[2])}</span>`:""}</li>`).join("")}</ol>`:`<p class="note">Histórico ainda não disponível.</p>`}
+  <div class="cardfoot"><a class="softbtn" href="https://www.fpb.pt/atletas/${encodeURIComponent(p.id)}/" target="_blank" rel="noopener">${IC.link}<span>Ficha na FPB</span></a><button class="x" id="close" data-focus>Fechar</button></div></div>`)}
 function coachPanel(key,role){const c=COACHES[key]||{name:key,carreira:[]};
   const roles=[];Object.entries(STAFF).forEach(([id,arr])=>arr.forEach((n,i)=>{if(ckey(n)===key)roles.push(`${TM[id].nm} · ${i===0?"Principal":"Adjunto"}`)}));
   COORD.forEach(x=>{if(ckey(x.name)===key)roles.unshift(x.role)});
@@ -880,6 +889,7 @@ function closePop(){const p=document.getElementById("subpop");if(p){p.remove();[
 function goHome(){closeSheet();closePop();S.tab="in";S.team=null;try{history.replaceState(null,"",location.pathname+location.search)}catch(_){}render();window.scrollTo(0,0)}
 document.addEventListener("click",e=>{
   if(e.target.closest("#home")){goHome();return}
+  const ath=e.target.closest("[data-ath]");if(ath){const [tid,id]=ath.dataset.ath.split("|");athletePanel(tid,id);return}
   if(e.target.id==="sheet"||e.target.closest("#close")){closeSheet();return}
   if(!e.target.closest(".subw"))closePop();
   const gg=e.target.closest(".gg.mine");if(gg){detail(G[+gg.dataset.g]);return}
@@ -919,7 +929,7 @@ document.addEventListener("click",e=>{
     if(S.view==="month"){S.cur=new Date(S.cur.getFullYear(),S.cur.getMonth()+s,1,12);S.day=ks(S.cur)}else S.cur=add(S.cur,7*s);render()}
   else if(b.id==="today"){S.cur=pd(TODAY);S.day=TODAY;render()}});
 document.addEventListener("change",e=>{if(e.target.id==="fase"){S.phase[S.team]=e.target.value;render()}});
-document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="home"){goHome();return}if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("mine")){e.preventDefault();detail(G[+e.target.dataset.g]);return}if(e.key==="Escape"){closeSheet();closePop()}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="home"){goHome();return}if((e.key==="Enter"||e.key===" ")&&e.target.dataset&&e.target.dataset.ath){e.preventDefault();const [tid,id]=e.target.dataset.ath.split("|");athletePanel(tid,id);return}if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("mine")){e.preventDefault();detail(G[+e.target.dataset.g]);return}if(e.key==="Escape"){closeSheet();closePop()}});
 document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.classList.add("ok");if(t.id==="capa")t.classList.add("ok")},true);
 document.addEventListener("error",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.remove();if(t.id==="capa")t.remove()},true);
 document.getElementById("crest").src=CREST;
