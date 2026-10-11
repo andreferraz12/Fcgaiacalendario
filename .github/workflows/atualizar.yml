@@ -2,19 +2,23 @@ name: Atualizar jogos e publicar site
 
 on:
   schedule:
-    # jogos e resultados: todos os dias às 00:05 UTC
-    - cron: "5 0 * * *"
-    # plantel, fotos e carreiras dos treinadores: dia 1 de cada mês às 05:00 UTC
-    - cron: "0 5 1 * *"
+    # Horas em UTC (Portugal: +1h no verão, igual no inverno)
+    # resultados: de meia em meia hora; só vai buscar dados se houver jogos
+    # que começaram há 2h30 ou mais e ainda não têm resultado
+    - cron: "17,47 * * * *"
+    # calendário (horários, pavilhões, jogos novos): terças e quintas
+    - cron: "0 6 * * 2,4"
+    # plantel, fotos e carreiras dos treinadores: terças e sextas
+    - cron: "0 5 * * 2,5"
   push:
-    branches: [main]      # publica também quando alteras ficheiros à mão
-  workflow_dispatch:      # botão "Run workflow" para atualizar à mão
+    branches: [main]      # publica quando alteras ficheiros à mão
+  workflow_dispatch:      # botão "Run workflow"
     inputs:
       modo:
         description: "O que atualizar"
         type: choice
-        default: jogos
-        options: [jogos, plantel, tudo]
+        default: calendario
+        options: [calendario, resultados, plantel, tudo]
 
 permissions:
   contents: write
@@ -22,40 +26,47 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: atualizar
   cancel-in-progress: false
 
 jobs:
   atualizar:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      mudou: ${{ steps.guardar.outputs.mudou }}
+      modo: ${{ steps.modo.outputs.modo }}
     steps:
       - uses: actions/checkout@v4
       - name: Escolher modo
         id: modo
         run: |
           M="${{ github.event.inputs.modo }}"
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            if [ "${{ github.event.schedule }}" = "0 5 1 * *" ]; then M=plantel; else M=jogos; fi
-          fi
+          case "${{ github.event.schedule }}" in
+            "17,47 * * * *") M=resultados ;;
+            "0 6 * * 2,4")   M=calendario ;;
+            "0 5 * * 2,5")   M=plantel ;;
+          esac
           if [ "${{ github.event_name }}" = "push" ]; then M=nenhum; fi
-          echo "modo=${M:-jogos}" >> "$GITHUB_OUTPUT"
-          echo "Modo: ${M:-jogos}"
+          echo "modo=${M:-calendario}" >> "$GITHUB_OUTPUT"
+          echo "Modo: ${M:-calendario}"
       - uses: actions/setup-python@v5
+        if: steps.modo.outputs.modo != 'nenhum'
         with:
           python-version: "3.12"
-      - run: pip install requests==2.32.3 beautifulsoup4==4.12.3
+      - if: steps.modo.outputs.modo != 'nenhum'
+        run: pip install requests==2.32.3 beautifulsoup4==4.12.3
       - name: Instalar browser (para as listas do fpb.pt)
         if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
         run: |
           pip install playwright==1.47.0
           python -m playwright install --with-deps chromium
-      - name: Recolher jogos e resultados
-        if: steps.modo.outputs.modo == 'jogos' || steps.modo.outputs.modo == 'tudo'
-        run: python scripts/atualizar.py
+      - name: Resultados (jogos acabados há 2h30 ou mais)
+        if: steps.modo.outputs.modo == 'resultados'
+        run: python scripts/atualizar.py --modo resultados
+      - name: Calendário, resultados e classificações
+        if: steps.modo.outputs.modo == 'calendario' || steps.modo.outputs.modo == 'tudo'
+        run: python scripts/atualizar.py --modo calendario
       - name: Recolher planteis e treinadores
         if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
         run: python scripts/plantel.py
@@ -67,25 +78,36 @@ jobs:
           path: debug/
           if-no-files-found: ignore
       - name: Guardar alterações
+        id: guardar
         if: steps.modo.outputs.modo != 'nenhum'
         run: |
-          if git diff --quiet -- data; then echo "Sem alterações."; exit 0; fi
+          if git diff --quiet -- data; then echo "Sem alterações."; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           git config user.name "fcgaia-bot"
           git config user.email "fcgaia-bot@users.noreply.github.com"
           git add data/jogos.json
-          git commit -m "Atualizar ${{ steps.modo.outputs.modo }} $(date -u +%Y-%m-%d)"
+          git commit -m "Atualizar ${{ steps.modo.outputs.modo }} $(date -u +%Y-%m-%d\ %H:%M)"
           git pull --rebase
           git push
+          echo "mudou=true" >> "$GITHUB_OUTPUT"
+
+  publicar:
+    needs: atualizar
+    # publica se os dados mudaram, se alteraste ficheiros à mão ou se carregaste em "Run workflow"
+    if: needs.atualizar.outputs.mudou == 'true' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Preparar site
         run: |
           mkdir -p _site
           cp index.html _site/
           cp -r data _site/
+          python3 scripts/gerar_ics.py _site
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - id: deploy
-        uses: actions/deploy-pages@v4
-
