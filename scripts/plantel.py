@@ -218,18 +218,43 @@ def discover_coaches(names):
 # ---------- páginas de equipa, atleta e treinador (HTML normal) ----------
 
 def short(name):
-    p = [w for w in norm(name).split() if w.lower() not in ("da", "de", "do", "das", "dos", "e")]
+    name = norm(name)
+    if name.isupper():
+        name = " ".join(w if w.lower() in ("da", "de", "do", "das", "dos", "e") else w.capitalize() for w in name.lower().split())
+    p = [w for w in name.split() if w.lower() not in ("da", "de", "do", "das", "dos", "e")]
     return f"{p[0]} {p[-1]}" if len(p) > 1 else norm(name)
 
 
 def team_athletes(eid):
+    """{id_atleta: (nome, número na equipa)} a partir da página da equipa na FPB."""
     s = get(f"{FPB}/equipa/equipa_{eid}/")
+    try:
+        DEBUG.mkdir(exist_ok=True)
+        (DEBUG / f"equipa_{eid}.html").write_text(str(s), encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        pass
     out = {}
     for a in s.select("a[href*='/atletas/']"):
         m = re.search(r"/atletas/(\d+)", a["href"])
-        if m:
-            txt = norm(a.get_text(" "))
-            out.setdefault(int(m.group(1)), norm(txt.split("•")[-1]))
+        if not m:
+            continue
+        aid = int(m.group(1))
+        name = re.sub(r"^\d{1,3}\s+|\s+\d{1,3}$", "", norm(norm(a.get_text(" ")).split("•")[-1]))
+        # cartão do atleta: sobe até ao elemento que só tem este atleta
+        card = a
+        for _ in range(4):
+            up = card.parent
+            if not up or len({x.get("href") for x in up.select("a[href*='/atletas/']")}) > 1:
+                break
+            card = up
+        num = None
+        for t in card.stripped_strings:
+            t = norm(t).lstrip("#Nº").strip()
+            if re.fullmatch(r"\d{1,3}", t):
+                num = int(t)
+                break
+        if aid not in out or (out[aid][1] is None and num is not None):
+            out[aid] = (name, num)
     return out
 
 
@@ -347,9 +372,12 @@ def main():
                 for k, v in team_athletes(e).items():
                     ath.setdefault(k, v)
             rows = []
-            for aid, nm in ath.items():
+            for aid, (nm, tnum) in ath.items():
                 try:
-                    rows.append(athlete(aid, nm))
+                    a = athlete(aid, nm)
+                    if tnum is not None:
+                        a["num"] = tnum  # o número da equipa tem prioridade sobre o da ficha
+                    rows.append(a)
                 except Exception as e:  # noqa: BLE001
                     log(f"AVISO: atleta {aid} ({nm}): {e}")
                 time.sleep(0.4)
