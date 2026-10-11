@@ -266,6 +266,9 @@ footer{margin-top:28px;font-size:13px;color:var(--dim);border-top:1px solid #262
 }
 @media print{
   @page{size:A4 landscape;margin:10mm}
+  html{background:#fff!important}
+  footer p:last-child{display:none}
+  footer{margin-top:8px;padding-top:6px;font-size:11px}
   :root{--bg:#fff;--panel:#fff;--panel-2:#f2f2f2;--ink:#000;--muted:#333;--dim:#555;--line:#bbb;--t-esp:#777}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff!important;background-image:none!important;color:#000}
@@ -478,8 +481,92 @@ footer p{margin:0 0 6px;line-height:1.45}footer b{color:var(--muted)}
 @media (max-width:640px){.tl li{grid-template-columns:72px 1fr;row-gap:2px}.tl a{grid-column:1/-1}.hband.join .cta{width:100%;justify-content:center}}
 .brand#home{cursor:pointer}
 .pcard.pl{cursor:pointer;transition:border-color .15s,transform .15s}.pcard.pl:hover,.pcard.pl:focus-visible{border-color:var(--gold);transform:translateY(-2px)}
+
+#printv{display:none}
+@media print{
+  html.pcal body>*:not(#printv){display:none!important}
+  html.pcal body{margin:0!important;padding:0!important;min-height:0!important}
+  html.pcal #printv{display:block;text-align:left;color:#000;font-family:var(--f-body,system-ui),sans-serif}
+  .pv-head{display:flex;align-items:center;gap:12px;border-bottom:3px solid #e2b812;padding-bottom:6px;margin-bottom:8px}
+  .pv-head img{width:44px;height:auto}
+  .pv-head b{display:block;font-family:var(--f-disp);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:1px}
+  .pv-head span{display:block;font-family:var(--f-disp);font-size:30px;line-height:1;text-transform:uppercase;color:#9c7e08}
+  .pv-month{width:100%;border-collapse:collapse;table-layout:fixed}
+  .pv-month th{font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:2px;border:1px solid #bbb;background:#f2f2f2}
+  .pv-month td{border:1px solid #bbb;vertical-align:top;text-align:left;padding:2px 3px;height:calc((155mm - 24px) / var(--rows));overflow:hidden}
+  .pv-month td.out{background:#f6f6f6;color:#aaa}.pv-month td.we{background:#fbf7e6}
+  .pd{font-weight:700;font-size:11px}.pd i{font-style:normal;color:#c0392b;font-size:8px;text-transform:uppercase}
+  .pg{font-size:8.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid var(--tc,#e2b812);padding-left:3px;margin-top:1px}
+  .pg span{color:#555}
+  .pv-leg{font-size:9px;color:#555;margin:4px 0 0}
+  .pv-week{width:100%;border-collapse:collapse;font-size:12px}
+  .pv-week td{text-align:left;padding:4px 6px;border-bottom:1px solid #ddd;vertical-align:top}
+  .pv-week tr:not(.pv-day) td:first-child{border-left:4px solid var(--tc,#e2b812)}
+  .pv-day td{font-family:var(--f-disp);font-size:16px;text-transform:uppercase;color:#9c7e08;padding-top:9px;border-bottom:2px solid #e2b812}
+  .pv-h{font-weight:700;width:52px}.pv-t{font-weight:700;width:110px;text-transform:uppercase}.pv-r{font-weight:700;text-align:right;width:70px}
+}
+.flag{height:14px;width:auto;vertical-align:-2px;margin-right:7px;border-radius:2px}.flag.e{font-size:16px;margin-right:6px}
 html,body{overflow-x:hidden}
 @media (max-width:640px){.gbanner::after{display:none}}
+html.printing .jnav button{display:none}
+html.printing .gg{background:#fff;border-color:#ccc}
+html.printing .gg.mine{border-color:var(--gold)}
+html.printing .gt,html.printing .gt.me{color:#000}
+html.printing{background:#fff!important}
+html.printing footer p:last-child{display:none}
+html.printing footer{margin-top:8px;padding-top:6px;font-size:11px}
+html.printing{--bg:#fff;--panel:#fff;--panel-2:#f2f2f2;--ink:#000;--muted:#333;--dim:#555;--line:#bbb;--t-esp:#777}
+html.printing *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html.printing,html.printing body{background:#fff!important;background-image:none!important;color:#000}
+html.printing .ticker,html.printing .tabs,html.printing .toolbar,html.printing .chips,html.printing .acts,html.printing .acts-note,html.printing .side,html.printing .backbtn,html.printing .fase,html.printing .daypanel,html.printing .c-go,html.printing .sheet,html.printing footer .x{display:none!important}
+html.printing .mast{background:#fff;border-bottom:3px solid var(--gold)}
+html.printing .brand h1 .a{color:#000}
+html.printing .wrap{max-width:none;padding:0}
+html.printing .tlay{display:block}
+html.printing .huge,html.printing .box h3{background:none!important;color:#000!important;-webkit-text-fill-color:#000;font-size:40px}
+html.printing .box,html.printing .trow,html.printing .daypanel,html.printing .card{background:#fff!important;border-color:#bbb}
+html.printing .box{break-inside:avoid}
+html.printing .month{gap:2px}
+html.printing .mc{min-height:80px;border:1px solid #ccc;background:#fff}
+html.printing .mc.we{background:#f4f4f4}
+html.printing .mc.out{opacity:.35}
+html.printing .mc .mini{display:block!important;color:#000}
+html.printing .mc .dots{display:none!important}
+html.printing .mc.today .n{background:none;color:#000}
+html.printing .gm,html.printing .rs,html.printing .col{break-inside:avoid}
+html.printing .gm .vs,html.printing .trow .nm,html.printing .trow .big,html.printing .trow .ln{color:#000}
+html.printing tr.me td{background:var(--gold)!important;color:#000!important}
+html.printing .tdet{grid-template-columns:1fr 1fr}
+html.printing .cols.c7{grid-template-columns:var(--wk,repeat(7,minmax(0,1fr)))}
+html.printing .lgo img{opacity:1}
+html.printing .ttabs,html.printing .softbtn,html.printing .subw,html.printing .more,html.printing .coord{display:none!important}
+html.printing .ovg,html.printing .pair{grid-template-columns:1fr 1fr}
+html.printing .pcard,html.printing .hero{background:#fff}
+html.printing html.pcal body>*:not(#printv){display:none!important}
+html.printing html.pcal body{margin:0!important;padding:0!important;min-height:0!important}
+html.printing html.pcal #printv{display:block;text-align:left;color:#000;font-family:var(--f-body,system-ui),sans-serif}
+html.printing .pv-head{display:flex;align-items:center;gap:12px;border-bottom:3px solid #e2b812;padding-bottom:6px;margin-bottom:8px}
+html.printing .pv-head img{width:44px;height:auto}
+html.printing .pv-head b{display:block;font-family:var(--f-disp);font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:1px}
+html.printing .pv-head span{display:block;font-family:var(--f-disp);font-size:30px;line-height:1;text-transform:uppercase;color:#9c7e08}
+html.printing .pv-month{width:100%;border-collapse:collapse;table-layout:fixed}
+html.printing .pv-month th{font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:2px;border:1px solid #bbb;background:#f2f2f2}
+html.printing .pv-month td{border:1px solid #bbb;vertical-align:top;text-align:left;padding:2px 3px;height:calc((155mm - 24px) / var(--rows));overflow:hidden}
+html.printing .pv-month td.out{background:#f6f6f6;color:#aaa}
+html.printing .pv-month td.we{background:#fbf7e6}
+html.printing .pd{font-weight:700;font-size:11px}
+html.printing .pd i{font-style:normal;color:#c0392b;font-size:8px;text-transform:uppercase}
+html.printing .pg{font-size:8.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid var(--tc,#e2b812);padding-left:3px;margin-top:1px}
+html.printing .pg span{color:#555}
+html.printing .pv-leg{font-size:9px;color:#555;margin:4px 0 0}
+html.printing .pv-week{width:100%;border-collapse:collapse;font-size:12px}
+html.printing .pv-week td{text-align:left;padding:4px 6px;border-bottom:1px solid #ddd;vertical-align:top}
+html.printing .pv-week tr:not(.pv-day) td:first-child{border-left:4px solid var(--tc,#e2b812)}
+html.printing .pv-day td{font-family:var(--f-disp);font-size:16px;text-transform:uppercase;color:#9c7e08;padding-top:9px;border-bottom:2px solid #e2b812}
+html.printing .pv-h{font-weight:700;width:52px}
+html.printing .pv-t{font-weight:700;width:110px;text-transform:uppercase}
+html.printing .pv-r{font-weight:700;text-align:right;width:70px}
+
 </style>
 <header class="mast"><div class="mast-in">
   <div class="brand" id="home" role="link" tabindex="0" aria-label="Ir para o início"><img id="crest" alt="Emblema do FC Gaia"><h1><span class="a">FC Gaia</span><span class="b">Basquetebol</span></h1></div>
@@ -825,12 +912,15 @@ function shareText(g){const t=TM[g.team],d=g.date?pd(g.date):null,sc=score(g);
   if(sc)l.push(`Resultado: ${g.home} ${g.res.replace("-","–")} ${g.away}`);
   else{if(d)l.push(`📅 ${DWL[wd(d)]}, ${d.getDate()} ${MS[d.getMonth()]}${g.time?" · "+g.time.slice(0,5).replace(":","h"):" · hora a marcar"}`);if(hasPlace(g))l.push(`📍 ${ven(g)}`)}
   l.push("#TODOSPELOGAIA");return l.join("\n")}
+const pname=n=>n&&n===n.toUpperCase()?n.toLowerCase().replace(/(^|\s)(\S)/g,(m,a,b)=>a+b.toUpperCase()).replace(/ (Da|De|Do|Das|Dos|E) /g,m=>m.toLowerCase()):n;
+function flagOf(p){if(p.nac_flag)return `<img class="flag" src="${esc(p.nac_flag)}" alt="" onerror="this.remove()">`;
+  const cc=(p.nac_cc||"").toUpperCase();return /^[A-Z]{2}$/.test(cc)?`<span class="flag e">${String.fromCodePoint(...[...cc].map(c=>127397+c.charCodeAt(0)))}</span>`:""}
 function athletePanel(tid,id){const p=(PLANTEL[tid]||[]).find(x=>String(x.id)===String(id));if(!p)return;
   const teams=ALLT.filter(t=>(PLANTEL[t.id]||[]).some(x=>String(x.id)===String(id))).map(t=>t.nm);
   const ins=p.insc||[];
-  const info=[p.pos?["Posição",p.pos]:null,p.h?["Altura",(p.h/100).toFixed(2).replace(".",",")+" m"]:null,p.nasc?["Data de nascimento",p.nasc]:p.ano?["Ano de nascimento",p.ano]:null].filter(Boolean);
+  const info=[p.pos?["Posição",p.pos]:null,p.h?["Altura",(p.h/100).toFixed(2).replace(".",",")+" m"]:null,p.nasc?["Data de nascimento",p.nasc]:p.ano?["Ano de nascimento",p.ano]:null,p.nac?["Nacionalidade",p.nac,true]:null].filter(Boolean);
   openSheet(`<div class="card coachp" role="dialog" aria-modal="true" aria-labelledby="atitle"><div class="ch">${avatar(p.name,p.photo,"xl")}<div><div class="k">Atleta · ${esc(teams.join(", "))}</div><h2 id="atitle">${esc(p.name)}</h2>${p.num!=null?`<span class="grau">#${p.num}</span>`:""}</div></div>
-  ${info.length?`<dl>${info.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`:""}
+  ${info.length?`<dl>${info.map(([k,v,f])=>`<dt>${k}</dt><dd>${f?flagOf(p):""}${esc(v)}</dd>`).join("")}</dl>`:""}
   <p class="sub2">Inscrições</p>${ins.length?`<ol class="car">${ins.map(r=>`<li><b>${esc(r[0])}</b><span class="cc">${esc(r[1])}</span>${r[2]?`<span class="cf">${esc(r[2])}</span>`:""}</li>`).join("")}</ol>`:`<p class="note">Histórico ainda não disponível.</p>`}
   <div class="cardfoot"><a class="softbtn" href="https://www.fpb.pt/atletas/${encodeURIComponent(p.id)}/" target="_blank" rel="noopener">${IC.link}<span>Ficha na FPB</span></a><button class="x" id="close" data-focus>Fechar</button></div></div>`)}
 function coachPanel(key,role){const c=COACHES[key]||{name:key,carreira:[]};
@@ -885,6 +975,28 @@ async function sendPeriodImage(btn){const p=periodInfo();btn.querySelector("span
   if(TOP&&file&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:"FC Gaia · "+p.label})}catch(e){}closePop();return}
   if(TOP){const a=document.createElement("a");a.href=c.toDataURL("image/png");a.download=p.file+".png";document.body.appendChild(a);a.click();a.remove();closePop();return}
   openSheet(`<div class="card"><div class="k">Pré-visualização</div><h2>${esc(p.label)}</h2><img class="shareimg" src="${c.toDataURL("image/png")}" alt="Imagem com os jogos"><p class="note">No site público, este botão abre a partilha do telemóvel (WhatsApp, Instagram…) ou descarrega a imagem no computador.</p><div class="cardfoot"><span></span><button class="x" id="close" data-focus>Fechar</button></div></div>`)}
+// impressão: o calendário tem uma versão própria que cabe sempre numa folha A4 deitada
+let PSTYLE=null;
+function printCal(){const p=periodInfo(),gs=periodGames();const tn=g=>TM[g.team].nm.replace(/"/g,"");
+  const tm=g=>g.time?g.time.slice(0,5).replace(":","h"):"--h--";
+  let html=`<div class="pv-head"><img src="${CREST}" alt=""><div><b>FC Gaia Basquetebol</b><span>${esc(p.label)}</span></div></div>`;
+  if(S.view==="month"){const y=S.cur.getFullYear(),mo=S.cur.getMonth(),start=mon(new Date(y,mo,1,12));let rows=0,cells="";
+    for(let n=0;n<42;n++){const d=add(start,n);if(n%7===0){if(n>=28&&d.getMonth()!==mo)break;rows++}const k=ks(d),g2=onDay(k),out=d.getMonth()!==mo;
+      cells+=`<td class="${out?"out":""}${wd(d)>=5?" we":""}"><div class="pd">${d.getDate()}${HOL[k]?` <i>Feriado</i>`:""}</div>${out?"":g2.slice(0,6).map(g=>`<div class="pg ${TM[g.team].cls}"><b>${tm(g)}</b> ${esc(tn(g))} <span>${g.isHome?"C":"F"} · ${esc(g.opp)}</span></div>`).join("")+(g2.length>6?`<div class="pg">+${g2.length-6}</div>`:"")}</td>`;
+      if(n%7===6)cells+="</tr><tr>"}
+    html+=`<table class="pv-month" style="--rows:${rows}"><thead><tr>${DW.map(d=>`<th>${d}</th>`).join("")}</tr></thead><tbody><tr>${cells}</tr></tbody></table><p class="pv-leg">C = casa · F = fora · horas a tracejado ainda por marcar</p>`;
+    return {html,zoom:1}}
+  let rowsH="",day="",n=0;gs.forEach(g=>{if(g.date!==day){day=g.date;const d=pd(day);rowsH+=`<tr class="pv-day"><td colspan="5">${DWL[wd(d)]}, ${d.getDate()} de ${MES[d.getMonth()]}${HOL[day]?` · ${esc(HOL[day])}`:""}</td></tr>`;n++}
+    const sc=score(g);rowsH+=`<tr class="${TM[g.team].cls}"><td class="pv-h">${tm(g)}</td><td class="pv-t">${esc(tn(g))}</td><td>${g.isHome?"Casa":"Fora"} · vs ${esc(g.opp)}</td><td>${esc(ven(g))}</td><td class="pv-r">${sc?`${sc.win?"V":"D"} ${sc.us}-${sc.th}`:""}</td></tr>`;n++});
+  if(!gs.length)rowsH=`<tr><td colspan="5">Sem jogos nesta semana.</td></tr>`;
+  html+=`<table class="pv-week">${rowsH}</table>`;
+  return {html,zoom:Math.min(1,600/(Math.max(n,1)*27))}}
+window.addEventListener("beforeprint",()=>{const cal=S.tab==="cal";
+  if(!PSTYLE){PSTYLE=document.createElement("style");document.head.appendChild(PSTYLE)}
+  PSTYLE.textContent=`@page{size:A4 ${cal?"landscape":"portrait"};margin:10mm;background:#fff}@media print{html,body{background:#fff!important}}`;
+  let pv=document.getElementById("printv");if(!pv){pv=document.createElement("div");pv.id="printv";document.body.appendChild(pv)}
+  if(cal){const r=printCal();pv.innerHTML=r.html;pv.style.zoom=r.zoom<1?r.zoom:"";document.documentElement.classList.add("pcal")}else{pv.innerHTML="";document.documentElement.classList.remove("pcal")}});
+window.addEventListener("afterprint",()=>{document.documentElement.classList.remove("pcal");const pv=document.getElementById("printv");if(pv)pv.innerHTML=""});
 function closePop(){const p=document.getElementById("subpop");if(p){p.remove();["subbtn","calshare"].forEach(i=>{const b=document.getElementById(i);if(b)b.setAttribute("aria-expanded","false")})}}
 function goHome(){closeSheet();closePop();S.tab="in";S.team=null;try{history.replaceState(null,"",location.pathname+location.search)}catch(_){}render();window.scrollTo(0,0)}
 document.addEventListener("click",e=>{
@@ -945,7 +1057,7 @@ document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.pa
 render();openFromHash();
 (function(){if(location.protocol==="file:")return;
 fetch("data/jogos.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(!d||!Array.isArray(d.games))return;
-  GAMES=d.games;STAND=d.stand||STAND;GROUPS=d.groups||GROUPS;if(d.plantel)PLANTEL=d.plantel;if(d.coaches)COACHES=d.coaches;if(d.staff)STAFF=d.staff;if(d.coord)COORD=d.coord;Object.assign(LOGOS,d.logos||{});
+  GAMES=d.games;STAND=d.stand||STAND;GROUPS=d.groups||GROUPS;if(d.plantel){PLANTEL=d.plantel;Object.values(PLANTEL).forEach(l=>l.forEach(p=>{p.name=pname(p.name)}))}if(d.coaches)COACHES=d.coaches;if(d.staff)STAFF=d.staff;if(d.coord)COORD=d.coord;Object.assign(LOGOS,d.logos||{});
   G=GAMES.map((r,i)=>{const [team,comp,src,num,jor,date,time,home,away,venue,status,res,phase]=r;const isHome=home.includes("FC Gaia");return {i,team,comp,src,num,jor,date,time,home,away,venue,status,res,phase,isHome,opp:isHome?away:home}});
   if(d.updated){const x=pd(d.updated),u=document.getElementById("upd");if(u)u.textContent=`${x.getDate()} ${MS[x.getMonth()]} ${x.getFullYear()}`}
   render();if(typeof openFromHash==='function')openFromHash()}).catch(()=>{})})();
