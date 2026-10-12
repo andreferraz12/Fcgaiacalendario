@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("fcgaia-tema");if(!t)t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="dark"}</script>
 </head><body><style>body{margin:0}
 /* Layout: club masthead (crest + name + two tabs), then either the calendar board (month default) or the teams hub; instagram-like dark grain with gold display type. Deliberately single dark theme (club identity). */
 :root{
@@ -508,6 +509,35 @@ footer p{margin:0 0 6px;line-height:1.45}footer b{color:var(--muted)}
 .flag{height:14px;width:auto;vertical-align:-2px;margin-right:7px;border-radius:2px}.flag.e{font-size:16px;margin-right:6px}
 html,body{overflow-x:hidden}
 @media (max-width:640px){.gbanner::after{display:none}}
+
+/* ===== tema claro (botão ☀/☾ no topo; segue o sistema por omissão) ===== */
+.thm{position:absolute;top:12px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid #3a3a3a;background:transparent;color:#e2b812;cursor:pointer;display:grid;place-items:center;padding:0}
+.thm:hover{border-color:#e2b812}.thm svg{width:18px;height:18px}
+.mast-in{position:relative}
+.thm .sun{display:none}html[data-theme="light"] .thm .sun{display:block}html[data-theme="light"] .thm .moon{display:none}
+@media (max-width:640px){.thm{top:10px;right:12px}}
+:root[data-theme="light"]{color-scheme:light;
+  --bg:#f3f2ee;--panel:#ffffff;--panel-2:#ebe9e3;--line:#d7d4cb;--ink:#151515;--muted:#55554f;--dim:#76766e;
+  --win:#1f8a46;--loss:#c0392b;--hol:#c0392b;
+  --gold:#b08a00;--gold-hi:#c9a20a;--gold-lo:#7a6200;
+  --t-sen:#b08a00;--t-esp:#555;--t-s18:#e06c14;--t-s16:#11998a;--t-s14:#7451ea;
+  --t-m12:#e0499a;--t-m10:#2f7fe0;--t-m8:#5c9a0a;--t-bb:#ec8a35}
+html[data-theme="light"]{background:var(--bg)}
+html[data-theme="light"] body{background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1.2px),radial-gradient(rgba(0,0,0,.025) 1px,transparent 1.2px)}
+/* barra do topo e destaques de clube continuam escuros */
+html[data-theme="light"] :is(.mast,.ticker,.hero){--gold:#e2b812;--gold-hi:#f4d65a;--gold-lo:#9c7e08;--ink:#f2f2ee;--muted:#a8a8a0;--dim:#8a8a82;--line:#3a3a3a}
+html[data-theme="light"] :is(.daypanel,.tcard,.box,.card,.side,.coord,.pcard,.pop,.hchip,.hband){background:var(--panel)}
+html[data-theme="light"] .tcard{--card:var(--panel)}
+html[data-theme="light"] :is(.mc.emp){border-color:var(--line)}
+html[data-theme="light"] footer{border-top-color:var(--line)}
+html[data-theme="light"] .pop{box-shadow:0 10px 30px rgba(0,0,0,.15)}
+html[data-theme="light"] .av.big{background:linear-gradient(180deg,#e7e5df,#d9d6ce)}
+html[data-theme="light"] .av.big b{color:#bdb9ae}
+html[data-theme="light"] .pcard .ph{background:#e7e5df}
+html[data-theme="light"] .ci.wa{background:#dcf1e3;color:#1f7a40}
+html[data-theme="light"] .join{background:linear-gradient(180deg,#faf1cc,#fff)}
+html[data-theme="light"] .hband.join{background:linear-gradient(90deg,#faf1cc,#fff)}
+html[data-theme="light"] .sheet{background:rgba(0,0,0,.45)}
 html.printing .jnav button{display:none}
 html.printing .gg{background:#fff;border-color:#ccc}
 html.printing .gg.mine{border-color:var(--gold)}
@@ -576,6 +606,7 @@ html.printing .pv-r{font-weight:700;text-align:right;width:70px}
     <button class="tab" role="tab" id="tab-eq" data-tab="eq" aria-selected="false">Equipas</button>
     <button class="tab" role="tab" id="tab-ct" data-tab="ct" aria-selected="false">Contactos</button>
   </nav>
+  <button class="thm" id="thm" type="button" aria-label="Mudar para tema claro" title="Tema claro / escuro"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div></header>
 <div class="ticker" aria-hidden="true" id="ticker"></div>
 <div class="wrap"><main id="main"></main>
@@ -1046,6 +1077,13 @@ document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.pa
 document.addEventListener("error",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.remove();if(t.id==="capa")t.remove()},true);
 document.getElementById("crest").src=CREST;
 document.getElementById("ticker").innerHTML=Array(16).fill("<span>#TODOSPELOGAIA</span>").join("");
+
+/* tema claro/escuro */
+(function(){const b=document.getElementById("thm");if(!b)return;const R=document.documentElement;
+  const lab=()=>b.setAttribute("aria-label",R.dataset.theme==="light"?"Mudar para tema escuro":"Mudar para tema claro");lab();
+  b.addEventListener("click",()=>{R.dataset.theme=R.dataset.theme==="light"?"dark":"light";try{localStorage.setItem("fcgaia-tema",R.dataset.theme)}catch(e){}lab()});
+  try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",e=>{if(!localStorage.getItem("fcgaia-tema")){R.dataset.theme=e.matches?"light":"dark";lab()}})}catch(e){}
+})();
 const U="https://sav2.fpb.pt/uploads/clubes/logotipo/",O="https://sav2.fpb.pt/old_uploads/CLU/";
 const LOGOS={"FIDES":U+"CLU_7311702380602.jpg","Juvemaia ACDC/Mecprec":U+"CLU_1601704477075.png","SC Beira-Mar":O+"CLU_6_LOGO.png","AD Sanjoanense":U+"CLU_31754576195.png","Olivais FC":O+"CLU_7_LOGO.png","Gafanha Rascunhos Urbano":U+"CLU_481763144304.png","FAC - Crédito Agrícola":U+"CLU_691693656807.png","Illiabum Clube":U+"Illiabum_Clube1602333892.png","Ovarense OLHO MARINHO":U+"CLU_121663058006.png","CAAS WISIFY":U+"Centro_dos_Antigos_Alunos_Salesianos1639227568.png","Académica Coimbra":U+"Associacao_Academica_de_Coimbra1596300872.png","CLIP Teams":U+"CLU_34851676308479.jpg","UD Oliveirense":O+"CLU_28_LOGO.png","Sangalhos DC":U+"Sangalhos_Desporto_Clube1627490311.png","Académico FC":O+"CLU_188_LOGO.png","ACA-Perfil Independente":U+"Atletico_Clube_Alfenense1599605277.png",
 "GDB Leça":U+"Grupo_Desportivo_Basquete_de_Leca1602618188.png","CD Aves":U+"CLU_36571695909164.png","Bolacesto":U+"CLU_1791790001218.png","Bolacesto B":U+"CLU_1791790001218.png","AC Alfenense":U+"Atletico_Clube_Alfenense1599605277.png","Guifões SC A":U+"CLU_1741733586027.png","FC Porto B":O+"CLU_120_LOGO.png","5Basket B":U+"CLU_30161748285345.png","Académico/Ribadouro B":O+"CLU_188_LOGO.png","BC Marco":U+"3625_1679141751.png","CPN":U+"Clube_Propaganda_de_Natacao1603657754.png","CPN A ANTARTE":U+"Clube_Propaganda_de_Natacao1603657754.png","USC Paredes":U+"Uniao_Sport_Clube_de_Paredes1640343022.png","CD Póvoa A":U+"CLU_1181738506693.png","CBP B":O+"CLU_3208_LOGO.png","Maia Basket B":U+"CLU_7141746203247.png","SC Vasco da Gama A":U+"CLU_1761675707996.png","SC Vasco da Gama B":U+"CLU_1761675707996.png","Powertogether B":U+"CLU_31551790159606.jpeg","UAA Aroso B":U+"CLU_181.png"};
