@@ -538,6 +538,23 @@ html[data-theme="light"] .ci.wa{background:#dcf1e3;color:#1f7a40}
 html[data-theme="light"] .join{background:linear-gradient(180deg,#faf1cc,#fff)}
 html[data-theme="light"] .hband.join{background:linear-gradient(90deg,#faf1cc,#fff)}
 html[data-theme="light"] .sheet{background:rgba(0,0,0,.45)}
+
+/* ===== legibilidade: letras maiores, mais espaço e mais contraste ===== */
+:root{--dim:#8f8f86}
+:root[data-theme="light"]{--dim:#66665f}
+.gm{padding:7px 0 7px 12px;line-height:1.25}
+.gm+.gm{margin-top:8px}
+.gm .vs{font-size:20px;letter-spacing:.2px}
+.gm .vs small{font-size:13px;color:var(--muted);letter-spacing:.8px}
+.gm .meta{font-size:16.5px;font-style:normal;color:var(--ink);opacity:.92;margin-top:2px}
+.gm .pav{font-size:15px;font-weight:600;text-transform:none;letter-spacing:.1px;color:var(--muted);margin-top:1px}
+.mini{font-size:14.5px;line-height:1.3;padding-left:5px}
+.mc .n{font-size:21px}
+.trow .pv{font-size:14.5px;text-transform:none;letter-spacing:0}
+.trow .lv,.trow .ha2{font-size:13px}
+.trow .sm{font-size:15.5px}
+footer{font-size:14.5px}
+@media (max-width:640px){.gm .vs{font-size:19px}.gm .meta{font-size:16px}}
 html.printing .jnav button{display:none}
 html.printing .gg{background:#fff;border-color:#ccc}
 html.printing .gg.mine{border-color:var(--gold)}
