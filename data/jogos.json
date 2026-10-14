@@ -1,5 +1,5 @@
 {
-"updated": "2026-10-13",
+"updated": "2026-10-14",
 "games": [
 [
 "Esperanças",
@@ -827,6 +827,156 @@
 "1.ª Fase"
 ],
 [
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+581,
+1,
+"2026-10-23",
+"",
+"CLIP Teams",
+"FC Gaia A",
+"Colégio Luso Internacional do Porto",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+584,
+2,
+"2026-10-30",
+"",
+"FC Gaia A",
+"ACR Vigorosa",
+"Pavilhão Futebol Clube Gaia",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+587,
+3,
+"2026-11-06",
+"",
+"CDJ Régio",
+"FC Gaia A",
+"Pavilhão Desportos de Vila do Conde",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+590,
+4,
+"2026-11-13",
+"",
+"FC Gaia A",
+"FC Porto 2",
+"Pavilhão Futebol Clube Gaia",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+593,
+5,
+"2026-11-20",
+"",
+"UAA Aroso A",
+"FC Gaia A",
+"Escola EB23 Manoel de Oliveira",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+596,
+6,
+"2026-11-27",
+"",
+"FC Gaia A",
+"CLIP Teams",
+"Pavilhão Futebol Clube Gaia",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+599,
+7,
+"2026-12-04",
+"",
+"ACR Vigorosa",
+"FC Gaia A",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+602,
+8,
+"2026-12-11",
+"",
+"FC Gaia A",
+"CDJ Régio",
+"Pavilhão Futebol Clube Gaia",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+605,
+9,
+"2026-12-18",
+"",
+"FC Porto 2",
+"FC Gaia A",
+"Gim. do Lagarteiro",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
+"Sub-18 Masc A",
+"Distrital Sub-18 · Grupo I",
+"ABP",
+608,
+10,
+"2027-01-08",
+"",
+"FC Gaia A",
+"UAA Aroso A",
+"Pavilhão Futebol Clube Gaia",
+"por marcar",
+"",
+"2.ª Fase"
+],
+[
 "Sub-18 Masc B",
 "Distrital Sub-18 · Grupo G2",
 "ABP",
@@ -867,8 +1017,8 @@
 "SC Vasco da Gama B",
 "FC Gaia B",
 "Parque das Camélias",
-"marcado",
-"",
+"realizado",
+"62-58",
 "1.ª Fase"
 ],
 [
@@ -1126,6 +1276,66 @@
 291
 ]
 ]
+},
+{
+"phase": "2.ª Fase",
+"name": "Distrital Sub-18 · Grupo I",
+"rows": [
+[
+"FC Gaia A",
+0,
+0,
+0,
+0,
+0,
+0
+],
+[
+"CLIP Teams",
+0,
+0,
+0,
+0,
+0,
+0
+],
+[
+"ACR Vigorosa",
+0,
+0,
+0,
+0,
+0,
+0
+],
+[
+"CDJ Régio",
+0,
+0,
+0,
+0,
+0,
+0
+],
+[
+"FC Porto 2",
+0,
+0,
+0,
+0,
+0,
+0
+],
+[
+"UAA Aroso A",
+0,
+0,
+0,
+0,
+0,
+0
+]
+]
 }
 ],
 "Sub-18 Masc B": [
@@ -1143,6 +1353,15 @@
 82
 ],
 [
+"FC Gaia B",
+3,
+1,
+2,
+4,
+193,
+186
+],
+[
 "CD Aves",
 2,
 1,
@@ -1152,13 +1371,13 @@
 137
 ],
 [
-"FC Gaia B",
+"SC Vasco da Gama B",
 2,
 1,
 1,
 3,
-135,
-124
+113,
+148
 ],
 [
 "Powertogether B",
@@ -1168,15 +1387,6 @@
 1,
 52,
 67
-],
-[
-"SC Vasco da Gama B",
-1,
-0,
-1,
-1,
-51,
-90
 ]
 ]
 }
@@ -1425,7 +1635,11 @@
 "SC Vasco da Gama A": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_1761675707996.png",
 "SC Vasco da Gama B": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_1761675707996.png",
 "Powertogether B": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_31551790159606.jpeg",
-"UAA Aroso B": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_181.png"
+"UAA Aroso B": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_181.png",
+"ACR Vigorosa": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_24051677937068.png",
+"CDJ Régio": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_3041717586387.png",
+"FC Porto 2": "https://sav2.fpb.pt/old_uploads/CLU/CLU_120_LOGO.png",
+"UAA Aroso A": "https://sav2.fpb.pt/uploads/clubes/logotipo/CLU_181.png"
 },
 "groups": {
 "Sub-14 Masc A": [
@@ -1891,6 +2105,311 @@
 "Pavilhão Municipal Ermesinde"
 ]
 ]
+},
+{
+"phase": "2.ª Fase",
+"rows": [
+[
+581,
+1,
+"2026-10-23",
+"",
+"CLIP Teams",
+"FC Gaia A",
+"",
+"Colégio Luso Internacional do Porto"
+],
+[
+582,
+1,
+"2026-10-23",
+"",
+"ACR Vigorosa",
+"FC Porto 2",
+"",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques"
+],
+[
+583,
+1,
+"2026-10-23",
+"",
+"CDJ Régio",
+"UAA Aroso A",
+"",
+"Pavilhão Desportos de Vila do Conde"
+],
+[
+584,
+2,
+"2026-10-30",
+"",
+"FC Gaia A",
+"ACR Vigorosa",
+"",
+"Pavilhão Futebol Clube Gaia"
+],
+[
+585,
+2,
+"2026-10-30",
+"",
+"UAA Aroso A",
+"CLIP Teams",
+"",
+"Escola EB23 Manoel de Oliveira"
+],
+[
+586,
+2,
+"2026-10-30",
+"",
+"FC Porto 2",
+"CDJ Régio",
+"",
+"Gim. do Lagarteiro"
+],
+[
+587,
+3,
+"2026-11-06",
+"",
+"CDJ Régio",
+"FC Gaia A",
+"",
+"Pavilhão Desportos de Vila do Conde"
+],
+[
+588,
+3,
+"2026-11-06",
+"",
+"ACR Vigorosa",
+"CLIP Teams",
+"",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques"
+],
+[
+589,
+3,
+"2026-11-06",
+"",
+"UAA Aroso A",
+"FC Porto 2",
+"",
+"Escola EB23 Manoel de Oliveira"
+],
+[
+590,
+4,
+"2026-11-13",
+"",
+"FC Gaia A",
+"FC Porto 2",
+"",
+"Pavilhão Futebol Clube Gaia"
+],
+[
+591,
+4,
+"2026-11-13",
+"",
+"CLIP Teams",
+"CDJ Régio",
+"",
+"Colégio Luso Internacional do Porto"
+],
+[
+592,
+4,
+"2026-11-13",
+"",
+"ACR Vigorosa",
+"UAA Aroso A",
+"",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques"
+],
+[
+593,
+5,
+"2026-11-20",
+"",
+"UAA Aroso A",
+"FC Gaia A",
+"",
+"Escola EB23 Manoel de Oliveira"
+],
+[
+594,
+5,
+"2026-11-20",
+"",
+"FC Porto 2",
+"CLIP Teams",
+"",
+"Gim. do Lagarteiro"
+],
+[
+595,
+5,
+"2026-11-20",
+"",
+"CDJ Régio",
+"ACR Vigorosa",
+"",
+"Pavilhão Desportos de Vila do Conde"
+],
+[
+596,
+6,
+"2026-11-27",
+"",
+"FC Gaia A",
+"CLIP Teams",
+"",
+"Pavilhão Futebol Clube Gaia"
+],
+[
+597,
+6,
+"2026-11-27",
+"",
+"FC Porto 2",
+"ACR Vigorosa",
+"",
+"Gim. do Lagarteiro"
+],
+[
+598,
+6,
+"2026-11-27",
+"",
+"UAA Aroso A",
+"CDJ Régio",
+"",
+"Escola EB23 Manoel de Oliveira"
+],
+[
+599,
+7,
+"2026-12-04",
+"",
+"ACR Vigorosa",
+"FC Gaia A",
+"",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques"
+],
+[
+600,
+7,
+"2026-12-04",
+"",
+"CLIP Teams",
+"UAA Aroso A",
+"",
+"Colégio Luso Internacional do Porto"
+],
+[
+601,
+7,
+"2026-12-04",
+"",
+"CDJ Régio",
+"FC Porto 2",
+"",
+"Pavilhão Desportos de Vila do Conde"
+],
+[
+602,
+8,
+"2026-12-11",
+"",
+"FC Gaia A",
+"CDJ Régio",
+"",
+"Pavilhão Futebol Clube Gaia"
+],
+[
+603,
+8,
+"2026-12-11",
+"",
+"CLIP Teams",
+"ACR Vigorosa",
+"",
+"Colégio Luso Internacional do Porto"
+],
+[
+604,
+8,
+"2026-12-11",
+"",
+"FC Porto 2",
+"UAA Aroso A",
+"",
+"Gim. do Lagarteiro"
+],
+[
+605,
+9,
+"2026-12-18",
+"",
+"FC Porto 2",
+"FC Gaia A",
+"",
+"Gim. do Lagarteiro"
+],
+[
+606,
+9,
+"2026-12-18",
+"",
+"CDJ Régio",
+"CLIP Teams",
+"",
+"Pavilhão Desportos de Vila do Conde"
+],
+[
+607,
+9,
+"2026-12-18",
+"",
+"UAA Aroso A",
+"ACR Vigorosa",
+"",
+"Escola EB23 Manoel de Oliveira"
+],
+[
+608,
+10,
+"2027-01-08",
+"",
+"FC Gaia A",
+"UAA Aroso A",
+"",
+"Pavilhão Futebol Clube Gaia"
+],
+[
+609,
+10,
+"2027-01-08",
+"",
+"CLIP Teams",
+"FC Porto 2",
+"",
+"Colégio Luso Internacional do Porto"
+],
+[
+610,
+10,
+"2027-01-08",
+"",
+"ACR Vigorosa",
+"CDJ Régio",
+"",
+"Pavilhão Escola EB23 Prof. Napoleão de Sousa Marques"
+]
+]
 }
 ],
 "Sub-18 Masc B": [
@@ -1944,7 +2463,7 @@
 "22:00",
 "SC Vasco da Gama B",
 "FC Gaia B",
-"",
+"62-58",
 "Parque das Camélias"
 ],
 [
