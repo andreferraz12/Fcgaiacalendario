@@ -5181,6 +5181,96 @@
 "nac_flag": "https://www.fpb.pt/wp-content/themes/fpbasquetebol/assets/images/flags/flag_portugal.jpg"
 },
 {
+"name": "Francisco Afonso",
+"num": 23,
+"pos": "",
+"h": null,
+"photo": "https://sav2.fpb.pt/uploads/utilizadores/173220_1708609042.jpg",
+"id": 245217,
+"ano": 2010,
+"nasc": "21/04/2010",
+"insc": [
+[
+"2026/2027",
+"AB Porto",
+"Futebol Clube de Gaia · Sénior(SE)"
+],
+[
+"2026/2027",
+"AB Porto",
+"Futebol Clube de Gaia · Sub 18"
+],
+[
+"2025/2026",
+"AB Porto",
+"Powertogether-Associação · Sub 18(SE)"
+],
+[
+"2025/2026",
+"AB Porto",
+"Powertogether-Associação · Sub 16"
+],
+[
+"2024/2025",
+"AB Porto",
+"Powertogether-Associação · Sub 16"
+],
+[
+"2024/2025",
+"AB Porto",
+"Powertogether-Associação · Sub 18(SE)"
+],
+[
+"2023/2024",
+"AB Porto",
+"Powertogether-Associação · Sub 14"
+],
+[
+"2022/2023",
+"AB Porto",
+"Powertogether-Associação · Sub 14"
+],
+[
+"2021/2022",
+"AB Porto",
+"Powertogether-Associação · Mini 12(SE)"
+],
+[
+"2020/2021",
+"AB Porto",
+"Powertogether-Associação · Sub 14(SE)"
+],
+[
+"2020/2021",
+"AB Porto",
+"Powertogether-Associação · Mini 12"
+],
+[
+"2019/2020",
+"AB Porto",
+"Powertogether-Associação · Mini 10"
+],
+[
+"2018/2019",
+"AB Porto",
+"Powertogether-Associação · Mini 10"
+],
+[
+"2017/2018",
+"AB Porto",
+"Powertogether-Associação · Mini 8"
+],
+[
+"2016/2017",
+"AB Porto",
+"Powertogether-Associação · Mini 8"
+]
+],
+"nac": "Portugal",
+"nac_cc": "pt",
+"nac_flag": "https://www.fpb.pt/wp-content/themes/fpbasquetebol/assets/images/flags/flag_portugal.jpg"
+},
+{
 "name": "Francisco Costa",
 "num": 18,
 "pos": "Base / Extremo",
@@ -5269,96 +5359,6 @@
 "2015/2016",
 "AB Porto",
 "Futebol Clube de Gaia · Mini 8"
-]
-],
-"nac": "Portugal",
-"nac_cc": "pt",
-"nac_flag": "https://www.fpb.pt/wp-content/themes/fpbasquetebol/assets/images/flags/flag_portugal.jpg"
-},
-{
-"name": "Francisco Afonso",
-"num": 23,
-"pos": "",
-"h": null,
-"photo": "https://sav2.fpb.pt/uploads/utilizadores/173220_1708609042.jpg",
-"id": 245217,
-"ano": 2010,
-"nasc": "21/04/2010",
-"insc": [
-[
-"2026/2027",
-"AB Porto",
-"Futebol Clube de Gaia · Sénior(SE)"
-],
-[
-"2026/2027",
-"AB Porto",
-"Futebol Clube de Gaia · Sub 18"
-],
-[
-"2025/2026",
-"AB Porto",
-"Powertogether-Associação · Sub 18(SE)"
-],
-[
-"2025/2026",
-"AB Porto",
-"Powertogether-Associação · Sub 16"
-],
-[
-"2024/2025",
-"AB Porto",
-"Powertogether-Associação · Sub 16"
-],
-[
-"2024/2025",
-"AB Porto",
-"Powertogether-Associação · Sub 18(SE)"
-],
-[
-"2023/2024",
-"AB Porto",
-"Powertogether-Associação · Sub 14"
-],
-[
-"2022/2023",
-"AB Porto",
-"Powertogether-Associação · Sub 14"
-],
-[
-"2021/2022",
-"AB Porto",
-"Powertogether-Associação · Mini 12(SE)"
-],
-[
-"2020/2021",
-"AB Porto",
-"Powertogether-Associação · Sub 14(SE)"
-],
-[
-"2020/2021",
-"AB Porto",
-"Powertogether-Associação · Mini 12"
-],
-[
-"2019/2020",
-"AB Porto",
-"Powertogether-Associação · Mini 10"
-],
-[
-"2018/2019",
-"AB Porto",
-"Powertogether-Associação · Mini 10"
-],
-[
-"2017/2018",
-"AB Porto",
-"Powertogether-Associação · Mini 8"
-],
-[
-"2016/2017",
-"AB Porto",
-"Powertogether-Associação · Mini 8"
 ]
 ],
 "nac": "Portugal",
@@ -5478,12 +5478,12 @@
 [
 "2025/2026",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 18"
+"Futebol Clube de Gaia · Sénior(SE)"
 ],
 [
 "2025/2026",
 "AB Porto",
-"Futebol Clube de Gaia · Sénior(SE)"
+"Futebol Clube de Gaia · Sub 18"
 ],
 [
 "2024/2025",
@@ -5498,12 +5498,12 @@
 [
 "2022/2023",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 16(SE)"
+"Futebol Clube de Gaia · Sub 14"
 ],
 [
 "2022/2023",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 14"
+"Futebol Clube de Gaia · Sub 16(SE)"
 ],
 [
 "2021/2022",
@@ -5513,12 +5513,12 @@
 [
 "2020/2021",
 "AB Porto",
-"Futebol Clube de Gaia · Mini 12"
+"Futebol Clube de Gaia · Sub 14(SE)"
 ],
 [
 "2020/2021",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 14(SE)"
+"Futebol Clube de Gaia · Mini 12"
 ],
 [
 "2019/2020",
@@ -9866,12 +9866,12 @@
 [
 "2025/2026",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 18"
+"Futebol Clube de Gaia · Sénior(SE)"
 ],
 [
 "2025/2026",
 "AB Porto",
-"Futebol Clube de Gaia · Sénior(SE)"
+"Futebol Clube de Gaia · Sub 18"
 ],
 [
 "2024/2025",
@@ -9886,12 +9886,12 @@
 [
 "2022/2023",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 16(SE)"
+"Futebol Clube de Gaia · Sub 14"
 ],
 [
 "2022/2023",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 14"
+"Futebol Clube de Gaia · Sub 16(SE)"
 ],
 [
 "2021/2022",
@@ -9901,12 +9901,12 @@
 [
 "2020/2021",
 "AB Porto",
-"Futebol Clube de Gaia · Mini 12"
+"Futebol Clube de Gaia · Sub 14(SE)"
 ],
 [
 "2020/2021",
 "AB Porto",
-"Futebol Clube de Gaia · Sub 14(SE)"
+"Futebol Clube de Gaia · Mini 12"
 ],
 [
 "2019/2020",
