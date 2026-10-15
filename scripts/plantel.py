@@ -252,7 +252,10 @@ def club_athletes_mini():
                             if not pick(pg, "escalao", opt):
                                 log(f"   filtro: sem escalão '{opt}'")
                                 continue
-                            pg.locator("#aplicar-filtros").first.click(timeout=5000, force=True)
+                            ap = pg.locator("#aplicar-filtros").first
+                            if ap.count() and ap.is_visible():
+                                ap.click(timeout=5000)
+                            # no computador o filtro aplica-se ao escolher a opção (o botão é só do telemóvel)
                             pg.wait_for_timeout(3000)
                             try:
                                 pg.wait_for_load_state("networkidle", timeout=10000)
