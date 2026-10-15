@@ -241,6 +241,36 @@ def club_results(games):
     return found, len(blocks)
 
 
+# ---------- Masters: competição descoberta automaticamente ----------
+
+def masters_competitions():
+    """Procura no Centro de Resultados (FPB e AB Porto) competições de Masters/Veteranos masculinas.
+    Assim que o calendário for publicado, passa a ser lido sem mexer no config.json."""
+    if "Masters" not in {t["id"] for t in CONFIG["equipas"]}:
+        return []
+    season = CONFIG.get("epoca_resultados", 65)
+    known = {c["id"] for c in CONFIG["competicoes"]}  # as já guardadas voltam a ser vistas (não faz mal)
+    out = []
+    for assoc, fonte in ((50, "FPB"), (4, "ABP")):
+        try:
+            soup = get(f"{BASE}/competitions?associationId={assoc}&seasonId={season}")
+        except Exception as e:  # noqa: BLE001
+            log(f"AVISO: lista de competições {fonte}: {e}")
+            continue
+        for a in soup.find_all("a", href=re.compile(r"competitionId=(\d+)")):
+            name = norm(a.get_text(" ")) or norm(a.get("title", ""))
+            if not re.search(r"(?i)master|veteran|maxi", name) or re.search(r"(?i)femin", name):
+                continue
+            cid = int(re.search(r"competitionId=(\d+)", a["href"]).group(1))
+            if cid in known or any(c["id"] == cid for c in out):
+                continue
+            log(f"Masters: competição encontrada {cid} ({name}, {fonte})")
+            out.append({"id": cid, "nome": re.sub(r"(?i)\s*s[ée]nior$", "", name), "equipa": "Masters", "fonte": fonte})
+    if not out:
+        log("Masters: calendário ainda não publicado no Centro de Resultados.")
+    return out
+
+
 # ---------- Atualização ----------
 
 def team_id(base, gaia_name, ab):
@@ -269,7 +299,14 @@ def pending_results(data, now=None):
 
 def main(mode="calendario"):
     data = json.loads(DATA.read_text(encoding="utf-8"))
-    comps = CONFIG["competicoes"]
+    comps = list(CONFIG["competicoes"])
+    # competições descobertas (Masters) ficam guardadas para os modos seguintes (ex.: resultados)
+    extra = {c["id"]: c for c in data.get("comps_extra", [])}
+    if mode == "calendario":
+        for c in masters_competitions():
+            extra[c["id"]] = c
+        data["comps_extra"] = list(extra.values())
+    comps += [c for c in extra.values() if c["id"] not in {x["id"] for x in comps}]
     if mode == "resultados":
         pend = pending_results(data)
         if not pend:

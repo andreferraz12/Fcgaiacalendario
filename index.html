@@ -443,8 +443,8 @@ a.cl-row:hover{background:var(--panel)}
 @media (max-width:860px){.hcta{grid-template-columns:1fr}.hero.home{min-height:240px}}
 @media (max-width:640px){.tabs{gap:0!important}.tabs .tab{font-size:clamp(12px,3.45vw,18px)!important;padding:8px 0 10px!important;letter-spacing:0!important;flex:1 1 auto!important}.hero.home .hero-cr{display:none}.hero.home .huge{font-size:clamp(48px,15vw,72px)}.hchip{font-size:17px;padding:7px 10px}}
 
-:root{--t-m12:#f472b6;--t-m10:#60a5fa;--t-m8:#a3e635;--t-bb:#fdba74}
-.m12{--tc:var(--t-m12)}.m10{--tc:var(--t-m10)}.m8{--tc:var(--t-m8)}.bb{--tc:var(--t-bb)}
+:root{--t-mst:#c9c9d1;--t-m12:#f472b6;--t-m10:#60a5fa;--t-m8:#a3e635;--t-bb:#fdba74}
+.m12{--tc:var(--t-m12)}.m10{--tc:var(--t-m10)}.m8{--tc:var(--t-m8)}.bb{--tc:var(--t-bb)}.mst{--tc:var(--t-mst)}
 .tgroup+.tgroup{margin-top:22px}
 .tgroup .sec-h{display:flex;align-items:center;gap:12px;font-size:24px}
 .tgroup .sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -521,7 +521,7 @@ html,body{overflow-x:hidden}
   --win:#1f8a46;--loss:#c0392b;--hol:#c0392b;
   --gold:#b08a00;--gold-hi:#c9a20a;--gold-lo:#7a6200;
   --t-sen:#b08a00;--t-esp:#555;--t-s18:#e06c14;--t-s16:#11998a;--t-s14:#7451ea;
-  --t-m12:#e0499a;--t-m10:#2f7fe0;--t-m8:#5c9a0a;--t-bb:#ec8a35}
+  --t-mst:#6b7280;--t-m12:#e0499a;--t-m10:#2f7fe0;--t-m8:#5c9a0a;--t-bb:#ec8a35}
 html[data-theme="light"]{background:var(--bg)}
 html[data-theme="light"] body{background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1.2px),radial-gradient(rgba(0,0,0,.025) 1px,transparent 1.2px)}
 /* barra do topo e destaques de clube continuam escuros */
@@ -662,8 +662,9 @@ const MINI=[
  {id:"Sub-10",nm:"Sub 10",cls:"m10",lv:"Minibasquete",mini:true},
  {id:"Sub-8",nm:"Sub 8",cls:"m8",lv:"Minibasquete",mini:true},
  {id:"Baby",nm:"Baby Basket",cls:"bb",lv:"Minibasquete",mini:true}];
-const ALLT=TEAMS.concat(MINI);
-const TGROUPS=[["Seniores",["Seniores Masc","Esperanças"]],["Formação",["Sub-18 Masc A","Sub-18 Masc B","Sub-16 Masc A","Sub-16 Masc B","Sub-14 Masc A","Sub-14 Masc B"]],["Minibasquete",MINI.map(t=>t.id)]];
+const MASTERS={id:"Masters",nm:"Masters",cls:"mst",lv:"Nacional · Liga 2 Master",mini:true,grp:"Grupo A"};
+const ALLT=TEAMS.slice(0,2).concat([MASTERS],TEAMS.slice(2),MINI);
+const TGROUPS=[["Seniores",["Seniores Masc","Esperanças","Masters"]],["Formação",["Sub-18 Masc A","Sub-18 Masc B","Sub-16 Masc A","Sub-16 Masc B","Sub-14 Masc A","Sub-14 Masc B"]],["Minibasquete",MINI.map(t=>t.id)]];
 const TM=Object.fromEntries(ALLT.map(t=>[t.id,t]));
 const HOL={"2026-10-05":"Implantação da República","2026-11-01":"Todos os Santos","2026-12-01":"Restauração","2026-12-08":"Imaculada Conceição","2026-12-25":"Natal","2027-01-01":"Ano Novo","2027-02-09":"Carnaval","2027-03-26":"Sexta-feira Santa","2027-03-28":"Páscoa","2027-04-25":"25 de Abril","2027-05-01":"Dia do Trabalhador","2027-05-27":"Corpo de Deus","2027-06-10":"Dia de Portugal","2027-06-24":"São João"};
 const MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
@@ -704,6 +705,10 @@ function icsFor(gs,name){const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//FC 
   L.push("END:VCALENDAR");return L.join("\r\n")}
 function dl(text,name){try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"text/calendar;charset=utf-8"}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}catch(e){}}
 let S={ttab:"ov",more:{},jor:{},phase:{},tab:"in",view:"month",cur:pd(TODAY),day:TODAY,sel:new Set(TEAMS.map(t=>t.id)),team:null};
+// Masters: só plantel até haver jogos; com jogos passa a equipa completa (calendário, filtros, classificação)
+function syncMasters(){const has=GAMES.some(r=>r[0]==="Masters");if(!has||!MASTERS.mini)return;
+  const all=S.sel.size===TEAMS.length;MASTERS.mini=false;TEAMS.splice(2,0,MASTERS);if(all)S.sel.add("Masters")}
+syncMasters();
 try{const s=JSON.parse(localStorage.getItem("fcgaia-app")||"null");if(s){if(["month","week"].includes(s.view))S.view=s.view;if(Array.isArray(s.sel)&&s.sel.length)S.sel=new Set(s.sel.filter(x=>TM[x]))}}catch(e){}
 if(location.hash==="#calendario")S.tab="cal";
 if(location.hash==="#equipas")S.tab="eq";
@@ -795,7 +800,7 @@ function renderTeams(){
   if(!S.team){
     const prova=t=>{const ph=STAND[t.id]||[],st=ph[ph.length-1];if(st)return st.name;const g=G.filter(x=>x.team===t.id&&!/^Taça/.test(x.phase)).pop()||G.find(x=>x.team===t.id);return g?g.comp:""};
     const nPl=t=>(PLANTEL[t.id]||[]).length;
-    const card=t=>`<button class="tcard ${t.cls}" data-team="${esc(t.id)}"><span class="lv">${esc(t.lv)}</span><span class="nm">${esc(t.nm)}</span><span class="pv2">${esc(t.mini?(nPl(t)?nPl(t)+" atletas":"Encontros de minibasquete"):prova(t))}</span><span class="c-go" aria-hidden="true">›</span></button>`;
+    const card=t=>`<button class="tcard ${t.cls}" data-team="${esc(t.id)}"><span class="lv">${esc(t.lv)}</span><span class="nm">${esc(t.nm)}</span><span class="pv2">${esc(t.mini?(nPl(t)?nPl(t)+" atletas":(t.lv==="Minibasquete"?"Encontros de minibasquete":(t.grp?"Liga 2 Master · "+t.grp:"Plantel"))):prova(t))}</span><span class="c-go" aria-hidden="true">›</span></button>`;
     const coordOf=h=>{const c=COORD.find(x=>h==="Formação"?/forma/i.test(x.role):h==="Minibasquete"?/mini/i.test(x.role):false);return c?`<div class="gcoord">${coachChip(c.name,c.role)}</div>`:""};
     const groups=TGROUPS.map(([h,ids])=>`<section class="tgroup"><h3 class="sec-h">${h}</h3>${coordOf(h)}<div class="tgrid">${ids.map(id=>card(TM[id])).join("")}</div></section>`).join("");
     return `<p class="eyebrow">FC Gaia 26/27</p><h2 class="huge">Equipas</h2>${groups}`}
@@ -807,7 +812,7 @@ function renderTeams(){
   const sel=`<label class="fase" for="fase"><span>Fase</span><select id="fase">${phases.map(p=>`<option value="${esc(p)}"${p===cur?" selected":""}>${esc(p)}</option>`).join("")}<option value="*"${cur==="*"?" selected":""}>Todas as fases</option></select></label>`;
   const side=`<aside class="side" aria-label="Escalões"><p class="side-h">Escalões</p><div class="side-l">${ALLT.map(x=>`<button class="side-i ${x.cls}" data-team="${esc(x.id)}" aria-current="${x.id===t.id}"><i></i>${esc(x.nm)}</button>`).join("")}</div></aside>`;
   const tabs=`<div class="ttabs" role="tablist" aria-label="Secções da equipa">${[["ov","Visão geral"],["jg","Jogos"],["pl","Plantel"]].map(([k,l])=>`<button role="tab" class="ttab" id="tt-${k}" data-ttab="${k}" aria-selected="${S.ttab===k}">${l}</button>`).join("")}</div>`;
-  if(t.mini)return `<div class="tlay">${side}<div class="tmain"><button class="backbtn" id="back">‹ Voltar às equipas</button><p class="eyebrow">${esc(t.lv)}</p><h2 class="huge">${esc(t.nm)}</h2><div class="tbody">${treinosBox(t)}${teamSquad(t)}</div></div></div>`;
+  if(t.mini)return `<div class="tlay">${side}<div class="tmain"><button class="backbtn" id="back">‹ Voltar às equipas</button><p class="eyebrow">${esc(t.lv)}</p><h2 class="huge">${esc(t.nm)}</h2><div class="tbody">${t.id==="Masters"?`<div class="box"><h3>Liga 2 Master · Grupo A</h3><p class="note">1.ª fase a duas voltas (6 jornadas) com GDB Leça, Académico FC e ED Guarda UP. Os 2 primeiros seguem para a Fase de Subida. O calendário aparece aqui assim que a FPB o publicar.</p></div>`:""}${treinosBox(t)}${teamSquad(t)}</div></div></div>`;
   const body=S.ttab==="jg"?teamGames(t,cur,all):S.ttab==="pl"?teamSquad(t):teamOverview(t,cur,all);
   return `<div class="tlay">${side}<div class="tmain"><button class="backbtn" id="back">‹ Voltar às equipas</button><p class="eyebrow">${esc(t.lv)}</p><h2 class="huge">${esc(t.nm)}</h2>
   <div class="trow2">${S.ttab!=="pl"?sel:""}${subBtn(t.id)}</div>${tabs}<div class="tbody">${body}</div></div></div>`}
@@ -1115,7 +1120,7 @@ fetch("data/jogos.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():
   GAMES=d.games;STAND=d.stand||STAND;GROUPS=d.groups||GROUPS;if(d.plantel){PLANTEL=d.plantel;Object.values(PLANTEL).forEach(l=>l.forEach(p=>{p.name=pname(p.name)}))}if(d.coaches)COACHES=d.coaches;if(d.staff)STAFF=d.staff;if(d.coord)COORD=d.coord;Object.assign(LOGOS,d.logos||{});
   G=GAMES.map((r,i)=>{const [team,comp,src,num,jor,date,time,home,away,venue,status,res,phase]=r;const isHome=home.includes("FC Gaia");return {i,team,comp,src,num,jor,date,time,home,away,venue,status,res,phase,isHome,opp:isHome?away:home}});
   if(d.updated){const x=pd(d.updated),u=document.getElementById("upd");if(u)u.textContent=`${x.getDate()} ${MS[x.getMonth()]} ${x.getFullYear()}`}
-  render();if(typeof openFromHash==='function')openFromHash()}).catch(()=>{})})();
+  if(typeof syncMasters==="function")syncMasters();render();if(typeof openFromHash==='function')openFromHash()}).catch(()=>{})})();
 </script>
 
 </body></html>

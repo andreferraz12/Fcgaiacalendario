@@ -51,6 +51,10 @@
       "id": "Esperanças"
     },
     {
+      "id": "Masters",
+      "mini": true
+    },
+    {
       "id": "Sub-18 Masc A"
     },
     {
@@ -133,5 +137,6 @@
       "name": "André Dara",
       "email": "minibasquete.fcgaia@gmail.com"
     }
-  ]
+  ],
+  "epoca_resultados": 65
 }

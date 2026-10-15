@@ -146,6 +146,8 @@ def team_from_text(t):
             return tid if tid in TEAMS else None
     if "femin" in t:
         return None
+    if re.search(r"master|veteran|maxi", t):
+        return "Masters" if "Masters" in TEAMS else None
     if "esperanc" in t:
         return "Esperanças"
     for n in ("18", "16", "14"):

@@ -5,7 +5,7 @@ import json, re, sys, unicodedata, datetime, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / "_site") / "ics"
 NOMES = {"Seniores Masc": "Seniores", "Esperanças": "Esperanças", "Sub-18 Masc A": "Sub 18 A", "Sub-18 Masc B": "Sub 18 B",
-         "Sub-16 Masc A": "Sub 16 A", "Sub-16 Masc B": "Sub 16 B", "Sub-14 Masc A": "Sub 14 A", "Sub-14 Masc B": "Sub 14 B"}
+         "Sub-16 Masc A": "Sub 16 A", "Sub-16 Masc B": "Sub 16 B", "Sub-14 Masc A": "Sub 14 A", "Sub-14 Masc B": "Sub 14 B", "Masters": "Masters"}
 TZ = ["BEGIN:VTIMEZONE", "TZID:Europe/Lisbon", "BEGIN:STANDARD", "DTSTART:19701025T020000", "TZOFFSETFROM:+0100",
       "TZOFFSETTO:+0000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD", "BEGIN:DAYLIGHT",
       "DTSTART:19700329T010000", "TZOFFSETFROM:+0000", "TZOFFSETTO:+0100", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
