@@ -200,7 +200,7 @@ def discover_teams():
     return ids
 
 
-MINI_RX = [("Baby", r"baby"), ("Sub-8", r"(mini|sub)\D{0,12}8\b"), ("Sub-10", r"(mini|sub)\D{0,12}10\b"), ("Sub-12", r"(mini|sub)\D{0,12}12\b")]
+MINI_RX = [("Baby", r"baby"), ("Sub-8", r"(mini|sub)\D{0,12}8\b"), ("Sub-10", r"(mini|sub)\D{0,12}10\b"), ("Sub-12", r"(mini|sub)\D{0,12}12\b"), ("Masters", r"master|veteran")]
 
 
 def club_athletes_mini():
@@ -241,6 +241,8 @@ def club_athletes_mini():
                     log(f"   filtro de escalão sem opção para {tid}")
                     continue
                 for g in gens:
+                    if tid == "Masters" and g and not plain(g[1]).startswith("mascul"):
+                        continue  # Masters: só a equipa masculina
                     try:
                         if g and gen_sel:
                             pg.locator("select").nth(gen_sel["i"]).select_option(g[0])
