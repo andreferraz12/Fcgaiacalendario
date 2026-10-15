@@ -71,7 +71,9 @@ jobs:
         run: python scripts/atualizar.py --modo calendario
       - name: Recolher planteis e treinadores
         if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
-        run: python scripts/plantel.py
+        run: |
+          mkdir -p debug
+          python scripts/plantel.py 2>&1 | tee debug/plantel.log
       - name: Guardar páginas lidas (para diagnóstico)
         if: always() && (steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo')
         uses: actions/upload-artifact@v4
@@ -79,6 +81,16 @@ jobs:
           name: debug-fpb
           path: debug/
           if-no-files-found: ignore
+      - name: Guardar diagnóstico no ramo "diagnostico"
+        if: always() && (steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo')
+        run: |
+          [ -d debug ] || exit 0
+          rm -rf /tmp/diag && mkdir -p /tmp/diag && cp -r debug/. /tmp/diag/
+          cd /tmp/diag
+          git init -q -b diagnostico
+          git add -A
+          git -c user.name=fcgaia-bot -c user.email=fcgaia-bot@users.noreply.github.com commit -qm "Diagnóstico $(date -u +%Y-%m-%d\ %H:%M)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" diagnostico
       - name: Guardar alterações
         id: guardar
         if: steps.modo.outputs.modo != 'nenhum'
