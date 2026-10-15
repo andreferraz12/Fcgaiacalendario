@@ -100,8 +100,11 @@ jobs:
           git config user.email "fcgaia-bot@users.noreply.github.com"
           git add data/jogos.json
           git commit -m "Atualizar ${{ steps.modo.outputs.modo }} $(date -u +%Y-%m-%d\ %H:%M)"
-          git pull --rebase
-          git push
+          git status --short > debug/git-status.txt 2>&1 || true
+          for i in 1 2 3; do
+            git pull --rebase --autostash 2>&1 | tee -a debug/git-pull.txt && git push 2>&1 | tee -a debug/git-push.txt && break
+            sleep 10
+          done
           echo "mudou=true" >> "$GITHUB_OUTPUT"
 
   publicar:
