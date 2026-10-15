@@ -211,79 +211,54 @@ FILTRO_ATLETAS = {
 
 
 def club_athletes_mini():
-    """Atletas do clube por escalão, usando os filtros (menus próprios, não <select>) da página
-    /atletas/clube_119/: Género e Escalão + "Aplicar filtros". Devolve {equipa: {id: nome}}."""
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        return {}
+    """Atletas do clube por escalão, pelo mesmo pedido que a página /atletas/clube_119/ faz ao escolher
+    Género e Escalão (admin-ajax.php, action=search_player). Devolve {equipa: {id: nome}}.
+    Proteção: se dois escalões devolverem exatamente a mesma lista, o filtro não funcionou e nada é usado."""
     out = {t: {} for t in FILTRO_ATLETAS if t in TEAMS}
-    url = f"{FPB}/atletas/clube_{CLUBE}/"
+    epoca = CONFIG.get("epoca_fpb", "2026/2027")
     DEBUG.mkdir(exist_ok=True)
-
-    def pick(pg, box, value):
-        """Abre o menu (div.drop_comps.<box>) e escolhe a opção com esse tag/value."""
-        pg.locator(f".drop_comps.{box} .title").first.click(timeout=5000)
-        pg.wait_for_timeout(400)
-        opt = pg.locator(f'.drop_comps.{box} li.option[tag="{value}"], .drop_comps.{box} li.option[value="{value}"]').first
-        if not opt.count():
-            return False
-        opt.click(timeout=5000, force=True)
-        pg.wait_for_timeout(600)
-        return True
-
-    try:
-        with sync_playwright() as p:
-            b = p.chromium.launch()
-            pg = b.new_page(viewport={"width": 1280, "height": 2000},
-                            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36")
-            for tid, (opts, gens) in FILTRO_ATLETAS.items():
-                if tid not in out:
-                    continue
-                for opt in opts:
-                    for g in gens:
-                        try:
-                            pg.goto(url, wait_until="domcontentloaded", timeout=60000)
-                            pg.wait_for_selector(".drop_comps.escalao", timeout=20000)
-                            pg.wait_for_timeout(1500)
-                            if not pick(pg, "genero", g):
-                                log(f"   filtro: sem género {g}")
-                                continue
-                            if not pick(pg, "escalao", opt):
-                                log(f"   filtro: sem escalão '{opt}'")
-                                continue
-                            ap = pg.locator("#aplicar-filtros").first
-                            if ap.count() and ap.is_visible():
-                                ap.click(timeout=5000)
-                            # no computador o filtro aplica-se ao escolher a opção (o botão é só do telemóvel)
-                            pg.wait_for_timeout(3000)
-                            try:
-                                pg.wait_for_load_state("networkidle", timeout=10000)
-                            except Exception:  # noqa: BLE001
-                                pass
-                            for _ in range(8):  # listas longas carregam ao fazer scroll
-                                pg.mouse.wheel(0, 5000)
-                                pg.wait_for_timeout(700)
-                            # carregar mais resultados, se houver
-                            for _ in range(10):
-                                more = pg.get_by_text(re.compile(r"(ver|carregar) mais", re.I))
-                                if not more.count() or not more.first.is_visible():
-                                    break
-                                more.first.click(timeout=3000)
-                                pg.wait_for_timeout(1500)
-                            links = pg.eval_on_selector_all("a[href*='/atletas/']", "els=>els.map(e=>[e.href,(e.innerText||'').trim()])")
-                            n0 = len(out[tid])
-                            for href, txt in links:
-                                m = re.search(r"/atletas/(\d+)", href)
-                                if m and "clube_" not in href and txt:
-                                    out[tid].setdefault(int(m.group(1)), norm(txt))
-                            log(f"   {tid} ({opt} · {g}): +{len(out[tid]) - n0} atletas")
-                            (DEBUG / f"atletas-{slug(tid)}-{slug(opt)}-{g}.html").write_text(pg.content(), encoding="utf-8")
-                        except Exception as e:  # noqa: BLE001
-                            log(f"AVISO: filtro {tid}/{opt}/{g}: {e}")
-            b.close()
-    except Exception as e:  # noqa: BLE001
-        log(f"AVISO: falhou a página de atletas do clube: {e}")
+    seen = {}
+    for tid, (opts, gens) in FILTRO_ATLETAS.items():
+        if tid not in out:
+            continue
+        for opt in opts:
+            for g in gens:
+                data = {"action": "search_player", "epoca": epoca, "escalao": opt, "genero": g,
+                        "nome": "", "idAssociacao": "", "idClube": str(CLUBE)}
+                try:
+                    r = requests.post(f"{FPB}/wp-admin/admin-ajax.php", data=data, headers=UA, timeout=30)
+                    r.raise_for_status()
+                    try:
+                        html = r.json()
+                    except ValueError:
+                        html = r.text
+                    html = html if isinstance(html, str) else json.dumps(html)
+                    (DEBUG / f"atletas-{slug(tid)}-{slug(opt)}-{g}.html").write_text(html, encoding="utf-8")
+                    soup = BeautifulSoup(html, "html.parser")
+                    got = {}
+                    for a in soup.find_all("a", href=re.compile(r"/atletas/(\d+)")):
+                        aid = int(re.search(r"/atletas/(\d+)", a["href"]).group(1))
+                        nm = norm(a.get_text(" "))
+                        if nm:
+                            got.setdefault(aid, nm)
+                    key = frozenset(got)
+                    if got and key in seen:
+                        log(f"AVISO: {tid} ({opt} · {g}) devolveu a mesma lista que {seen[key][1]}; filtro ignorado nos dois.")
+                        out[tid] = {}
+                        out.setdefault("_invalido", set()).update({tid, seen[key][0]})
+                        continue
+                    if got:
+                        seen[key] = (tid, f"{tid} ({opt} · {g})")
+                    if tid not in out.get("_invalido", set()):
+                        for k, v in got.items():
+                            out[tid].setdefault(k, v)
+                    log(f"   {tid} ({opt} · {g}): {len(got)} atletas")
+                except Exception as e:  # noqa: BLE001
+                    log(f"AVISO: filtro {tid}/{opt}/{g}: {e}")
+                time.sleep(0.5)
+    bad = out.pop("_invalido", set())
+    for t in bad:
+        out[t] = {}
     return out
 
 
