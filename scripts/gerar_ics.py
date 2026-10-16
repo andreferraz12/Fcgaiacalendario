@@ -56,7 +56,11 @@ def cal(games, name):
             L += ["DTSTART;VALUE=DATE:" + d.strftime("%Y%m%d"), "DTEND;VALUE=DATE:" + (d + datetime.timedelta(days=1)).strftime("%Y%m%d")]
         title = f"{NOMES.get(team, team)} · {home} vs {away}" + (f" ({res})" if res else "")
         desc = f"{comp}" + (f" · Jornada {jor}" if jor else "") + f"\nJogo n.º {num}" + ("" if hora else "\nHora ainda por marcar (data de referência da jornada).")
-        L += ["SUMMARY:" + esc(title), "LOCATION:" + esc(venue), "DESCRIPTION:" + esc(desc), "END:VEVENT"]
+        loc = [ "LOCATION:" + esc(venue)]
+        if re.search(r"(?i)futebol clube gaia|pav\.? fc ?gaia", venue):
+            loc = ["LOCATION:" + esc("Pavilhão Futebol Clube Gaia, Rua Fialho de Almeida 34, 4400-150 Vila Nova de Gaia"),
+                   "GEO:41.1280245;-8.6085688"]
+        L += ["SUMMARY:" + esc(title)] + loc + ["DESCRIPTION:" + esc(desc), "END:VEVENT"]
     L.append("END:VCALENDAR")
     return "\r\n".join(fold(x) for x in L) + "\r\n"
 
