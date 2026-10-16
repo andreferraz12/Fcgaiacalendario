@@ -782,7 +782,7 @@ const SITE=(/^https?:$/.test(location.protocol)&&/github\.io|pages\.dev|fcgaia/.
 const CONTACT={wa:"351937220404",waTxt:"+351 937 220 404",email:"basquetebol@fcgaia.pt",form:"https://forms.gle/YJqEnns1Wjqj4MHJ6",
   morada:["Rua Fialho de Almeida, 34","4400-150 Vila Nova de Gaia"],horario:[["Segunda a sexta","18h30 – 20h30"],["Sábado","10h00 – 12h30"]],
   capa:"https://sav2.fpb.pt/uploads/clubes/capa/CLU_capa119.jpg",
-  mapa:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent("Rua Fialho de Almeida 34, 4400-150 Vila Nova de Gaia"),
+  mapa:"https://www.google.com/maps/search/?api=1&query=41.1280245%2C-8.6085688&query_place_id=ChIJcSpv7dBkJA0RBqLMhBpR_4Y",
   redes:[["Instagram","https://www.instagram.com/fcgaiabasket","ig","@fcgaiabasket"],["Facebook","https://www.facebook.com/fcgaiabasquetebol","fb","fcgaiabasquetebol"],["Site do clube","https://www.fcgaia.pt/","web","fcgaia.pt"]]};
 const IC={
   nav:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
@@ -876,7 +876,7 @@ const TREINOS={
  "Sub-18":{nasc:"2009 e 2010",rows:[["Segunda","21h30–23h00","ped"],["Quarta","21h30–23h00","ped"],["Quinta","20h00–21h30","fcg","A"],["Sexta","21h30–23h00","ped"]]}};
 function treinosBox(t){const k=t.id.replace(/ Masc [AB]$/,""),tr=TREINOS[k];if(!tr)return "";const eq=(t.id.match(/ Masc ([AB])$/)||[])[1];
   const rows=tr.rows.filter(r=>!r[3]||r[3]===eq);
-  return `<section class="box treinos"><h3>Treinos</h3><p class="sub">Nascidos em ${esc(tr.nasc)}</p><ul class="tl">${rows.map(r=>`<li><b>${r[0]}</b><span class="th">${r[1]}</span><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(PAVQ[r[2]])}" target="_blank" rel="noopener">${IC.pin}<span>${esc(PAV[r[2]])}</span></a></li>`).join("")}</ul></section>`}
+  return `<section class="box treinos"><h3>Treinos</h3><p class="sub">Nascidos em ${esc(tr.nasc)}</p><ul class="tl">${rows.map(r=>`<li><b>${r[0]}</b><span class="th">${r[1]}</span><a href="${r[2]==="fcg"?"https://www.google.com/maps/search/?api=1&query=41.1280245%2C-8.6085688&query_place_id=ChIJcSpv7dBkJA0RBqLMhBpR_4Y":"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(PAVQ[r[2]])}" target="_blank" rel="noopener">${IC.pin}<span>${esc(PAV[r[2]])}</span></a></li>`).join("")}</ul></section>`}
 function teamOverview(t,cur,all){const gs=cur==="*"?all:all.filter(g=>g.phase===cur);const {fut,past}=splitGames(gs);
   const nx=fut[0],ls=past.find(g=>g.res)||past[0];const st=(STAND[t.id]||[]).find(p=>cur==="*"||p.phase===cur);
   const pl=PLANTEL[t.id]||[];const sf=staffOf(t.id);
@@ -990,12 +990,19 @@ const HOME_ADDR="Rua Fialho de Almeida 34, 4400-150 Vila Nova de Gaia";
 const hasPlace=g=>!pend(g)&&g.venue&&!/definir/i.test(g.venue);
 const placeQ=g=>/futebol clube gaia|pav\.? fc ?gaia/i.test(g.venue)?HOME_ADDR:g.venue;
 const IOS=/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent),ANDROID=/Android/.test(navigator.userAgent);
-function dirMenu(g){if(!hasPlace(g))return "";const q=encodeURIComponent(placeQ(g));
+const HOME_GEO={lat:41.1280245,lng:-8.6085688,pid:"ChIJcSpv7dBkJA0RBqLMhBpR_4Y",nm:"Pavilhão FC Gaia"};
+const isHome=g=>/futebol clube gaia|pav\.? fc ?gaia/i.test(g.venue||"");
+function dirMenu(g){if(!hasPlace(g))return "";const q=encodeURIComponent(placeQ(g)+", Portugal");
+  const H=HOME_GEO,ll=H.lat+","+H.lng,h=isHome(g);
+  const gm=h?`https://www.google.com/maps/dir/?api=1&destination=${ll}&destination_place_id=${H.pid}`:`https://www.google.com/maps/dir/?api=1&destination=${q}`;
+  const wz=h?`https://waze.com/ul?ll=${ll}&navigate=yes`:`https://waze.com/ul?q=${q}&navigate=yes`;
+  const ap=h?`https://maps.apple.com/?daddr=${ll}&q=${encodeURIComponent(H.nm)}`:`https://maps.apple.com/?daddr=${q}`;
+  const geo=h?`geo:${ll}?q=${ll}(${encodeURIComponent(H.nm)})`:`geo:0,0?q=${q}`;
   return `<div class="sharew" id="m-dir" hidden><p class="pop-h">${IC.pin}<span>${esc(ven(g))}</span></p>
-   <a class="pi" href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener">${IC.nav}<span>Google Maps</span></a>
-   <a class="pi" href="https://waze.com/ul?q=${q}&navigate=yes" target="_blank" rel="noopener">${IC.nav}<span>Waze</span></a>
-   <a class="pi" href="https://maps.apple.com/?daddr=${q}" target="_blank" rel="noopener">${IC.nav}<span>Apple Maps</span></a>
-   ${ANDROID?`<a class="pi" href="geo:0,0?q=${q}">${IC.pin}<span>Outra app</span></a>`:""}</div>`}
+   <a class="pi" href="${gm}" target="_blank" rel="noopener">${IC.nav}<span>Google Maps</span></a>
+   <a class="pi" href="${wz}" target="_blank" rel="noopener">${IC.nav}<span>Waze</span></a>
+   <a class="pi" href="${ap}" target="_blank" rel="noopener">${IC.nav}<span>Apple Maps</span></a>
+   ${ANDROID?`<a class="pi" href="${geo}">${IC.pin}<span>Outra app</span></a>`:""}</div>`}
 const gameUrl=g=>SITE+"#jogo/"+slug(g.team)+"/"+g.num;
 function shareText(g){const t=TM[g.team],d=g.date?pd(g.date):null,sc=score(g);
   const nm=t.nm.replace(/"/g,""),l=[`🏀 ${g.home} vs ${g.away}`,g.comp.startsWith(nm)?g.comp:`${nm} · ${g.comp}`];
