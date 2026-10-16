@@ -507,7 +507,7 @@ footer p{margin:0 0 6px;line-height:1.45}footer b{color:var(--muted)}
   .pv-h{font-weight:700;width:52px}.pv-t{font-weight:700;width:110px;text-transform:uppercase}.pv-r{font-weight:700;text-align:right;width:70px}
 }
 .flag{height:14px;width:auto;vertical-align:-2px;margin-right:7px;border-radius:2px}.flag.e{font-size:16px;margin-right:6px}
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip}
 @media (max-width:640px){.gbanner::after{display:none}}
 
 /* ===== tema claro (botão ☀/☾ no topo; segue o sistema por omissão) ===== */
@@ -575,6 +575,21 @@ html[data-theme="light"] .athph b{color:#bdb9ae}
   .athtop{grid-template-columns:1fr}
   .athph{width:min(100%,280px);margin:0 auto}
   .athid{text-align:left}
+}
+
+/* ===== revisão de usabilidade ===== */
+/* emblemas nos resultados da jornada (o estilo dos números apanhava as iniciais) */
+.mr .lgo b{font-family:var(--f-cond);font-size:.5em;color:var(--muted);text-align:center}
+/* espaço entre a grelha da visão geral e os treinos */
+.tbody>.ovg+.treinos{margin-top:14px}
+/* listas que deslizam na horizontal: sinal de que há mais à direita */
+@media (max-width:860px){
+  .side-l,.chips{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);padding-right:24px}
+}
+/* telemóvel: o menu fica sempre visível ao fazer scroll (o emblema sobe, os separadores ficam) */
+@media (max-width:640px){
+  .mast{position:sticky;top:var(--mast-top,0);z-index:20}
+  .tabs .tab{min-height:44px}
 }
 html.printing .jnav button{display:none}
 html.printing .gg{background:#fff;border-color:#ccc}
@@ -747,7 +762,10 @@ function renderCal(){let eyebrow,title,body;
       gs.slice(0,4).map(g=>`<span class="mini ${TM[g.team].cls}${pend(g)?" pend":""}"><em>${g.time?hh(g.time):"--"}</em> ${esc(TM[g.team].nm)}</span>`).join("")+
       (gs.length>4?`<span class="empty">+${gs.length-4} jogos</span>`:"")+
       `<span class="dots">${gs.map(g=>`<span class="dot ${TM[g.team].cls}${pend(g)?" pend":""}"></span>`).join("")}</span></button>`}
-    body+=`</div>`;const sd=pd(S.day),gs=onDay(S.day);
+    body+=`</div>`;
+    // se hoje não há jogos, mostra logo o próximo dia com jogos deste mês (até a pessoa escolher outro)
+    if(!S.dayPicked&&S.day===TODAY&&!onDay(S.day).length){const nx=[...Array(31)].map((_,n)=>ks(add(pd(TODAY),n+1))).find(k=>pd(k).getMonth()===mo&&onDay(k).length);if(nx){S.day=nx;return renderCal()}}
+    const sd=pd(S.day),gs=onDay(S.day);
     body+=`<section class="daypanel"><h3>${DWL[wd(sd)]}, ${sd.getDate()} de ${MES[sd.getMonth()]}${HOL[S.day]?` <span class="hol">${esc(HOL[S.day])}</span>`:""}</h3>${gs.length?gs.map(g=>line(g)).join(""):`<span class="empty">Sem jogos neste dia. Toca noutro dia do calendário.</span>`}</section>`}
   else{const m=mon(S.cur),e=add(m,6);eyebrow=`${m.getDate()} ${MS[m.getMonth()]} a ${e.getDate()} ${MS[e.getMonth()]}`;title="Agenda";
     const tpl=[0,1,2,3,4,5,6].map(n=>{const k=ks(add(m,n));return onDay(k).length?"minmax(0,1fr)":"72px"}).join(" ");
@@ -796,7 +814,7 @@ function subMenu(id){const https=icsUrl(id),webcal=https.replace(/^https:/,"webc
   <p class="pop-n">Os jogos novos e as alterações entram sozinhos no teu calendário.</p></div>`}
 function subBtn(id){return `<div class="subw"><button class="softbtn" id="subbtn" data-sub="${esc(id||"")}" aria-haspopup="true" aria-expanded="false">${IC.bell}<span>Subscrever calendário</span></button></div>`}
 function actions(where){const sub=where==="cal"?subBtn(""):"";
-  const loc=TOP?`<button class="act" id="print">Imprimir / PDF</button><span aria-hidden="true">·</span><button class="act" id="ics-all">Exportar calendário (.ics)</button>`:`<span class="note">Imprimir e exportar estão disponíveis no site público.</span>`;
+  const loc=TOP?`${where==="cal"?"":`<button class="act" id="print">Imprimir / PDF</button><span aria-hidden="true">·</span>`}<button class="act" id="ics-all">Exportar calendário (.ics)</button>`:`<span class="note">Imprimir e exportar estão disponíveis no site público.</span>`;
   return `<div class="acts">${loc}${sub?`<span aria-hidden="true">·</span>${sub}`:""}</div>`}
 function myRow(id){const ph=STAND[id];if(!ph||!ph.length)return null;const st=ph[ph.length-1];const idx=st.rows.findIndex(r=>r[0].startsWith("FC Gaia"));return idx<0?null:{pos:idx+1,row:st.rows[idx]}}
 const ckey=n=>slug(n);
@@ -811,7 +829,7 @@ function renderTeams(){
   if(!S.team){
     const prova=t=>{const ph=STAND[t.id]||[],st=ph[ph.length-1];if(st)return st.name;const g=G.filter(x=>x.team===t.id&&!/^Taça/.test(x.phase)).pop()||G.find(x=>x.team===t.id);return g?g.comp:""};
     const nPl=t=>(PLANTEL[t.id]||[]).length;
-    const card=t=>`<button class="tcard ${t.cls}" data-team="${esc(t.id)}"><span class="lv">${esc(t.lv)}</span><span class="nm">${esc(t.nm)}</span><span class="pv2">${esc(t.mini?(nPl(t)?nPl(t)+" atletas":(t.lv==="Minibasquete"?"Encontros de minibasquete":(t.grp?"Liga 2 Master · "+t.grp:"Plantel"))):prova(t))}</span><span class="c-go" aria-hidden="true">›</span></button>`;
+    const card=t=>`<button class="tcard ${t.cls}" data-team="${esc(t.id)}"><span class="lv">${esc(t.lv)}</span><span class="nm">${esc(t.nm)}</span><span class="pv2">${esc(t.mini?(nPl(t)?nPl(t)+(nPl(t)===1?" atleta":" atletas"):(t.lv==="Minibasquete"?"Encontros de minibasquete":(t.grp?"Liga 2 Master · "+t.grp:"Plantel"))):prova(t))}</span><span class="c-go" aria-hidden="true">›</span></button>`;
     const coordOf=h=>{const c=COORD.find(x=>h==="Formação"?/forma/i.test(x.role):h==="Minibasquete"?/mini/i.test(x.role):false);return c?`<div class="gcoord">${coachChip(c.name,c.role)}</div>`:""};
     const groups=TGROUPS.map(([h,ids])=>`<section class="tgroup"><h3 class="sec-h">${h}</h3>${coordOf(h)}<div class="tgrid">${ids.map(id=>card(TM[id])).join("")}</div></section>`).join("");
     return `<p class="eyebrow">FC Gaia 26/27</p><h2 class="huge">Equipas</h2>${groups}`}
@@ -1112,13 +1130,13 @@ document.addEventListener("click",e=>{
   else if(b.dataset.chip){const id=b.dataset.chip,all=S.sel.size===TEAMS.length;
     if(id==="*")S.sel=new Set(TEAMS.map(t=>t.id));else if(all)S.sel=new Set([id]);else{S.sel.has(id)?S.sel.delete(id):S.sel.add(id);if(!S.sel.size)S.sel=new Set(TEAMS.map(t=>t.id))}
     save();render()}
-  else if(b.dataset.day){S.day=b.dataset.day;render();const p=document.querySelector(".daypanel");if(p&&window.innerWidth<700)p.scrollIntoView({block:"start",behavior:"smooth"})}
+  else if(b.dataset.day){S.day=b.dataset.day;S.dayPicked=true;render();const p=document.querySelector(".daypanel");if(p&&window.innerWidth<700)p.scrollIntoView({block:"start",behavior:"smooth"})}
   else if(b.dataset.goteam){S.tab="eq";S.team=b.dataset.goteam;S.ttab="ov";setHash(teamHash(S.team));render();window.scrollTo(0,0)}
   else if(b.dataset.team){const was=S.team;S.team=b.dataset.team;if(!was)S.ttab="ov";setHash(teamHash(S.team));render();window.scrollTo(0,0)}
   else if(b.id==="back"){S.team=null;setHash("#equipas");render();window.scrollTo(0,0)}
   else if(b.id==="prev"||b.id==="next"){const s=b.id==="next"?1:-1;
     if(S.view==="month"){S.cur=new Date(S.cur.getFullYear(),S.cur.getMonth()+s,1,12);S.day=ks(S.cur)}else S.cur=add(S.cur,7*s);render()}
-  else if(b.id==="today"){S.cur=pd(TODAY);S.day=TODAY;render()}});
+  else if(b.id==="today"){S.cur=pd(TODAY);S.day=TODAY;S.dayPicked=true;render()}});
 document.addEventListener("change",e=>{if(e.target.id==="fase"){S.phase[S.team]=e.target.value;render()}});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="home"){goHome();return}if((e.key==="Enter"||e.key===" ")&&e.target.dataset&&e.target.dataset.ath){e.preventDefault();const [tid,id]=e.target.dataset.ath.split("|");athletePanel(tid,id);return}if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("mine")){e.preventDefault();detail(G[+e.target.dataset.g]);return}if(e.key==="Escape"){closeSheet();closePop()}});
 document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.parentNode&&t.parentNode.classList&&t.parentNode.classList.contains("av"))t.classList.add("ok");if(t.id==="capa")t.classList.add("ok")},true);
@@ -1132,6 +1150,11 @@ document.getElementById("ticker").innerHTML=Array(16).fill("<span>#TODOSPELOGAIA
   b.addEventListener("click",()=>{R.dataset.theme=R.dataset.theme==="light"?"dark":"light";try{localStorage.setItem("fcgaia-tema",R.dataset.theme)}catch(e){}lab()});
   try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",e=>{if(!localStorage.getItem("fcgaia-tema")){R.dataset.theme=e.matches?"light":"dark";lab()}})}catch(e){}
 })();
+
+/* menu fixo no telemóvel: só os separadores ficam à vista */
+(function(){const m=document.querySelector(".mast"),t=document.querySelector(".tabs");if(!m||!t)return;
+  const fit=()=>{const off=t.getBoundingClientRect().top-m.getBoundingClientRect().top;m.style.setProperty("--mast-top",(-Math.max(0,off))+"px")};
+  fit();addEventListener("resize",fit);addEventListener("load",fit)})();
 const U="https://sav2.fpb.pt/uploads/clubes/logotipo/",O="https://sav2.fpb.pt/old_uploads/CLU/";
 const LOGOS={"FIDES":U+"CLU_7311702380602.jpg","Juvemaia ACDC/Mecprec":U+"CLU_1601704477075.png","SC Beira-Mar":O+"CLU_6_LOGO.png","AD Sanjoanense":U+"CLU_31754576195.png","Olivais FC":O+"CLU_7_LOGO.png","Gafanha Rascunhos Urbano":U+"CLU_481763144304.png","FAC - Crédito Agrícola":U+"CLU_691693656807.png","Illiabum Clube":U+"Illiabum_Clube1602333892.png","Ovarense OLHO MARINHO":U+"CLU_121663058006.png","CAAS WISIFY":U+"Centro_dos_Antigos_Alunos_Salesianos1639227568.png","Académica Coimbra":U+"Associacao_Academica_de_Coimbra1596300872.png","CLIP Teams":U+"CLU_34851676308479.jpg","UD Oliveirense":O+"CLU_28_LOGO.png","Sangalhos DC":U+"Sangalhos_Desporto_Clube1627490311.png","Académico FC":O+"CLU_188_LOGO.png","ACA-Perfil Independente":U+"Atletico_Clube_Alfenense1599605277.png",
 "GDB Leça":U+"Grupo_Desportivo_Basquete_de_Leca1602618188.png","CD Aves":U+"CLU_36571695909164.png","Bolacesto":U+"CLU_1791790001218.png","Bolacesto B":U+"CLU_1791790001218.png","AC Alfenense":U+"Atletico_Clube_Alfenense1599605277.png","Guifões SC A":U+"CLU_1741733586027.png","FC Porto B":O+"CLU_120_LOGO.png","5Basket B":U+"CLU_30161748285345.png","Académico/Ribadouro B":O+"CLU_188_LOGO.png","BC Marco":U+"3625_1679141751.png","CPN":U+"Clube_Propaganda_de_Natacao1603657754.png","CPN A ANTARTE":U+"Clube_Propaganda_de_Natacao1603657754.png","USC Paredes":U+"Uniao_Sport_Clube_de_Paredes1640343022.png","CD Póvoa A":U+"CLU_1181738506693.png","CBP B":O+"CLU_3208_LOGO.png","Maia Basket B":U+"CLU_7141746203247.png","SC Vasco da Gama A":U+"CLU_1761675707996.png","SC Vasco da Gama B":U+"CLU_1761675707996.png","Powertogether B":U+"CLU_31551790159606.jpeg","UAA Aroso B":U+"CLU_181.png"};
