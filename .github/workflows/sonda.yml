@@ -1,0 +1,20 @@
+name: Sonda estatísticas (temporário)
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install requests==2.32.3 beautifulsoup4==4.12.3
+      - run: python scripts/sonda_stats.py
+      - name: Guardar no ramo diagnostico
+        if: always()
+        run: |
+          rm -rf /tmp/diag && mkdir -p /tmp/diag && cp -r debug/. /tmp/diag/ && cd /tmp/diag
+          git init -q -b diagnostico && git add -A
+          git -c user.name=fcgaia-bot -c user.email=fcgaia-bot@users.noreply.github.com commit -qm "Sonda"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" diagnostico
