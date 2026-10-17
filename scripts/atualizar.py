@@ -212,6 +212,12 @@ def club_results(games):
     """Resultados do clube em fpb.pt/resultados/clube_119/ (fonte de reserva).
     Usa os nomes de equipas já conhecidos para encontrar cada jogo e os dois números entre eles."""
     soup = get(CONFIG["resultados_clube"])
+    try:
+        dbg = ROOT / "debug"
+        dbg.mkdir(exist_ok=True)
+        (dbg / "resultados-clube.html").write_text(str(soup), encoding="utf-8")
+    except Exception:  # noqa: BLE001
+        pass
     lines = [norm(x) for x in soup.get_text("\n").split("\n")]
     lines = [x for x in lines if x]
     blocks, cur = {}, None

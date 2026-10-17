@@ -65,10 +65,14 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Resultados (jogos acabados há 2h30 ou mais)
         if: steps.modo.outputs.modo == 'resultados'
-        run: python scripts/atualizar.py --modo resultados
+        run: |
+          mkdir -p debug
+          python scripts/atualizar.py --modo resultados 2>&1 | tee debug/atualizar.log
       - name: Calendário, resultados e classificações
         if: steps.modo.outputs.modo == 'calendario' || steps.modo.outputs.modo == 'tudo'
-        run: python scripts/atualizar.py --modo calendario
+        run: |
+          mkdir -p debug
+          python scripts/atualizar.py --modo calendario 2>&1 | tee -a debug/atualizar.log
       - name: Recolher planteis e treinadores
         if: steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo'
         run: |
@@ -82,7 +86,7 @@ jobs:
           path: debug/
           if-no-files-found: ignore
       - name: Guardar diagnóstico no ramo "diagnostico"
-        if: always() && (steps.modo.outputs.modo == 'plantel' || steps.modo.outputs.modo == 'tudo')
+        if: always() && steps.modo.outputs.modo != 'nenhum'
         run: |
           [ -d debug ] || exit 0
           rm -rf /tmp/diag && mkdir -p /tmp/diag && cp -r debug/. /tmp/diag/
