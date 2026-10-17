@@ -16100,6 +16100,15 @@
 ],
 "Masters": [
 "João Matos"
+],
+"Sub-8": [
+"Gustavo Ribeirão"
+],
+"Sub-10": [
+"Alexandre Silva"
+],
+"Sub-12": [
+"Ruben Costa"
 ]
 },
 "coord": [
@@ -16167,5 +16176,20 @@
 "role": "Diretora do Minibasquete",
 "name": "Ana Carvalho"
 }
+],
+"apoio": {
+"Minibasquete": [
+"Rodrigo Sousa",
+"Marta Ribeiro",
+"Ana Silva",
+"João Barata",
+"Zekiah Owens",
+"Francisco Silva",
+"Gonçalo Soares",
+"João Pedro Ribeiro",
+"António Cristo",
+"Inês Costa",
+"Bernardo Ribeiro"
 ]
+}
 }
