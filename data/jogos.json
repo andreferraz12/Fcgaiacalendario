@@ -1,5 +1,5 @@
 {
-"updated": "2026-10-16",
+"updated": "2026-10-17",
 "games": [
 [
 "Esperanças",
@@ -262,8 +262,8 @@
 "FPB",
 2785,
 18,
-"2027-03-03",
-"21:30",
+"2027-03-06",
+"15:00",
 "Académica Coimbra",
 "FC Gaia",
 "Pavilhão Multidesportos Dr. Mário Mexia",
@@ -1274,6 +1274,15 @@
 "name": "Esperanças · 1.ª Fase Série B",
 "rows": [
 [
+"Ovarense OLHO MARINHO",
+1,
+1,
+0,
+2,
+83,
+64
+],
+[
 "SC Beira-Mar",
 1,
 1,
@@ -1292,6 +1301,15 @@
 78
 ],
 [
+"UD Oliveirense",
+1,
+0,
+1,
+1,
+64,
+83
+],
+[
 "ACA-Perfil Independente",
 0,
 0,
@@ -1302,24 +1320,6 @@
 ],
 [
 "CLIP Teams",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"Ovarense OLHO MARINHO",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"UD Oliveirense",
 0,
 0,
 0,
@@ -1503,6 +1503,15 @@
 82
 ],
 [
+"CD Aves",
+3,
+1,
+2,
+4,
+149,
+196
+],
+[
 "FC Gaia B",
 3,
 1,
@@ -1512,13 +1521,13 @@
 186
 ],
 [
-"CD Aves",
+"Powertogether B",
 2,
 1,
 1,
 3,
-103,
-137
+111,
+113
 ],
 [
 "SC Vasco da Gama B",
@@ -1528,15 +1537,6 @@
 3,
 113,
 148
-],
-[
-"Powertogether B",
-1,
-0,
-1,
-1,
-52,
-67
 ]
 ]
 }
@@ -1660,6 +1660,15 @@
 67
 ],
 [
+"Bolacesto B",
+3,
+1,
+2,
+4,
+161,
+119
+],
+[
 "FC Gaia B",
 1,
 1,
@@ -1667,15 +1676,6 @@
 2,
 49,
 45
-],
-[
-"Bolacesto B",
-2,
-0,
-2,
-2,
-79,
-101
 ],
 [
 "CBP B",
@@ -1688,12 +1688,12 @@
 ],
 [
 "BC Marco",
+1,
 0,
-0,
-0,
-0,
-0,
-0
+1,
+1,
+18,
+82
 ]
 ]
 }
@@ -1723,21 +1723,21 @@
 ],
 [
 "Bolacesto",
-4,
+5,
+3,
 2,
-2,
-6,
-327,
-237
+8,
+409,
+286
 ],
 [
 "GDB Leça",
-4,
+5,
 2,
-2,
-6,
-259,
-263
+3,
+7,
+308,
+345
 ],
 [
 "CD Aves",
@@ -1987,7 +1987,7 @@
 "11:30",
 "GDB Leça",
 "Bolacesto",
-"",
+"49-82",
 "Pav. Mun. Leça Palmeira"
 ],
 [
@@ -2513,7 +2513,7 @@
 "10:00",
 "Bolacesto B",
 "BC Marco",
-"",
+"82-18",
 "Pavilhão Municipal Salvador Guedes"
 ],
 [
@@ -2992,7 +2992,7 @@
 "11:30",
 "CD Aves",
 "Powertogether B",
-"",
+"46-59",
 "Pavilhão do Clube Desportivo das Aves 1930"
 ],
 [
@@ -3636,7 +3636,7 @@
 "21:45",
 "UD Oliveirense",
 "Ovarense OLHO MARINHO",
-"",
+"64-83",
 "Simoldes Arena"
 ],
 [
@@ -3653,7 +3653,7 @@
 2685,
 1,
 "2026-10-17",
-"20:30",
+"21:00",
 "CLIP Teams",
 "CAAS WISIFY",
 "",
@@ -3712,8 +3712,8 @@
 [
 2691,
 2,
-"",
-"",
+"2026-10-25",
+"16:30",
 "CAAS WISIFY",
 "ACA-Perfil Independente",
 "",
@@ -4162,8 +4162,8 @@
 [
 2736,
 10,
-"",
-"",
+"2026-12-19",
+"15:00",
 "Académica Coimbra",
 "FIDES",
 "",
@@ -4312,8 +4312,8 @@
 [
 2751,
 12,
-"",
-"",
+"2027-01-24",
+"16:30",
 "CAAS WISIFY",
 "CLIP Teams",
 "",
@@ -4432,12 +4432,12 @@
 [
 2763,
 14,
-"",
-"",
+"2027-02-07",
+"15:00",
 "Académica Coimbra",
 "ACA-Perfil Independente",
 "",
-"Pavilhão Multidesportos Dr. Mário Mexia"
+"Pavilhão Engº Jorge Anjinho"
 ],
 [
 2764,
@@ -4652,8 +4652,8 @@
 [
 2785,
 18,
-"",
-"",
+"2027-03-06",
+"15:00",
 "Académica Coimbra",
 "FC Gaia",
 "",
@@ -4872,8 +4872,8 @@
 [
 2807,
 22,
-"",
-"",
+"2027-04-18",
+"15:00",
 "Académica Coimbra",
 "CAAS WISIFY",
 "",
@@ -16113,5 +16113,6 @@
 "name": "André Dara",
 "email": "minibasquete.fcgaia@gmail.com"
 }
-]
+],
+"comps_extra": []
 }
