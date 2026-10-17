@@ -237,12 +237,20 @@ def club_results(games):
         h, a = norm(g["home"]).lower(), norm(g["away"]).lower()
         if h not in bl or a not in bl:
             continue
-        ih, ia = bl.index(h), bl.index(a)
-        lo, hi = sorted((ih, ia))
-        nums = [int(x) for x in blocks[g["date"]][lo + 1:hi] if re.fullmatch(r"\d{1,3}", x)]
+        # procura o par casa/fora do MESMO jogo (casa seguida de fora, poucas linhas depois),
+        # para não misturar dois jogos do FC Gaia no mesmo dia
+        pair = next(((i, j) for i, x in enumerate(bl) if x == h
+                     for j in range(i + 1, min(i + 9, len(bl))) if bl[j] == a), None)
+        if not pair:
+            continue
+        ih, ia = pair
+        seg = blocks[g["date"]][ih + 1:ia]
+        if any(x.lower() in (h, a) for x in seg if x.lower() not in (h, a)) or len([x for x in seg if x.lower() not in (h, a)]) > 4:
+            continue
+        nums = [int(x) for x in seg if re.fullmatch(r"\d{1,3}", x)]
         if len(nums) != 2:
             continue
-        sh, sa = (nums[0], nums[1]) if ih < ia else (nums[1], nums[0])
+        sh, sa = nums[0], nums[1]
         found.append((g, f"{sh}-{sa}"))
     return found, len(blocks)
 
