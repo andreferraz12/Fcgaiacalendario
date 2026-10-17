@@ -16114,5 +16114,58 @@
 "email": "minibasquete.fcgaia@gmail.com"
 }
 ],
-"comps_extra": []
+"comps_extra": [],
+"tm": {
+"Baby": [
+"Pedro Silva"
+],
+"Sub-8": [
+"Raquel Moura",
+"José Baptista"
+],
+"Sub-10": [
+"Sara Xavier",
+"Paulo Teixeira"
+],
+"Sub-12": [
+"Ana Carvalho",
+"Pedro Ventura"
+],
+"Sub-14 Masc A": [
+"Nuno Oliveira"
+],
+"Sub-14 Masc B": [
+"Cátia Silva"
+],
+"Sub-16 Masc A": [
+"Jorge Vilar"
+],
+"Sub-16 Masc B": [
+"Stephanie Nascimento"
+],
+"Sub-18 Masc A": [
+"Nuno Silva"
+],
+"Sub-18 Masc B": [
+"Manuel Amaral"
+],
+"Esperanças": [
+"Helder Regalado"
+],
+"Seniores Masc": [
+"João Xavier"
+]
+},
+"dirs": [
+{
+"group": "Formação",
+"role": "Diretora da Formação",
+"name": "Carla Dias"
+},
+{
+"group": "Minibasquete",
+"role": "Diretora do Minibasquete",
+"name": "Ana Carvalho"
+}
+]
 }
