@@ -12,8 +12,8 @@
 "Olivais FC",
 "FC Gaia",
 "Pav. Engº Augusto Correia",
-"marcado",
-"",
+"realizado",
+"71-70",
 "1.ª Fase"
 ],
 [
@@ -1194,61 +1194,61 @@
 "name": "CN1 · 1.ª Fase Série B",
 "rows": [
 [
-"Juvemaia ACDC/Mecprec",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"SC Beira-Mar",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
 "FC Gaia",
+1,
+1,
 0,
-0,
-0,
-0,
-0,
-0
+2,
+84,
+69
 ],
 [
 "Olivais FC",
+1,
+1,
 0,
-0,
-0,
-0,
-0,
-0
+2,
+90,
+76
 ],
 [
-"Académico FC",
+"Juvemaia ACDC/Mecprec",
+1,
+1,
 0,
+2,
+69,
+66
+],
+[
+"SC Beira-Mar",
+1,
 0,
-0,
-0,
-0,
-0
+1,
+1,
+66,
+69
 ],
 [
 "Gafanha Rascunhos Urbano",
+1,
 0,
-0,
-0,
-0,
-0,
-0
+1,
+1,
+76,
+90
 ],
 [
 "FIDES",
+1,
+0,
+1,
+1,
+69,
+84
+],
+[
+"Académico FC",
 0,
 0,
 0,
@@ -1274,6 +1274,24 @@
 "name": "Esperanças · 1.ª Fase Série B",
 "rows": [
 [
+"CLIP Teams",
+1,
+1,
+0,
+2,
+85,
+42
+],
+[
+"Illiabum Clube",
+1,
+1,
+0,
+2,
+99,
+79
+],
+[
 "Ovarense OLHO MARINHO",
 1,
 1,
@@ -1290,6 +1308,24 @@
 2,
 78,
 60
+],
+[
+"Olivais FC",
+1,
+1,
+0,
+2,
+71,
+70
+],
+[
+"FC Gaia",
+1,
+0,
+1,
+1,
+70,
+71
 ],
 [
 "Académica Coimbra",
@@ -1310,6 +1346,24 @@
 83
 ],
 [
+"Sangalhos DC",
+1,
+0,
+1,
+1,
+79,
+99
+],
+[
+"CAAS WISIFY",
+1,
+0,
+1,
+1,
+42,
+85
+],
+[
 "ACA-Perfil Independente",
 0,
 0,
@@ -1319,61 +1373,7 @@
 0
 ],
 [
-"CLIP Teams",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"Sangalhos DC",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
 "FIDES",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"FC Gaia",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"CAAS WISIFY",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"Illiabum Clube",
-0,
-0,
-0,
-0,
-0,
-0
-],
-[
-"Olivais FC",
 0,
 0,
 0,
@@ -3049,7 +3049,7 @@
 "18:30",
 "SC Beira-Mar",
 "Juvemaia ACDC/Mecprec",
-"",
+"66-69",
 "Pavilhão Aristides Hall - Universidade de Aveiro"
 ],
 [
@@ -3069,7 +3069,7 @@
 "18:30",
 "Olivais FC",
 "Gafanha Rascunhos Urbano",
-"",
+"90-76",
 "Pav. Engº Augusto Correia"
 ],
 [
@@ -3616,7 +3616,7 @@
 "21:00",
 "Olivais FC",
 "FC Gaia",
-"",
+"71-70",
 "Pav. Engº Augusto Correia"
 ],
 [
@@ -3626,7 +3626,7 @@
 "21:00",
 "Sangalhos DC",
 "Illiabum Clube",
-"",
+"79-99",
 "Complexo Desportivo de Sangalhos"
 ],
 [
@@ -3656,7 +3656,7 @@
 "21:00",
 "CLIP Teams",
 "CAAS WISIFY",
-"",
+"85-42",
 "Colégio Luso Internacional do Porto"
 ],
 [
