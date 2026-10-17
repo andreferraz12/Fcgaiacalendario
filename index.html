@@ -596,6 +596,37 @@ html[data-theme="light"] .athph b{color:#bdb9ae}
 .tml{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .gcoord{display:flex;flex-wrap:wrap;gap:8px}
 .apoio{margin:4px 0 14px}.apoio .sub2{margin:0 0 4px}.apl{margin:0;color:var(--muted);font-size:15px;line-height:1.5;max-width:70ch}
+
+/* ===== estatísticas ===== */
+.sthead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.stw{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:4px;background:var(--panel);margin:6px 0 4px}
+.stt{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stt th,.stt td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line)}
+.stt th{font-weight:700;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:var(--panel-2)}
+.stt .l{text-align:left;position:sticky;left:0;background:var(--panel);z-index:1;min-width:150px}
+.stt th.l{background:var(--panel-2)}
+.stt td.l b{display:inline-block;min-width:22px;color:var(--gold);font-family:var(--f-disp);font-weight:400}
+.stt td.l i{font-style:normal;color:var(--gold);margin-left:3px}
+.stt .hi{font-weight:800;color:var(--ink)}
+.stt tfoot td{font-weight:700;background:var(--panel-2);border-bottom:0}.stt tfoot td.l{background:var(--panel-2)}
+.stt tbody tr:last-child td{border-bottom:0}
+.stleg{font-size:13px;margin:6px 0 18px}
+.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.stgame{display:grid;grid-template-columns:1fr auto;gap:2px 10px;text-align:left;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--tc,var(--gold));border-radius:4px;padding:12px 14px;cursor:pointer;color:var(--ink)}
+.stgame:hover{border-color:var(--gold)}
+.stgame .sd{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.stgame .so{grid-column:1;font-weight:800;font-size:18px;font-style:italic;text-transform:uppercase}
+.stgame .ss{grid-column:2;grid-row:1/3;align-self:center;font-family:var(--f-disp);font-size:26px}
+.stgame .ss.w{color:var(--win)}.stgame .ss.l{color:var(--loss)}
+.stgame .sx{grid-column:1/3;font-size:14px;color:var(--muted)}
+.stgame .sgo{grid-column:1/3;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+.card.boxc{max-width:920px;max-height:calc(100dvh - 32px);overflow:auto}
+.bxh{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;margin:6px 0 12px}
+.bxh span{font-size:.8em}.bxh b{font-family:var(--f-disp);font-weight:400;font-size:1.3em;color:var(--gold)}.bxh i{font-style:normal;color:var(--muted)}
+.bxseg{margin:12px 0 4px}
+.qt .l{min-width:120px}
+.softbtn.wide{width:100%;justify-content:center;margin-top:12px}
+@media (max-width:640px){.ttabs{top:var(--navh,0)}.stt{font-size:14px}.stt .l{min-width:130px}}
 html.printing .jnav button{display:none}
 html.printing .gg{background:#fff;border-color:#ccc}
 html.printing .gg.mine{border-color:var(--gold)}
@@ -848,9 +879,9 @@ function renderTeams(){
   const cur=S.phase[t.id]||league[league.length-1]||phases[0]||"*";
   const sel=`<label class="fase" for="fase"><span>Fase</span><select id="fase">${phases.map(p=>`<option value="${esc(p)}"${p===cur?" selected":""}>${esc(p)}</option>`).join("")}<option value="*"${cur==="*"?" selected":""}>Todas as fases</option></select></label>`;
   const side=`<aside class="side" aria-label="Escalões"><p class="side-h">Escalões</p><div class="side-l">${ALLT.map(x=>`<button class="side-i ${x.cls}" data-team="${esc(x.id)}" aria-current="${x.id===t.id}"><i></i>${esc(x.nm)}</button>`).join("")}</div></aside>`;
-  const tabs=`<div class="ttabs" role="tablist" aria-label="Secções da equipa">${[["ov","Visão geral"],["jg","Jogos"],["pl","Plantel"]].map(([k,l])=>`<button role="tab" class="ttab" id="tt-${k}" data-ttab="${k}" aria-selected="${S.ttab===k}">${l}</button>`).join("")}</div>`;
+  const tabs=`<div class="ttabs" role="tablist" aria-label="Secções da equipa">${[["ov","Visão geral"],["jg","Jogos"],["pl","Plantel"]].concat(hasStats(t.id)?[["st","Estatísticas"]]:[]).map(([k,l])=>`<button role="tab" class="ttab" id="tt-${k}" data-ttab="${k}" aria-selected="${S.ttab===k}">${l}</button>`).join("")}</div>`;
   if(t.mini)return `<div class="tlay">${side}<div class="tmain"><button class="backbtn" id="back">‹ Voltar às equipas</button><p class="eyebrow">${esc(t.lv)}</p><h2 class="huge">${esc(t.nm)}</h2><div class="trow2">${shareBtn(SITE+teamHash(t.id),"FC Gaia · "+t.nm.replace(/"/g,""))}</div><div class="tbody">${t.id==="Masters"?`<div class="box"><h3>Liga 2 Master · Grupo A</h3><p class="note">1.ª fase a duas voltas (6 jornadas) com GDB Leça, Académico FC e ED Guarda UP. Os 2 primeiros seguem para a Fase de Subida. O calendário aparece aqui assim que a FPB o publicar.</p></div>`:""}${treinosBox(t)}${teamSquad(t)}</div></div></div>`;
-  const body=S.ttab==="jg"?teamGames(t,cur,all):S.ttab==="pl"?teamSquad(t):teamOverview(t,cur,all);
+  if(S.ttab==="st"&&!hasStats(t.id))S.ttab="ov";const body=S.ttab==="st"?teamStatsView(t):S.ttab==="jg"?teamGames(t,cur,all):S.ttab==="pl"?teamSquad(t):teamOverview(t,cur,all);
   return `<div class="tlay">${side}<div class="tmain"><button class="backbtn" id="back">‹ Voltar às equipas</button><p class="eyebrow">${esc(t.lv)}</p><h2 class="huge">${esc(t.nm)}</h2>
   <div class="trow2">${S.ttab!=="pl"?sel:""}${subBtn(t.id)}${shareBtn(SITE+teamHash(t.id),"FC Gaia · "+t.nm.replace(/"/g,""))}</div>${tabs}<div class="tbody">${body}</div></div></div>`}
 
@@ -993,7 +1024,7 @@ function detail(g){const t=TM[g.team],d=g.date?pd(g.date):null;
    <a class="pi" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(gameUrl(g))}" target="_blank" rel="noopener">${IC.fb}<span>Facebook</span></a>
    <a class="pi" href="mailto:?subject=${encodeURIComponent(evTitle(g))}&body=${encodeURIComponent(shareText(g)+"\n"+gameUrl(g))}">${IC.mail}<span>Email</span></a>
    <button class="pi" id="copytxt" data-g="${g.i}">${IC.copy}<span>Copiar texto e link</span></button></div>
-  <div class="cardfoot"><div class="acts3">${hasPlace(g)?`<button class="softbtn" data-menu="m-dir" aria-expanded="false">${IC.nav}<span>Direções</span></button>`:""}${g.date?`<button class="softbtn" data-menu="m-cal" aria-expanded="false">${IC.cal}<span>Calendário</span></button>`:""}<button class="softbtn" id="sharebtn" data-g="${g.i}" aria-expanded="false">${IC.share}<span>Partilhar</span></button></div><button class="x" id="close" data-focus>Fechar</button></div></div>`)
+  ${gameStatsId(g)?`<button class="softbtn wide" data-box="${gameStatsId(g)}">${IC.img}<span>Estatísticas do jogo</span></button>`:""}<div class="cardfoot"><div class="acts3">${hasPlace(g)?`<button class="softbtn" data-menu="m-dir" aria-expanded="false">${IC.nav}<span>Direções</span></button>`:""}${g.date?`<button class="softbtn" data-menu="m-cal" aria-expanded="false">${IC.cal}<span>Calendário</span></button>`:""}<button class="softbtn" id="sharebtn" data-g="${g.i}" aria-expanded="false">${IC.share}<span>Partilhar</span></button></div><button class="x" id="close" data-focus>Fechar</button></div></div>`)
   const m=location.hash.match(/^#jogo\//);if(!m){try{history.replaceState(null,"","#jogo/"+slug(g.team)+"/"+g.num)}catch(_){}}}
 const HOME_ADDR="Rua Fialho de Almeida 34, 4400-150 Vila Nova de Gaia";
 const hasPlace=g=>!pend(g)&&g.venue&&!/definir/i.test(g.venue);
@@ -1169,8 +1200,63 @@ document.getElementById("ticker").innerHTML=Array(16).fill("<span>#TODOSPELOGAIA
 
 /* menu fixo no telemóvel: só os separadores ficam à vista */
 (function(){const m=document.querySelector(".mast"),t=document.querySelector(".tabs");if(!m||!t)return;
-  const fit=()=>{const off=t.getBoundingClientRect().top-m.getBoundingClientRect().top;m.style.setProperty("--mast-top",(-Math.max(0,off))+"px")};
+  const fit=()=>{const off=t.getBoundingClientRect().top-m.getBoundingClientRect().top;m.style.setProperty("--mast-top",(-Math.max(0,off))+"px");document.documentElement.style.setProperty("--navh",(innerWidth<=640?m.offsetHeight-Math.max(0,off):0)+"px")};
   fit();addEventListener("resize",fit);addEventListener("load",fit)})();
+
+/* ===== Estatísticas (FIBA LiveStats) ===== */
+let STATSIDX=typeof STATSIDX_INLINE!=="undefined"?STATSIDX_INLINE:{};
+const STATCACHE=typeof STATCACHE_INLINE!=="undefined"?STATCACHE_INLINE:{};
+const statsKeys=id=>Object.entries(STATSIDX).filter(([k])=>k.split("|")[0]===id).map(([k,v])=>({num:+k.split("|")[1],id:v}));
+const hasStats=id=>statsKeys(id).length>0;
+const gameStatsId=g=>STATSIDX[g.team+"|"+g.num];
+function loadStats(ids){return Promise.all(ids.map(id=>STATCACHE[id]?Promise.resolve(STATCACHE[id]):fetch("data/stats/"+id+".json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j)STATCACHE[id]=j;return j}).catch(()=>null)))}
+const minSec=m=>{const [a,b]=String(m||"0:0").split(":").map(Number);return (a||0)*60+(b||0)};
+const fmtMin=s=>Math.floor(s/60)+":"+String(Math.round(s%60)).padStart(2,"0");
+const pct=(m,a)=>a?Math.round(100*m/a)+"%":"–";
+const gaiaIdx=st=>st.teams.findIndex(t=>/gaia/i.test(t.name));
+// [nº,nome,titular,min,pts,2m,2a,3m,3a,llm,lla,ro,rd,rt,as,br,dl,bp,fc,+/-,val]
+const P={num:0,nm:1,st:2,min:3,pts:4,m2:5,a2:6,m3:7,a3:8,ml:9,al:10,ro:11,rd:12,rt:13,as:14,br:15,dl:16,bp:17,fc:18,pm:19,val:20};
+const pnm=n=>String(n||"").toLowerCase().replace(/(^|\s)(\S)/g,(m,a,b)=>a+b.toUpperCase()).replace(/ (Da|De|Do|Das|Dos|E) /g,m=>m.toLowerCase());
+
+function teamStatsView(t){setTimeout(()=>fillStats(t.id),0);return `<div id="statsv"><p class="note">A carregar estatísticas…</p></div>`}
+function fillStats(tid){const box=document.getElementById("statsv");if(!box)return;
+  const ks=statsKeys(tid);loadStats(ks.map(k=>k.id)).then(list=>{
+    const rows=ks.map((k,i)=>({k,st:list[i],g:G.find(x=>x.team===tid&&x.num===k.num)})).filter(r=>r.st&&r.g).sort((a,b)=>(b.g.date||"").localeCompare(a.g.date||""));
+    if(!rows.length){box.innerHTML=`<p class="note">Ainda não há estatísticas disponíveis.</p>`;return}
+    // acumulado da época (jogadores do FC Gaia)
+    const acc={};rows.forEach(({st})=>{const gi=gaiaIdx(st);if(gi<0)return;st.teams[gi].pl.forEach(p=>{const key=pnm(p[P.nm]);
+      const a=acc[key]||(acc[key]={nm:key,num:p[P.num],gp:0,sec:0,v:Array(21).fill(0)});if(minSec(p[P.min])>0||p[P.pts])a.gp++;a.sec+=minSec(p[P.min]);a.num=p[P.num];
+      for(let i=4;i<21;i++)a.v[i]+=+p[i]||0})});
+    const pl=Object.values(acc).filter(a=>a.gp).sort((a,b)=>b.v[P.pts]-a.v[P.pts]);const tot=S.stmode==="tot";
+    const f=(a,i)=>tot?a.v[i]:(a.v[i]/a.gp).toFixed(1).replace(".",",");
+    const season=`<div class="sthead"><h3 class="sech">Época · ${rows.length} ${rows.length===1?"jogo":"jogos"}</h3>
+      <div class="seg" role="group" aria-label="Tipo"><button data-stmode="avg" aria-pressed="${!tot}">Médias</button><button data-stmode="tot" aria-pressed="${tot}">Totais</button></div></div>
+      <div class="stw"><table class="stt"><thead><tr><th class="l">Jogador</th><th>J</th><th>Min</th><th>Pts</th><th>RT</th><th>AS</th><th>BR</th><th>DL</th><th>BP</th><th>FC</th><th>2P</th><th>3P</th><th>LL</th><th>+/-</th></tr></thead><tbody>
+      ${pl.map(a=>`<tr><td class="l"><b>${esc(a.num)}</b> ${esc(a.nm)}</td><td>${a.gp}</td><td>${tot?fmtMin(a.sec):fmtMin(a.sec/a.gp)}</td><td class="hi">${f(a,P.pts)}</td><td>${f(a,P.rt)}</td><td>${f(a,P.as)}</td><td>${f(a,P.br)}</td><td>${f(a,P.dl)}</td><td>${f(a,P.bp)}</td><td>${f(a,P.fc)}</td>
+        <td>${pct(a.v[P.m2],a.v[P.a2])}</td><td>${pct(a.v[P.m3],a.v[P.a3])}</td><td>${pct(a.v[P.ml],a.v[P.al])}</td><td>${tot?a.v[P.pm]:f(a,P.pm)}</td></tr>`).join("")}</tbody></table></div>
+      <p class="note stleg">J jogos · RT ressaltos · AS assistências · BR bolas recuperadas · DL desarmes de lançamento · BP bolas perdidas · FC faltas cometidas · 2P/3P/LL percentagem de lançamentos de 2, de 3 e lances livres.</p>`;
+    const games=`<h3 class="sech">Jogos</h3><div class="stg">${rows.map(({k,st,g})=>{const gi=gaiaIdx(st),us=st.teams[gi],th=st.teams[1-gi];const top=[...us.pl].sort((a,b)=>b[P.pts]-a[P.pts])[0];
+      return `<button class="stgame" data-box="${k.id}" data-g="${g.i}"><span class="sd">${fmtDate(g.date)}</span><span class="so">${g.isHome?"vs":"@"} ${esc(g.opp)}</span><span class="ss ${us.score>th.score?"w":"l"}">${us.score>th.score?"V":"D"} ${us.score}-${th.score}</span>${top?`<span class="sx">Melhor marcador: ${esc(pnm(top[P.nm]))} (${top[P.pts]})</span>`:""}<span class="sgo">Ver ficha ›</span></button>`}).join("")}</div>`;
+    box.innerHTML=season+games})}
+const fmtDate=d=>{if(!d)return "";const x=pd(d);return `${DW[wd(x)]} ${x.getDate()} ${MS[x.getMonth()]}`};
+
+function boxTable(t){const r=p=>`<tr${p[P.st]?' class="st"':""}><td class="l"><b>${esc(p[P.num])}</b> ${esc(pnm(p[P.nm]))}${p[P.st]?"<i>*</i>":""}</td><td>${esc(p[P.min])}</td><td class="hi">${p[P.pts]}</td><td>${p[P.m2]}/${p[P.a2]}</td><td>${p[P.m3]}/${p[P.a3]}</td><td>${p[P.ml]}/${p[P.al]}</td><td>${p[P.ro]}</td><td>${p[P.rd]}</td><td>${p[P.rt]}</td><td>${p[P.as]}</td><td>${p[P.br]}</td><td>${p[P.dl]}</td><td>${p[P.bp]}</td><td>${p[P.fc]}</td><td>${p[P.pm]>0?"+":""}${p[P.pm]}</td></tr>`;
+  const T=t.tot||{};
+  return `<div class="stw"><table class="stt bx"><thead><tr><th class="l">Jogador</th><th>Min</th><th>Pts</th><th>2P</th><th>3P</th><th>LL</th><th>RO</th><th>RD</th><th>RT</th><th>AS</th><th>BR</th><th>DL</th><th>BP</th><th>FC</th><th>+/-</th></tr></thead><tbody>${t.pl.map(r).join("")}</tbody>
+  <tfoot><tr><td class="l">Equipa</td><td></td><td class="hi">${T.sPoints??t.score}</td><td>${T.sTwoPointersMade??""}/${T.sTwoPointersAttempted??""}</td><td>${T.sThreePointersMade??""}/${T.sThreePointersAttempted??""}</td><td>${T.sFreeThrowsMade??""}/${T.sFreeThrowsAttempted??""}</td><td>${T.sReboundsOffensive??""}</td><td>${T.sReboundsDefensive??""}</td><td>${T.sReboundsTotal??""}</td><td>${T.sAssists??""}</td><td>${T.sSteals??""}</td><td>${T.sBlocks??""}</td><td>${T.sTurnovers??""}</td><td>${T.sFoulsPersonal??""}</td><td></td></tr></tfoot></table></div>`}
+function openBox(id,side){loadStats([id]).then(([st])=>{if(!st)return;const gi=Math.max(0,gaiaIdx(st));const sel=side==null?gi:side;const A=st.teams[0],B=st.teams[1];
+  const qs=Math.max(A.q.length,B.q.length),qh=[...Array(qs)].map((_,i)=>i<4?`${i+1}.º`:`P${i-3}`);
+  openSheet(`<div class="card boxc" role="dialog" aria-modal="true" aria-labelledby="bxt"><div class="k">Ficha de jogo · FIBA LiveStats</div>
+   <h2 id="bxt" class="bxh"><span>${esc(A.name)}</span><b>${A.score}</b><i>–</i><b>${B.score}</b><span>${esc(B.name)}</span></h2>
+   <div class="stw"><table class="stt qt"><thead><tr><th class="l"></th>${qh.map(h=>`<th>${h}</th>`).join("")}<th>Total</th></tr></thead><tbody>${[A,B].map(t=>`<tr><td class="l">${esc(t.name)}</td>${[...Array(qs)].map((_,i)=>`<td>${t.q[i]??""}</td>`).join("")}<td class="hi">${t.score}</td></tr>`).join("")}</tbody></table></div>
+   <div class="seg bxseg" role="group" aria-label="Equipa">${[A,B].map((t,i)=>`<button data-boxside="${i}" data-boxid="${id}" aria-pressed="${i===sel}">${esc(t.name)}</button>`).join("")}</div>
+   ${boxTable(st.teams[sel])}
+   <p class="note stleg">* titular · RO/RD/RT ressaltos ofensivos/defensivos/total · AS assistências · BR bolas recuperadas · DL desarmes de lançamento · BP bolas perdidas · FC faltas cometidas</p>
+   <div class="cardfoot"><div class="athacts"><a class="softbtn" href="https://fibalivestats.dcd.shared.geniussports.com/u/FPDB/${id}/" target="_blank" rel="noopener">${IC.link}<span>Ver na FIBA LiveStats</span></a></div><button class="x" id="close" data-focus>Fechar</button></div></div>`)})}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-box],[data-boxside],[data-stmode]");if(!b)return;
+  if(b.dataset.stmode){S.stmode=b.dataset.stmode;render();return}
+  if(b.dataset.boxside!=null){openBox(+b.dataset.boxid,+b.dataset.boxside);return}
+  e.stopPropagation();openBox(+b.dataset.box)},true);
 const U="https://sav2.fpb.pt/uploads/clubes/logotipo/",O="https://sav2.fpb.pt/old_uploads/CLU/";
 const LOGOS={"FIDES":U+"CLU_7311702380602.jpg","Juvemaia ACDC/Mecprec":U+"CLU_1601704477075.png","SC Beira-Mar":O+"CLU_6_LOGO.png","AD Sanjoanense":U+"CLU_31754576195.png","Olivais FC":O+"CLU_7_LOGO.png","Gafanha Rascunhos Urbano":U+"CLU_481763144304.png","FAC - Crédito Agrícola":U+"CLU_691693656807.png","Illiabum Clube":U+"Illiabum_Clube1602333892.png","Ovarense OLHO MARINHO":U+"CLU_121663058006.png","CAAS WISIFY":U+"Centro_dos_Antigos_Alunos_Salesianos1639227568.png","Académica Coimbra":U+"Associacao_Academica_de_Coimbra1596300872.png","CLIP Teams":U+"CLU_34851676308479.jpg","UD Oliveirense":O+"CLU_28_LOGO.png","Sangalhos DC":U+"Sangalhos_Desporto_Clube1627490311.png","Académico FC":O+"CLU_188_LOGO.png","ACA-Perfil Independente":U+"Atletico_Clube_Alfenense1599605277.png",
 "GDB Leça":U+"Grupo_Desportivo_Basquete_de_Leca1602618188.png","CD Aves":U+"CLU_36571695909164.png","Bolacesto":U+"CLU_1791790001218.png","Bolacesto B":U+"CLU_1791790001218.png","AC Alfenense":U+"Atletico_Clube_Alfenense1599605277.png","Guifões SC A":U+"CLU_1741733586027.png","FC Porto B":O+"CLU_120_LOGO.png","5Basket B":U+"CLU_30161748285345.png","Académico/Ribadouro B":O+"CLU_188_LOGO.png","BC Marco":U+"3625_1679141751.png","CPN":U+"Clube_Propaganda_de_Natacao1603657754.png","CPN A ANTARTE":U+"Clube_Propaganda_de_Natacao1603657754.png","USC Paredes":U+"Uniao_Sport_Clube_de_Paredes1640343022.png","CD Póvoa A":U+"CLU_1181738506693.png","CBP B":O+"CLU_3208_LOGO.png","Maia Basket B":U+"CLU_7141746203247.png","SC Vasco da Gama A":U+"CLU_1761675707996.png","SC Vasco da Gama B":U+"CLU_1761675707996.png","Powertogether B":U+"CLU_31551790159606.jpeg","UAA Aroso B":U+"CLU_181.png"};
@@ -1182,7 +1268,7 @@ document.addEventListener("load",e=>{const t=e.target;if(t.tagName==="IMG"&&t.pa
 render();openFromHash();
 (function(){if(location.protocol==="file:")return;
 fetch("data/jogos.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(!d||!Array.isArray(d.games))return;
-  GAMES=d.games;STAND=d.stand||STAND;GROUPS=d.groups||GROUPS;if(d.plantel){PLANTEL=d.plantel;Object.values(PLANTEL).forEach(l=>l.forEach(p=>{p.name=pname(p.name).replace(/[\s\-–]+$/,"")}))}if(d.coaches)COACHES=d.coaches;if(d.staff)STAFF=d.staff;if(d.coord)COORD=d.coord;if(d.tm&&typeof TMGR!=="undefined")TMGR=d.tm;if(d.dirs&&typeof DIRS!=="undefined")DIRS=d.dirs;if(d.apoio&&typeof APOIO!=="undefined")APOIO=d.apoio;Object.assign(LOGOS,d.logos||{});
+  GAMES=d.games;STAND=d.stand||STAND;GROUPS=d.groups||GROUPS;if(d.plantel){PLANTEL=d.plantel;Object.values(PLANTEL).forEach(l=>l.forEach(p=>{p.name=pname(p.name).replace(/[\s\-–]+$/,"")}))}if(d.coaches)COACHES=d.coaches;if(d.staff)STAFF=d.staff;if(d.coord)COORD=d.coord;if(d.stats)STATSIDX=d.stats;if(d.tm&&typeof TMGR!=="undefined")TMGR=d.tm;if(d.dirs&&typeof DIRS!=="undefined")DIRS=d.dirs;if(d.apoio&&typeof APOIO!=="undefined")APOIO=d.apoio;Object.assign(LOGOS,d.logos||{});
   G=GAMES.map((r,i)=>{const [team,comp,src,num,jor,date,time,home,away,venue,status,res,phase]=r;const isHome=home.includes("FC Gaia");return {i,team,comp,src,num,jor,date,time,home,away,venue,status,res,phase,isHome,opp:isHome?away:home}});
   if(d.updated){const x=pd(d.updated),u=document.getElementById("upd");if(u)u.textContent=`${x.getDate()} ${MS[x.getMonth()]} ${x.getFullYear()}`}
   if(typeof syncMasters==="function")syncMasters();render();if(typeof openFromHash==='function')openFromHash()}).catch(()=>{})})();

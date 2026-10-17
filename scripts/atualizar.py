@@ -76,6 +76,12 @@ def competition_phases(comp_id):
     """Devolve {phaseId: titulo} e as tabelas de classificação do resumo."""
     soup = get(f"{BASE}/getCompetitionDetails?competitionId={comp_id}")
     phases, tables = {}, {}
+    LIVESTATS_LAST[comp_id] = {}
+    for tr in soup.find_all("tr"):
+        a = tr.find("a", href=re.compile(r"geniussports\.com/u/[A-Z]+/(\d+)"))
+        c = cells(tr)
+        if a and c and c[0].isdigit():
+            LIVESTATS_LAST[comp_id][int(c[0])] = int(re.search(r"/u/[A-Z]+/(\d+)", a["href"]).group(1))
     for a in soup.find_all("a", href=re.compile(r"getSchedule\?competitionId=%s&phaseId=(\d+)" % comp_id)):
         pid = re.search(r"phaseId=(\d+)", a["href"]).group(1)
         head = a.find_previous(string=re.compile(r"(?i)fase|elimina"))
@@ -285,6 +291,77 @@ def masters_competitions():
     return out
 
 
+# ---------- Estatísticas dos jogos (FIBA LiveStats) ----------
+
+LIVESTATS_LAST = {}   # competição -> {n.º do jogo: id LiveStats} (lido na página da competição)
+LIVESTATS_TEAM = {}   # (equipa, n.º do jogo) -> id LiveStats
+STATS_DIR = ROOT / "data" / "stats"
+STATS_TEAMS = ("Seniores Masc",)   # equipas com separador Estatísticas
+
+
+def stats_compact(j, lsid):
+    """Reduz o data.json da FIBA LiveStats ao essencial para o site."""
+    out = {"id": lsid, "teams": []}
+    for k in ("1", "2"):
+        t = j["tm"][k]
+        q = [t[f"p{i}_score"] for i in range(1, 12) if f"p{i}_score" in t]
+        pl = []
+        for p in t.get("pl", {}).values():
+            if p.get("sMinutes") in (None, "", "0:00") and not p.get("sPoints"):
+                continue
+            nm = f"{p.get('firstName', '')} {p.get('familyName', '')}".strip() or p.get("name", "")
+            pl.append([p.get("shirtNumber", ""), nm, 1 if p.get("starter") else 0, p.get("sMinutes", "0:00"),
+                       p.get("sPoints", 0), p.get("sTwoPointersMade", 0), p.get("sTwoPointersAttempted", 0),
+                       p.get("sThreePointersMade", 0), p.get("sThreePointersAttempted", 0),
+                       p.get("sFreeThrowsMade", 0), p.get("sFreeThrowsAttempted", 0),
+                       p.get("sReboundsOffensive", 0), p.get("sReboundsDefensive", 0), p.get("sReboundsTotal", 0),
+                       p.get("sAssists", 0), p.get("sSteals", 0), p.get("sBlocks", 0), p.get("sTurnovers", 0),
+                       p.get("sFoulsPersonal", 0), p.get("sPlusMinusPoints", 0), p.get("eff_1", 0)])
+        tot = {x: t.get("tot_" + x, 0) for x in ("sPoints", "sTwoPointersMade", "sTwoPointersAttempted",
+               "sThreePointersMade", "sThreePointersAttempted", "sFreeThrowsMade", "sFreeThrowsAttempted",
+               "sReboundsOffensive", "sReboundsDefensive", "sReboundsTotal", "sAssists", "sSteals", "sBlocks",
+               "sTurnovers", "sFoulsPersonal", "sPointsInThePaint", "sPointsFastBreak", "sPointsSecondChance",
+               "sPointsFromTurnovers", "sBenchPoints", "sBiggestLead")}
+        out["teams"].append({"name": t.get("name", ""), "score": t.get("score", 0), "q": q, "pl": pl, "tot": tot})
+    return out
+
+
+def fetch_stats(games, data):
+    """Guarda em data/stats/<id>.json a ficha dos jogos com resultado que ainda não a têm."""
+    idx = data.setdefault("ls", {})
+    for (team, num), lsid in LIVESTATS_TEAM.items():
+        if (team, num) in games:
+            idx[f"{team}|{num}"] = lsid
+    STATS_DIR.mkdir(parents=True, exist_ok=True)
+    have = data.setdefault("stats", {})
+    for g in games.values():
+        key = f"{g['team']}|{g['num']}"
+        if g["team"] not in STATS_TEAMS or not g["res"] or key not in idx or key in have:
+            continue
+        lsid = idx[key]
+        try:
+            r = requests.get(f"https://fibalivestats.dcd.shared.geniussports.com/data/{lsid}/data.json", headers=UA, timeout=30)
+            r.raise_for_status()
+            j = r.json()
+            st = stats_compact(j, lsid)
+            sc = sorted(t["score"] for t in st["teams"])
+            if sc != sorted(int(x) for x in g["res"].split("-")):
+                log(f"Estatísticas {key}: marcador da ficha {sc} ainda diferente do resultado {g['res']}; tento mais tarde.")
+                continue
+            (STATS_DIR / f"{lsid}.json").write_text(json.dumps(st, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+            have[key] = lsid
+            log(f"Estatísticas: {key} -> {lsid} ({st['teams'][0]['name']} {st['teams'][0]['score']}-{st['teams'][1]['score']} {st['teams'][1]['name']})")
+        except Exception as e:  # noqa: BLE001
+            log(f"AVISO: estatísticas {key} ({lsid}): {e}")
+
+
+def stats_pending(data):
+    """Jogos com resultado nos últimos 4 dias sem ficha guardada (equipas com estatísticas)."""
+    lim = (datetime.date.today() - datetime.timedelta(days=4)).isoformat()
+    have = data.get("stats", {})
+    return [r for r in data["games"] if r[0] in STATS_TEAMS and r[11] and (r[5] or "") >= lim and f"{r[0]}|{r[3]}" not in have]
+
+
 # ---------- Atualização ----------
 
 def team_id(base, gaia_name, ab):
@@ -323,6 +400,10 @@ def main(mode="calendario"):
     comps += [c for c in extra.values() if c["id"] not in {x["id"] for x in comps}]
     if mode == "resultados":
         pend = pending_results(data)
+        spend = stats_pending(data)
+        if spend:
+            log(f"{len(spend)} jogo(s) com resultado à espera das estatísticas.")
+        pend = pend + spend
         if not pend:
             log("Nenhum jogo à espera de resultado (2h30 a 30h depois do início). Nada a fazer.")
             return
@@ -343,6 +424,9 @@ def main(mode="calendario"):
         log(f"[{round(100 * ci / max(len(comps), 1)):3d}%] {comp['nome']}")
         try:
             phases, tables = competition_phases(cid)
+            if comp["fonte"] == "FPB" and not comp.get("ab"):
+                for n, l in LIVESTATS_LAST.get(cid, {}).items():
+                    LIVESTATS_TEAM[(comp["equipa"], n)] = l
         except Exception as e:  # noqa: BLE001
             log(f"AVISO: falhou a competição {cid} ({comp['nome']}): {e}")
             continue
@@ -442,6 +526,7 @@ def main(mode="calendario"):
     except Exception as e:  # noqa: BLE001
         log(f"AVISO: falhou a página de resultados do clube: {e}")
 
+    fetch_stats(games, data)
     data["games"] = [[g[k] for k in F] for g in sorted(games.values(), key=lambda x: (x["team"], x["date"] or "9", x["num"]))]
     data["stand"], data["logos"], data["groups"] = stand, logos, groups
     after = json.dumps(data, ensure_ascii=False, sort_keys=True)
